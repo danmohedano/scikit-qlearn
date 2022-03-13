@@ -1,6 +1,24 @@
 from setuptools import setup, find_packages
 import pathlib
-here = pathlib.Path(__file__).parent.resolve()
+import codecs
+import os.path
+
+here = os.path.abspath(os.path.dirname(__file__))
+
+
+def read(rel_path):
+    with codecs.open(os.path.join(here, rel_path), 'r') as fp:
+        return fp.read()
+
+
+def get_version(rel_path):
+    for line in read(rel_path).splitlines():
+        if line.startswith('__version__'):
+            delim = '"' if '"' in line else "'"
+            return line.split(delim)[1]
+    else:
+        raise RuntimeError("Unable to find version string.")
+
 
 DISTNAME = 'scikit-qlearn'
 DESCRIPTION = 'A set of python modules for quantum enhanced machine learning algorithms'
@@ -10,16 +28,7 @@ URL = 'https://github.com/danmohedano/scikit-qlearn'
 LICENSE = 'MIT'
 DOWNLOAD_URL = URL
 PACKAGE_NAME = 'skqlearn'
-LONG_DESCRIPTION = (here / 'README.md').read_text(encoding='utf-8')
-
-
-def get_version():
-    """Obtain the version number"""
-    data = {}
-    with open("skqlearn/version.py") as fp:
-        exec(fp.read(), data)
-
-    return data['__version__']
+LONG_DESCRIPTION = read('README.md')
 
 # Arguments marked as "Required" below must be included for upload to PyPI.
 # Fields marked as "Optional" may be commented out.
@@ -28,7 +37,7 @@ def get_version():
 if __name__ == '__main__':
     setup(
         name=DISTNAME,  # Required
-        version=get_version(),  # Required
+        version=get_version(os.path.join(PACKAGE_NAME, '_version.py')),  # Required
         description=DESCRIPTION,  # Optional
         long_description=LONG_DESCRIPTION,  # Optional
         long_description_content_type='text/markdown',  # Optional (see note above)
@@ -38,7 +47,7 @@ if __name__ == '__main__':
         classifiers=[  # Optional
             'Development Status :: 1 - Planning',
             'Intended Audience :: Developers',
-            'Intended Audience:: Science / Research',
+            'Intended Audience :: Science/Research',
             'Topic :: Scientific/Engineering',
             'License :: OSI Approved :: MIT License',
             'Programming Language :: Python :: 3',
@@ -49,8 +58,7 @@ if __name__ == '__main__':
             'Programming Language :: Python :: 3 :: Only',
         ],
         keywords='quantum, machine learning, ai',  # Optional
-        package_dir={'': PACKAGE_NAME},  # Optional
-        packages=find_packages(where=PACKAGE_NAME),  # Required
+        packages=[PACKAGE_NAME],  # Required
         python_requires='>=3.7, <4',
         install_requires=[],  # Optional
         extras_require={  # Optional
