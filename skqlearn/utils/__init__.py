@@ -1,1 +1,1 @@
-from .utils import *
+from skqlearn.utils.utils import *

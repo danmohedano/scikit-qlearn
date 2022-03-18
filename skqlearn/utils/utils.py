@@ -3,64 +3,90 @@ from qiskit import *
 from qiskit.providers.aer import QasmSimulator
 
 
-def fidelity_estimation(a: np.ndarray, b: np.ndarray, n_iters: int = 1024) -> float:
+def fidelity_estimation(
+        state_a: np.ndarray,
+        state_b: np.ndarray,
+        n_iters: int
+) -> float:
+    """Fidelity estimation between two quantum states.
+
+    Args:
+        state_a: State a described by its amplitudes.
+        state_b: State b described by its amplitudes.
+        n_iters: Number of iterations in the simulation
+
+    Returns:
+        float: Estimation of the fidelity between the states.
     """
-    Fidelity estimation between two states based on the Control-SWAP Test.
-    :param a: State 1 of operation.
-    :param b: State 2 of operation.
-    :param n_iters: Number of iterations.
-    :return: Fidelity of the states.
-    """
-    size_a = np.ceil(np.log2(a.shape[0]))
-    size_b = np.ceil(np.log2(b.shape[0]))
+    # Calculation of the amount of qubits needed to represent each state
+    qubit_size_a = np.ceil(np.log2(state_a.shape[0]))
+    qubit_size_b = np.ceil(np.log2(state_b.shape[0]))
 
-    # Creation of quantum circuit
-    a_qr = QuantumRegister(size_a, 'a')
-    b_qr = QuantumRegister(size_b, 'b')
-    anc = QuantumRegister(1, 'anc')
-    cr = ClassicalRegister(1, 'c')
-    qc = QuantumCircuit(a_qr, b_qr, anc, cr)
+    # Creation of the quantum registers that will store states a and b, as well
+    # as the ancilla qubit needed for the estimation and the classical qubit
+    # utilized in the measurement.
+    quantum_register_a = QuantumRegister(qubit_size_a, 'a')
+    quantum_register_b = QuantumRegister(qubit_size_b, 'b')
+    ancilla_qubit = QuantumRegister(1, 'anc')
+    classical_register = ClassicalRegister(1, 'c')
+    circuit = QuantumCircuit(quantum_register_a, quantum_register_b,
+                             ancilla_qubit, classical_register)
 
-    # Initialization
-    qc.initialize(a, a_qr)
-    qc.initialize(b, b_qr)
+    # Initialization of the quantum registers with the states provided
+    circuit.initialize(state_a, quantum_register_a)
+    circuit.initialize(state_b, quantum_register_b)
 
-    # Addition of quantum logic gates
-    qc.h(anc)
+    # Addition of Hadamard Gate to ancilla qubit
+    circuit.h(ancilla_qubit)
 
-    for i in range(1, min(a_qr.size, b_qr.size) + 1):
-        qc.cswap(anc, a_qr[-i], b_qr[-i])
+    # Addition of CSWAP gate with ancilla qubit as control qubit
+    for i in range(1, min(qubit_size_a.size, qubit_size_b.size) + 1):
+        circuit.cswap(ancilla_qubit,
+                      quantum_register_a[-i],
+                      quantum_register_b[-i])
 
-    qc.h(anc)
-    qc.measure(anc, cr)
+    # Addition of Hadamard Gate to ancilla qubit
+    circuit.h(ancilla_qubit)
 
-    #print(qc)
+    # Addition of measurement from ancilla qubit to classical bit register
+    circuit.measure(ancilla_qubit, classical_register)
 
     # Simulation
     simulator = QasmSimulator()
-    compiled_circuit = transpile(qc, simulator)
+    compiled_circuit = transpile(circuit, simulator)
     job = simulator.run(compiled_circuit, shots=n_iters)
-
     result = job.result()
-    #print(result.get_counts(compiled_circuit))
 
-    return 2 * result.get_counts(compiled_circuit)['0'] / n_iters - 1
+    return 2.0 * result.get_counts(compiled_circuit)['0'] / n_iters - 1.0
 
 
-def distance_estimation(a: np.ndarray, a_norm: float, b: np.ndarray, b_norm: float, n_iters: int = 1024) -> float:
+def distance_estimation(
+        a: np.ndarray,
+        a_norm: float,
+        b: np.ndarray,
+        b_norm: float,
+        n_iters: int = 1024
+) -> float:
+    """Euclidean distance estimation through fidelity estimation.
+
+    Args:
+        a:
+        a_norm:
+        b:
+        b_norm:
+        n_iters:
+
+    Returns:
+        float: Square of the euclidean distance estimated.
     """
-    Euclidean distance estimation through the use of fidelity.
-    :param a:
-    :param a_norm:
-    :param b:
-    :param b_norm:
-    :param n_iters:
-    :return:
-    """
+    if a.shape != b.shape:
+        raise ValueError(f'Vector dimensions disparity between {a.shape} '
+                         'and {b.shape}')
+
     z = a_norm ** 2 + b_norm ** 2
     phi = np.array([a_norm, -b_norm]) / np.sqrt(z)
     psi = np.concatenate([a / a_norm, b / b_norm]) / np.sqrt(2)
 
     fidelity = fidelity_estimation(phi, psi, n_iters)
-    return np.sqrt(2 * z * fidelity)
+    return 2.0 * z * fidelity
 

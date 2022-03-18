@@ -1,3 +1,3 @@
 from ._version import __version__
-from .test import *
-from .utils import *
+from skqlearn.utils import *
+from skqlearn.unsupervised import *
