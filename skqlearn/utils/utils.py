@@ -6,14 +6,12 @@ from qiskit.providers.aer import QasmSimulator
 def fidelity_estimation(
         state_a: np.ndarray,
         state_b: np.ndarray,
-        n_iters: int
 ) -> float:
     """Fidelity estimation between two quantum states.
 
     Args:
         state_a: State a described by its amplitudes.
         state_b: State b described by its amplitudes.
-        n_iters: Number of iterations in the simulation
 
     Returns:
         float: Estimation of the fidelity between the states.
@@ -54,10 +52,10 @@ def fidelity_estimation(
     # Simulation
     simulator = QasmSimulator()
     compiled_circuit = transpile(circuit, simulator)
-    job = simulator.run(compiled_circuit, shots=n_iters)
+    job = simulator.run(compiled_circuit, shots=10000)
     result = job.result()
 
-    return 2.0 * result.get_counts(compiled_circuit)['0'] / n_iters - 1.0
+    return 2.0 * result.get_counts(compiled_circuit)['0'] / 10000 - 1.0
 
 
 def distance_estimation(
@@ -65,16 +63,14 @@ def distance_estimation(
         a_norm: float,
         b: np.ndarray,
         b_norm: float,
-        n_iters: int = 1024
 ) -> float:
     """Euclidean distance estimation through fidelity estimation.
 
     Args:
-        a:
-        a_norm:
-        b:
-        b_norm:
-        n_iters:
+        a: Input a.
+        a_norm: L2-norm of input a.
+        b: Input b.
+        b_norm: L2-norm of input b.
 
     Returns:
         float: Square of the euclidean distance estimated.
@@ -87,6 +83,6 @@ def distance_estimation(
     phi = np.array([a_norm, -b_norm]) / np.sqrt(z)
     psi = np.concatenate([a / a_norm, b / b_norm]) / np.sqrt(2)
 
-    fidelity = fidelity_estimation(phi, psi, n_iters)
+    fidelity = fidelity_estimation(phi, psi)
     return 2.0 * z * fidelity
 

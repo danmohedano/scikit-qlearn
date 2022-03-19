@@ -19,7 +19,7 @@ class KMeans:
             n_clusters: int,
             max_iterations: int,
             random_state: Union[int, np.random.RandomState, None],
-            distance_calculation: str,
+            distance_calculation_method: str,
     ):
         """Inits KMeans object.
 
@@ -31,7 +31,7 @@ class KMeans:
             random_state (int, RandomState or None): Determines random number
                 generation for centroid initialization. If provided as an int,
                 it will be used as seed to make the randomness deterministic.
-            distance_calculation ({'classic', 'quantum'}): The distance
+            distance_calculation_method ({'classic', 'quantum'}): The distance
                 calculation method:
                 'classic': Regular euclidean distance will be used.
                 'quantum': Quantum distance estimation will be used.
@@ -39,12 +39,13 @@ class KMeans:
         self.n_clusters = n_clusters
         self.max_iterations = max_iterations
         self.random_state = random_state
-        self.distance_calculation = distance_calculation
+        self.distance_calculation_method = distance_calculation_method
         self._check_params()
         self.cluster_centers = None
         self.labels = None
         self.n_features_in = None
         self.n_iter = None
+        self._centroid_norms = None
 
     def _check_params(self):
         """Check for the correctness of the parameters provided and processes
@@ -66,10 +67,10 @@ class KMeans:
         elif not isinstance(self.random_state, np.random.RandomState):
             raise ValueError('Invalid type for random_state, got '
                              f'{type(self.random_state)}')
-        if self.distance_calculation not in ['classic', 'quantum']:
+        if self.distance_calculation_method not in ['classic', 'quantum']:
             raise ValueError("distance_calculation method should be "
                              "{'classic', 'quantum'}, got "
-                             f"{self.distance_calculation} instead.")
+                             f"{self.distance_calculation_method} instead.")
 
     def _init_centroids(
             self,
@@ -88,13 +89,37 @@ class KMeans:
         centroids = x[indices]
         return centroids
 
-    def _centroid_distance(
+    def _distance(
+            self,
+            a: np.ndarray,
+            a_norm: float,
+            b: np.ndarray,
+            b_norm: float,
+    ) -> float:
+        """Euclidean distance between two data points.
+
+        Args:
+            a: Input a.
+            a_norm: L2-norm of input a. Not used, defined to conform to
+                distance_estimation's prototype.
+            b: Input b.
+            b_norm: L2-norm of input b. Not used, defined to conform to
+                distance_estimation's prototype.
+
+        Returns:
+            float: Euclidean distance between a and b.
+        """
+        return np.linalg.norm(a - b)
+
+    def _data_labels(
             self,
             x: np.ndarray,
             x_norms: np.ndarray,
             centroids: np.ndarray,
+            centroid_norms: np.ndarray,
     ) -> np.ndarray:
-        """Calculates the distances between each point and all centroids.
+        """Calculates the distances between each point and all centroids and
+        determines the closest one.
 
         Args:
             x (np.ndarray of shape (n_samples, n_features)): Input data.
@@ -102,14 +127,16 @@ class KMeans:
                 instance. Only needed if quantum estimation is used.
             centroids (np.ndarray of shape (n_clusters, n_features)): Cluster
                 centroids.
+            centroid_norms (np.ndarray of shape (n_clusters)): L2-norm of
+                centroids. Only needed if quantum estimation is used.
 
         Returns:
-            np.ndarray of shape (n_samples, n_clusters): Distance from every
-                instance to every cluster centroid.
+            np.ndarray of shape (n_samples,): Label for each of the instances
+                provided
 
         Raises:
-            ValueError: If dimension mismatch between x and centroids or x and
-                x_norms.
+            ValueError: If dimension mismatch between x and centroids, x and
+                x_norms or centroids and centroid_norms.
         """
         if x.shape[1] != centroids.shape[1]:
             raise ValueError('n_features should match between x and centroids '
@@ -117,24 +144,28 @@ class KMeans:
         if x.shape[0] != x_norms.shape[0]:
             raise ValueError('n_samples should match between x and x_norms '
                              f', got {x.shape} and {x_norms.shape} instead.')
+        if centroids.shape[0] != centroid_norms.shape[0]:
+            raise ValueError('n_clusters should match between centroids and '
+                             f'centroid_norms, got {centroids.shape} and '
+                             f'{centroid_norms.shape} instead.')
 
-        distances = np.zeros((x.shape[0], centroids.shape[0]))
-
-        if self.distance_calculation == 'classic':
-            for i in range(x.shape[0]):
-                for j in range(centroids.shape[0]):
-                    distances[i][j] = np.linalg.norm(x[i, :] - centroids[i, :])
+        if self.distance_calculation_method == 'classic':
+            distance_fn = self._distance
         else:
-            for j in range(centroids.shape[0]):
-                centroid_norm = np.linalg.norm(centroids[j, :])
-                for i in range(x.shape[0]):
-                    distances[i][j] = distance_estimation(x[i, :],
-                                                          x_norms[i],
-                                                          centroids[j, :],
-                                                          centroid_norm,
-                                                          10000)
+            distance_fn = distance_estimation
 
-        return distances
+        labels = np.array(x.shape[0])
+
+        for i in range(x.shape[0]):
+            centroid_distances = []
+            for j in range(centroids.shape[0]):
+                distance = distance_fn(x[i, :], x_norms[i, :],
+                                       centroids[j, :], centroid_norms[j, :])
+                centroid_distances.append(distance)
+
+            labels[i] = np.argmin(centroid_distances)
+
+        return labels
 
     def fit(
             self,
@@ -154,6 +185,9 @@ class KMeans:
 
         x_norms = [np.linalg.norm(x[i, :]) for i in range(x.shape[0])]
         x_norms = np.array(x_norms)
+        centroid_norms = [np.linalg.norm(centroids[i, :])
+                          for i in range(centroids.shape[0])]
+        centroid_norms = np.array(centroid_norms)
 
         for iter_ in range(self.max_iterations):
             # Auxiliary variables to check for stopping condition and to keep
@@ -161,25 +195,29 @@ class KMeans:
             label_change_flag = False
             cluster_data = [[] * self.n_clusters]
 
-            distances = self._centroid_distance(x, x_norms, centroids)
+            new_labels = self._data_labels(x, x_norms, centroids, centroid_norms)
             for i in range(x.shape[0]):
-                # Check for closest centroid to x[i]
-                new_label = np.argmin(distances[i, :])
-                if new_label != x_labels[i]:
+                if new_labels[i] != x_labels[i]:
                     label_change_flag = True
 
-                cluster_data[new_label].append(i)
-                x_labels[i] = new_label
+                cluster_data[new_labels[i]].append(i)
+                x_labels[i] = new_labels[i]
 
             if label_change_flag:
                 # Recalculation of centroids as mean of each instance belonging
                 # to the cluster
                 for i in range(self.n_clusters):
                     centroids[i] = x[cluster_data[i], :].mean(axis=0)
+
+                # Recalculation of centroid norms after their update
+                centroid_norms = [np.linalg.norm(centroids[i, :])
+                                  for i in range(centroids.shape[0])]
+                centroid_norms = np.array(centroid_norms)
             else:
                 break
 
         self.cluster_centers = centroids
+        self._centroid_norms = centroid_norms
         self.labels = x_labels
         self.n_iter = iter_
         self.n_features_in = x.shape[1]
@@ -218,13 +256,12 @@ class KMeans:
             ndarray of shape (n_samples,): Index of the cluster each sample
                 belongs to.
         """
-        x_labels = np.ones(x.shape[0]) * -1
-
         x_norms = [np.linalg.norm(x[i, :]) for i in range(x.shape[0])]
         x_norms = np.array(x_norms)
 
-        distances = self._centroid_distance(x, x_norms, self.cluster_centers)
-        for i in range(x.shape[0]):
-            x_labels[i] = np.argmin(distances[i, :])
+        x_labels = self._data_labels(x,
+                                     x_norms,
+                                     self.cluster_centers,
+                                     self._centroid_norms)
 
         return x_labels
