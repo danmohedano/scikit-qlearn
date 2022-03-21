@@ -154,18 +154,18 @@ class KMeans:
         else:
             distance_fn = distance_estimation
 
-        labels = np.array(x.shape[0])
+        labels = []
 
         for i in range(x.shape[0]):
             centroid_distances = []
             for j in range(centroids.shape[0]):
-                distance = distance_fn(x[i, :], x_norms[i, :],
-                                       centroids[j, :], centroid_norms[j, :])
+                distance = distance_fn(x[i, :], x_norms[i],
+                                       centroids[j, :], centroid_norms[j])
                 centroid_distances.append(distance)
 
-            labels[i] = np.argmin(centroid_distances)
+            labels.append(np.argmin(centroid_distances))
 
-        return labels
+        return np.array(labels, dtype=int)
 
     def fit(
             self,
@@ -181,7 +181,7 @@ class KMeans:
             self (object): Fitted estimator.
         """
         centroids = self._init_centroids(x)
-        x_labels = np.ones(x.shape[0]) * -1
+        x_labels = np.ones(x.shape[0], dtype=int) * -1
 
         x_norms = [np.linalg.norm(x[i, :]) for i in range(x.shape[0])]
         x_norms = np.array(x_norms)
@@ -193,7 +193,7 @@ class KMeans:
             # Auxiliary variables to check for stopping condition and to keep
             # track of the instances belonging to each cluster
             label_change_flag = False
-            cluster_data = [[] * self.n_clusters]
+            cluster_data = {x: [] for x in range(self.n_clusters)}
 
             new_labels = self._data_labels(x, x_norms, centroids, centroid_norms)
             for i in range(x.shape[0]):
