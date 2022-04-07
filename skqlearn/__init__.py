@@ -1,2 +1,3 @@
-from skqlearn._version import __version__
-from skqlearn.test import *
+from ._version import __version__
+from skqlearn.algorithms import *
+from skqlearn.clustering import *

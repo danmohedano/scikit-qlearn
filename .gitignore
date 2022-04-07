@@ -130,3 +130,6 @@ dmypy.json
 
 # IDE files
 .idea/
+
+# Personal testing file
+testing.py

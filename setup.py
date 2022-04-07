@@ -60,9 +60,5 @@ if __name__ == '__main__':
         keywords='quantum, machine learning, ai',  # Optional
         packages=[PACKAGE_NAME],  # Required
         python_requires='>=3.7, <4',
-        install_requires=[],  # Optional
-        extras_require={  # Optional
-            'dev': [],
-            'test': [],
-        },
+        install_requires=['qiskit', 'qiskit[visualization]', 'numpy'],  # Optional
     )
