@@ -1,6 +1,7 @@
 import numpy as np
 from qiskit import *
 from qiskit.providers.aer import QasmSimulator
+from skqlearn.gates import multiqubit_cswap
 
 
 def fidelity_estimation(
@@ -17,8 +18,8 @@ def fidelity_estimation(
         float: Estimation of the fidelity between the states.
     """
     # Calculation of the amount of qubits needed to represent each state
-    qubit_size_a = np.ceil(np.log2(state_a.shape[0]))
-    qubit_size_b = np.ceil(np.log2(state_b.shape[0]))
+    qubit_size_a = np.ceil(np.log2(state_a.shape[0])).astype(int)
+    qubit_size_b = np.ceil(np.log2(state_b.shape[0])).astype(int)
 
     # Creation of the quantum registers that will store states a and b, as well
     # as the ancilla qubit needed for the estimation and the classical qubit
@@ -37,11 +38,11 @@ def fidelity_estimation(
     # Addition of Hadamard Gate to ancilla qubit
     circuit.h(ancilla_qubit)
 
-    # Addition of CSWAP gate with ancilla qubit as control qubit
-    for i in range(1, min(qubit_size_a.size, qubit_size_b.size) + 1):
-        circuit.cswap(ancilla_qubit,
-                      quantum_register_a[-i],
-                      quantum_register_b[-i])
+    # Addition of the multi-qubit controlled SWAP gate
+    circuit.append(multiqubit_cswap(qubit_size_a, qubit_size_b),
+                   [*quantum_register_a[:],
+                    *quantum_register_b[:],
+                    ancilla_qubit])
 
     # Addition of Hadamard Gate to ancilla qubit
     circuit.h(ancilla_qubit)
@@ -81,7 +82,7 @@ def distance_estimation(
 
     z = a_norm ** 2 + b_norm ** 2
     phi = np.array([a_norm, -b_norm]) / np.sqrt(z)
-    psi = np.concatenate([a / a_norm, b / b_norm]) / np.sqrt(2)
+    psi = np.concatenate([a / a_norm, b / b_norm]) / np.sqrt(2.0)
 
     fidelity = fidelity_estimation(phi, psi)
     return 2.0 * z * fidelity
