@@ -1,3 +1,3 @@
 from ._version import __version__
-from skqlearn.utils import *
-from skqlearn.unsupervised import *
+from skqlearn.algorithms import *
+from skqlearn.clustering import *
