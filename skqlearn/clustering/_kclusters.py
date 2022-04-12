@@ -116,12 +116,15 @@ class GenericClustering(ABC):
     def _centroid_update(
             self,
             x: np.ndarray,
-            cluster_assignments: dict
+            x_norms: np.ndarray,
+            cluster_assignments: dict,
     ) -> np.ndarray:
         """Update function for the centroids.
 
         Args:
             x (np.ndarray of shape (n_samples, n_features)): Input samples.
+            x_norms (np.ndarray of shape (n_samples)): L2-norm of every
+                instance. Only needed if quantum estimation is used.
             cluster_assignments (dict): Index assignments for each cluster of
                 each instance index. The dictionary is of the form
                 {cluster_index: [instance_indices]}
@@ -229,7 +232,7 @@ class GenericClustering(ABC):
             if label_change_flag:
                 # Recalculation of centroids according to implemented
                 # abstract method
-                centroids = self._centroid_update(x, cluster_data)
+                centroids = self._centroid_update(x, x_norms, cluster_data)
 
                 # Recalculation of centroid norms after their update
                 centroid_norms = [np.linalg.norm(centroids[i, :])
