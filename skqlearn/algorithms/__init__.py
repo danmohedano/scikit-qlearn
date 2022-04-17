@@ -1,1 +1,1 @@
-from skqlearn.algorithms.utils import *
+from skqlearn.algorithms.algorithms import *
