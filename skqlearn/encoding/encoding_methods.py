@@ -192,6 +192,7 @@ def _amplitude_encoding_expanded_dataset(x: np.ndarray) -> np.ndarray:
     """
     states = []
     for i in range(x.shape[0]):
+        # TODO: change to np.concatenate
         states += _amplitude_encoding_expanded_single(x[i, :]).tolist()
 
     return np.array(states)
