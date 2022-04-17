@@ -11,8 +11,8 @@ def fidelity_estimation(
     """Fidelity estimation between two quantum states.
 
     Args:
-        state_a: State a described by its amplitudes.
-        state_b: State b described by its amplitudes.
+        state_a (np.ndarray): State a described by its amplitudes.
+        state_b (np.ndarray): State b described by its amplitudes.
 
     Returns:
         float: Estimation of the fidelity between the states.
@@ -67,11 +67,13 @@ def distance_estimation(
 ) -> float:
     """Euclidean distance estimation through fidelity estimation.
 
+    todo: Explain negative results problem and solution.
+
     Args:
-        a: Input a.
-        a_norm: L2-norm of input a.
-        b: Input b.
-        b_norm: L2-norm of input b.
+        a (np.ndarray): Input a.
+        a_norm (float): L2-norm of input a.
+        b (np.ndarray): Input b.
+        b_norm (float): L2-norm of input b.
 
     Returns:
         float: Square of the euclidean distance estimated.
@@ -85,5 +87,53 @@ def distance_estimation(
     psi = np.concatenate([a / a_norm, b / b_norm]) / np.sqrt(2.0)
 
     fidelity = fidelity_estimation(phi, psi)
-    return 2.0 * z * fidelity
+    return max(2.0 * z * fidelity, 0.0)
+
+
+def inner_product_estimation(
+        state_a: np.ndarray,
+        state_b: np.ndarray,
+) -> float:
+    """Quantum estimation of the inner product between two quantum states.
+
+    todo: elaborate on algorithm
+
+    Args:
+        state_a (np.ndarray): State a described by its amplitudes.
+        state_b (np.ndarray): State b described by its amplitudes.
+
+    Returns:
+        float: Estimation of the inner product between both quantum states.
+    """
+    if state_a.shape != state_b.shape:
+        # Pad with 0s the amplitude vectors if necessary in order for both
+        # states to have the same amount of qubits.
+        max_size = max(state_a.shape[0], state_b.shape[0])
+        state_a = np.pad(state_a, (0, max_size - state_a.shape[0]))
+        state_b = np.pad(state_b, (0, max_size - state_b.shape[0]))
+
+    # Calculation of the amount of qubits needed to represent each state
+    qubit_size = np.ceil(np.log2(state_a.shape[0])).astype(int)
+
+    quantum_register = QuantumRegister(qubit_size + 1, 'qr')
+    classical_register = ClassicalRegister(1, 'c')
+    circuit = QuantumCircuit(quantum_register, classical_register)
+
+    # Calculation of the initial quantum state
+    psi = np.concatenate([state_a, state_b]) / np.sqrt(2)
+    circuit.initialize(psi, quantum_register)
+
+    circuit.h(quantum_register[0])
+
+    # Addition of measurement to classical bit register
+    circuit.measure(quantum_register[0], classical_register)
+
+    # Simulation
+    simulator = QasmSimulator()
+    compiled_circuit = transpile(circuit, simulator)
+    job = simulator.run(compiled_circuit, shots=10000)
+    result = job.result()
+
+    # TODO: check correctness
+    return result.get_counts(compiled_circuit)['0'] / 10000 - 1.0
 
