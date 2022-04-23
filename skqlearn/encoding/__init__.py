@@ -1,1 +1,6 @@
-from skqlearn.encoding.encoding_methods import *
+from skqlearn.encoding.encoding import Encoding
+from skqlearn.encoding.angle_encoding import AngleEncoding
+from skqlearn.encoding.amplitude_encoding import AmplitudeEncoding
+from skqlearn.encoding.expanded_amplitude_encoding import ExpandedAmplitudeEncoding
+from skqlearn.encoding.basis_encoding import BasisEncoding
+from skqlearn.encoding.qsample_encoding import QSampleEncoding

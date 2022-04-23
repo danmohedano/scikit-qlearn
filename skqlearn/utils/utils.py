@@ -134,6 +134,5 @@ def inner_product_estimation(
     job = simulator.run(compiled_circuit, shots=10000)
     result = job.result()
 
-    # TODO: check correctness
-    return result.get_counts(compiled_circuit)['0'] / 10000 - 1.0
+    return 2 * (result.get_counts(compiled_circuit)['0'] / 10000) - 1.0
 
