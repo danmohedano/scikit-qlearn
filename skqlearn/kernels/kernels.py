@@ -1,5 +1,5 @@
 import numpy as np
-from skqlearn.algorithms import inner_product_estimation
+from skqlearn.utils import inner_product_estimation
 
 
 def kernel_wrapper(

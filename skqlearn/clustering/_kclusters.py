@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import Union
 import numpy as np
-from skqlearn.algorithms import distance_estimation
+from skqlearn.utils import distance_estimation
 from abc import abstractmethod, ABC
 
 

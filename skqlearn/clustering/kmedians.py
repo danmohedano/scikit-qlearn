@@ -1,6 +1,6 @@
 import numpy as np
 from ._kclusters import GenericClustering
-from skqlearn.algorithms import distance_estimation
+from skqlearn.utils import distance_estimation
 
 
 class KMedians(GenericClustering):
