@@ -10,7 +10,7 @@ def multiqubit_cswap(
     """Create a multi-qubit controlled SWAP quantum gate.
 
     Composes a multi-qubit controlled SWAP gate as a quantum circuit by
-    applying CSWAP gates, qubitbitwise, to registers a and b, using as control
+    applying CSWAP gates, qubit-wise, to registers a and b, using as control
     an ancilla qubit. If the dimensions of a and b differ, then the CSWAP's are
     applied until there are no more qubits in one of the states.
 

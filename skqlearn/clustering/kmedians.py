@@ -1,6 +1,6 @@
 import numpy as np
 from ._kclusters import GenericClustering
-from skqlearn.algorithms import distance_estimation
+from skqlearn.utils import distance_estimation
 
 
 class KMedians(GenericClustering):
@@ -36,26 +36,28 @@ class KMedians(GenericClustering):
         else:
             distance_fn = distance_estimation
 
-        centroids = np.zeros((self.n_clusters, x.shape[1]))
-        for cluster_idx in range(self.n_clusters):
-            distances = np.zeros((len(cluster_assignments[cluster_idx]),
-                                  len(cluster_assignments[cluster_idx])))
-
-            # Calculate distance between every pair of instances
-            for i in range(len(cluster_assignments[cluster_idx])):
-                data_i = x[cluster_assignments[cluster_idx][i], :]
-                norm_i = x_norms[cluster_assignments[cluster_idx][i]]
-                for j in range(len(cluster_assignments[cluster_idx])):
+        # Calculate distances between instances only in the first execution.
+        distances = getattr(self, '_sample_distances', None)
+        if distances is None:
+            distances = np.zeros([x.shape[0], x.shape[0]])
+            for i in range(x.shape[0]):
+                for j in range(x.shape[0]):
                     if i == j:
                         continue
-                    data_j = x[cluster_assignments[cluster_idx][j], :]
-                    norm_j = x_norms[cluster_assignments[cluster_idx][j]]
-                    distances[i, j] = distance_fn(data_i, norm_i,
-                                                  data_j, norm_j)
+                    distances[i, j] = distance_fn(x[i, :], x_norms[i],
+                                                  x[j, :], x_norms[j])
 
+            setattr(self, '_sample_distances', distances)
+
+        # Update centroids through the median
+        centroids = np.zeros((self.n_clusters, x.shape[1]))
+        for cluster_idx in range(self.n_clusters):
             # Aggregate distances from each instance to every other distance
-            # and obtain the median instance
-            dist_aggregate = np.sum(distances, axis=0)
+            # and obtain the median instance (only considering those contained
+            # in the current centroid)
+            instance_idxs = cluster_assignments[cluster_idx]
+            dist_aggregate = np.sum(distances[instance_idxs, instance_idxs],
+                                    axis=0)
             median_idx = np.argmin(dist_aggregate)
             data_median_idx = cluster_assignments[cluster_idx][median_idx]
 
