@@ -1,7 +1,7 @@
 import numpy as np
 from qiskit import *
-from qiskit.providers.aer import QasmSimulator
 from skqlearn.gates import multiqubit_cswap
+from skqlearn.jobhandler import JobHandler
 
 
 def fidelity_estimation(
@@ -50,13 +50,15 @@ def fidelity_estimation(
     # Addition of measurement from ancilla qubit to classical bit register
     circuit.measure(ancilla_qubit, classical_register)
 
-    # Simulation
-    simulator = QasmSimulator()
-    compiled_circuit = transpile(circuit, simulator)
-    job = simulator.run(compiled_circuit, shots=10000)
-    result = job.result()
+    # Execution of the circuit
+    job_handler = JobHandler()
+    result = job_handler.run_job(circuit)
 
-    return 2.0 * result.get_counts(compiled_circuit)['0'] / 10000 - 1.0
+    # Estimation of the probability
+    shots = job_handler.shots
+    comp = job_handler.compiled_circuits
+
+    return 2.0 * result.get_counts(comp)['0'] / shots - 1.0
 
 
 def distance_estimation(
@@ -128,11 +130,13 @@ def inner_product_estimation(
     # Addition of measurement to classical bit register
     circuit.measure(quantum_register[0], classical_register)
 
-    # Simulation
-    simulator = QasmSimulator()
-    compiled_circuit = transpile(circuit, simulator)
-    job = simulator.run(compiled_circuit, shots=10000)
-    result = job.result()
+    # Execution of the circuit
+    job_handler = JobHandler()
+    result = job_handler.run_job(circuit)
 
-    return 2 * (result.get_counts(compiled_circuit)['0'] / 10000) - 1.0
+    # Estimation of the probability
+    shots = job_handler.shots
+    comp = job_handler.compiled_circuits
+
+    return 2.0 * result.get_counts(comp)['0'] / shots - 1.0
 
