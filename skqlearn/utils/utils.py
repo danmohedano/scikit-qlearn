@@ -1,5 +1,5 @@
 import numpy as np
-from qiskit import *
+from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
 from skqlearn.gates import multiqubit_cswap
 from skqlearn.jobhandler import JobHandler
 
@@ -9,6 +9,8 @@ def fidelity_estimation(
         state_b: np.ndarray,
 ) -> float:
     """Fidelity estimation between two quantum states.
+
+    todo: elaborate
 
     Args:
         state_a (np.ndarray): State a described by its amplitudes.
@@ -58,7 +60,7 @@ def fidelity_estimation(
     shots = job_handler.shots
     comp = job_handler.compiled_circuits
 
-    return 2.0 * result.get_counts(comp)['0'] / shots - 1.0
+    return max(2.0 * result.get_counts(comp)['0'] / shots - 1.0, 0)
 
 
 def distance_estimation(
@@ -69,7 +71,7 @@ def distance_estimation(
 ) -> float:
     """Euclidean distance estimation through fidelity estimation.
 
-    todo: Explain negative results problem and solution.
+    todo: elaborate
 
     Args:
         a (np.ndarray): Input a.
@@ -89,7 +91,7 @@ def distance_estimation(
     psi = np.concatenate([a / a_norm, b / b_norm]) / np.sqrt(2.0)
 
     fidelity = fidelity_estimation(phi, psi)
-    return max(2.0 * z * fidelity, 0.0)
+    return 2.0 * z * np.sqrt(fidelity)
 
 
 def inner_product_estimation(
@@ -139,4 +141,3 @@ def inner_product_estimation(
     comp = job_handler.compiled_circuits
 
     return 2.0 * result.get_counts(comp)['0'] / shots - 1.0
-

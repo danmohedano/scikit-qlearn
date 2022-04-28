@@ -1,5 +1,5 @@
 import qiskit
-from qiskit import *
+from qiskit import QuantumRegister, QuantumCircuit
 
 
 def multiqubit_cswap(
@@ -22,7 +22,12 @@ def multiqubit_cswap(
     Returns:
         qiskit.circuit.Instruction: The gate composed as a quantum circuit. It
          can then be appended in other quantum circuits.
+
+    Raises:
+        ValueError: If negative or zero sizes are provided.
     """
+    if qubit_size_a < 1 or qubit_size_b < 1:
+        raise ValueError('Invalid qubit sizes. Must be > 0.')
     # Creation of the quantum registers that will store states a and b
     quantum_register_a = QuantumRegister(qubit_size_a, 'a')
     quantum_register_b = QuantumRegister(qubit_size_b, 'b')

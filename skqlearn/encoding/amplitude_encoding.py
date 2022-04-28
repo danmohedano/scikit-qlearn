@@ -1,5 +1,4 @@
 from .encoding import Encoding
-from typing import Union
 import numpy as np
 
 
@@ -23,13 +22,16 @@ class AmplitudeEncoding(Encoding):
         Raises:
             ValueError: If an invalid input is provided.
         """
-        if len(x.shape) == 1:
+        if not isinstance(x, np.ndarray):
+            raise ValueError(f'Invalid input type provided. Expected '
+                             f'np.ndarray got {type(x)} instead.')
+        elif len(x.shape) == 1:
             return self._encoding_single(x)
         elif len(x.shape) == 2:
             return self._encoding_dataset(x)
         else:
-            raise ValueError(f'Invalid input shape provided. Expected 1D or 2D, '
-                             f'got {x.shape} instead.')
+            raise ValueError(f'Invalid input shape provided. Expected 1D or 2D'
+                             f', got {x.shape} instead.')
 
     def _encoding_single(self, x: np.ndarray) -> np.ndarray:
         """Application of amplitude encoding to a single sample.
@@ -40,7 +42,11 @@ class AmplitudeEncoding(Encoding):
         Returns:
             np.ndarray: Quantum state described as an amplitude vector.
         """
-        size = int(np.ceil(np.log2(x.shape[0])) ** 2)
+        if np.linalg.norm(x) != 1.0:
+            raise ValueError(f'Invalid input, must be normalized. Got |x| = '
+                             f'{np.linalg.norm(x)} instead')
+
+        size = max(int(2 ** np.ceil(np.log2(x.shape[0]))), 2)
 
         # Return array with padded 0s at the end
         return np.pad(x, (0, size - x.shape[0]))
@@ -52,10 +58,11 @@ class AmplitudeEncoding(Encoding):
             x (np.ndarray of shape (n_samples, n_features)): Input dataset.
 
         Returns:
-            np.ndarray: Quantum state described as an amplitude vector constructed
-                by concatenating the quantum states for each sample.
+            np.ndarray: Quantum state described as an amplitude vector
+                constructed by concatenating the quantum states for each
+                sample.
         """
-        vector_size = int(np.ceil(np.log2(x.shape[1])) ** 2)
+        vector_size = max(int(2 ** np.ceil(np.log2(x.shape[1]))), 2)
         states = np.zeros(vector_size * x.shape[0])
         for i in range(x.shape[0]):
             states[i * vector_size:(i + 1) * vector_size] = \

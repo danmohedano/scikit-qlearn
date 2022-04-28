@@ -1,5 +1,4 @@
-from setuptools import setup, find_packages
-import pathlib
+from setuptools import setup
 import codecs
 import os.path
 
@@ -61,5 +60,6 @@ if __name__ == '__main__':
         packages=[PACKAGE_NAME],  # Required
         python_requires='>=3.7, <4',
         install_requires=['qiskit',
-                          'numpy'],  # Optional
+                          'numpy',
+                          'pytest'],  # Optional
     )

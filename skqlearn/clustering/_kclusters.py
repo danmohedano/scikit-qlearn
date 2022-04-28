@@ -219,7 +219,8 @@ class GenericClustering(ABC):
             label_change_flag = False
             cluster_data = {x: [] for x in range(self.n_clusters)}
 
-            new_labels = self._data_labels(x, x_norms, centroids, centroid_norms)
+            new_labels = self._data_labels(x, x_norms,
+                                           centroids, centroid_norms)
 
             # Check if any of the instances has changed cluster
             for i in range(x.shape[0]):

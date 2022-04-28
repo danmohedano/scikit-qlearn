@@ -9,7 +9,8 @@ class Singleton(type):
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+            cls._instances[cls] = super(Singleton, cls).__call__(*args,
+                                                                 **kwargs)
         return cls._instances[cls]
 
 
@@ -24,7 +25,7 @@ class JobHandler(metaclass=Singleton):
             self,
             backend: qiskit.providers.Backend,
             shots: int,
-            run_options: dict,
+            run_options: dict = {},
     ):
         """Configuration of the job handler.
 
@@ -35,6 +36,9 @@ class JobHandler(metaclass=Singleton):
             run_options (dict): Keyword dictionary used in the run method as
                 run time backend options.
         """
+        if shots < 1:
+            raise ValueError('Invalid value for shots provided. Expected '
+                             f'positive integer, got {shots} instead.')
         self.backend = backend
         self.shots = shots
         self.run_options = run_options

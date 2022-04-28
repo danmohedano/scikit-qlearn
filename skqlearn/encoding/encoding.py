@@ -70,4 +70,3 @@ class Encoding(ABC):
                                                       y_encoded[j, :])
 
         return gram
-

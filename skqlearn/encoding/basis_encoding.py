@@ -29,11 +29,11 @@ class BasisEncoding(Encoding):
         """
         if isinstance(x, int) and x >= 0:
             return self._encoding_single(x)
-        elif isinstance(x, np.ndarray):
+        elif isinstance(x, np.ndarray) and len(x.shape) == 1:
             return self._encoding_dataset(x)
         else:
-            raise ValueError('Invalid input type. Expected positive integer or '
-                             f'np.ndarray, got {type(x)} instead.')
+            raise ValueError('Invalid input type. Expected positive integer or'
+                             f' np.ndarray, got {type(x)} instead.')
 
     def _encoding_single(self, x: int, size: int = -1) -> np.ndarray:
         """Application of basis encoding to a single input.
@@ -41,18 +41,19 @@ class BasisEncoding(Encoding):
         Args:
             x (int): Input value.
             size (int): Size (in n_amplitudes) of the desired state. Must be a
-                power of 2. If none is provided, then the size will be determined
-                by the next larger power of 2.
+                power of 2. If none is provided, then the size will be
+                determined by the next larger power of 2.
 
         Returns:
             np.ndarray: Quantum state described as an amplitude vector.
         """
         if size == -1:
-            # Calculate the closest larger power of 2 (equivalent to calculating
-            # the amount of qubits necessary and the size of the amplitude vector
-            # needed to represent that state)
-            size = int(np.ceil(np.log2(x + 1)) ** 2)
+            # Calculate the closest larger power of 2 (equivalent 2 calculating
+            # the amount of qubits necessary and the size of the amplitude
+            # vector needed to represent that state)
+            size = max(int(2 ** np.ceil(np.log2(x))), 2)
 
+        print(size)
         state = np.zeros(size)
         state[x] = 1.0
 
@@ -65,11 +66,11 @@ class BasisEncoding(Encoding):
             x (np.ndarray of shape (n_samples,)): Input dataset.
 
         Returns:
-            np.ndarray: Quantum state described as an amplitude vector representing
-                a superposition of all states in the dataset.
+            np.ndarray: Quantum state described as an amplitude vector
+                representing a superposition of all states in the dataset.
         """
         max_data = np.amax(x)
-        size = int(np.ceil(np.log2(max_data + 1)) ** 2)
+        size = max(int(2 ** np.ceil(np.log2(max_data))), 2)
         state = np.zeros(size)
 
         for i in range(x.shape[0]):
