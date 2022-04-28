@@ -56,7 +56,8 @@ class KMedians(GenericClustering):
             # and obtain the median instance (only considering those contained
             # in the current centroid)
             instance_idxs = cluster_assignments[cluster_idx]
-            dist_aggregate = np.sum(distances[instance_idxs, instance_idxs],
+            dist_aggregate = np.sum(distances[instance_idxs, :]
+                                    [:, instance_idxs],
                                     axis=0)
             median_idx = np.argmin(dist_aggregate)
             data_median_idx = cluster_assignments[cluster_idx][median_idx]

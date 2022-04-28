@@ -91,7 +91,7 @@ def distance_estimation(
     psi = np.concatenate([a / a_norm, b / b_norm]) / np.sqrt(2.0)
 
     fidelity = fidelity_estimation(phi, psi)
-    return 2.0 * z * np.sqrt(fidelity)
+    return np.sqrt(2.0 * z * fidelity)
 
 
 def inner_product_estimation(

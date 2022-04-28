@@ -85,9 +85,19 @@ class GenericClustering(ABC):
         Returns:
             np.ndarray of shape (n_clusters, n_features): Initial cluster
                 centroids.
+
+        Raises:
+            ValueError: If there are not enough unique input samples to define
+                different centroids.
         """
-        indices = self.random_state.permutation(x.shape[0])[:self.n_clusters]
-        centroids = x[indices]
+        unique_values = np.unique(x, axis=0)
+        if len(unique_values) < self.n_clusters:
+            raise ValueError('Invalid input samples. Number of unique samples'
+                             f'must be at least n_clusters, '
+                             f'got {len(unique_values)} instead.')
+        indices = self.random_state.permutation(len(unique_values)
+                                                )[:self.n_clusters]
+        centroids = unique_values[indices]
         return centroids
 
     def _distance(
@@ -175,19 +185,28 @@ class GenericClustering(ABC):
 
         if self.distance_calculation_method == 'classic':
             distance_fn = self._distance
+            estimation_flag = False
         else:
             distance_fn = distance_estimation
+            estimation_flag = True
 
-        labels = []
+        labels = np.zeros(x.shape[0])
 
         for i in range(x.shape[0]):
-            centroid_distances = []
+            centroid_distances = np.zeros(centroids.shape[0])
             for j in range(centroids.shape[0]):
+                if estimation_flag and (x[i, :] == centroids[j, :]).all():
+                    # Correction when computing with quantum estimation to
+                    # avoid centroids being left with no samples assigned
+                    # because of estimation errors.
+                    labels[i] = -1  # Forces the wanted assignment
+                    break
+
                 distance = distance_fn(x[i, :], x_norms[i],
                                        centroids[j, :], centroid_norms[j])
-                centroid_distances.append(distance)
+                centroid_distances[j] = distance
 
-            labels.append(np.argmin(centroid_distances))
+            labels[i] = np.argmin(centroid_distances)
 
         return np.array(labels, dtype=int)
 
@@ -213,6 +232,8 @@ class GenericClustering(ABC):
                           for i in range(centroids.shape[0])]
         centroid_norms = np.array(centroid_norms)
 
+        assignment_flag = False
+
         for iter_ in range(self.max_iterations):
             # Auxiliary variables to check for stopping condition and to keep
             # track of the instances belonging to each cluster
@@ -231,6 +252,18 @@ class GenericClustering(ABC):
                 x_labels[i] = new_labels[i]
 
             if label_change_flag:
+                # Check that all centroids have at least 1 assigned sample.
+                # If not, restart process (problem caused by doing quantum
+                # estimations instead of real calculations)
+                assignment_flag = False
+                for assignments in cluster_data.values():
+                    if len(assignments) == 0:
+                        assignment_flag = True
+                        break
+
+                if assignment_flag:
+                    break
+
                 # Recalculation of centroids according to implemented
                 # abstract method
                 centroids = self._centroid_update(x, x_norms, cluster_data)
@@ -242,12 +275,15 @@ class GenericClustering(ABC):
             else:
                 break
 
-        self.cluster_centers = centroids
-        self._centroid_norms = centroid_norms
-        self.labels = x_labels
-        self.n_iter = iter_
-        self.n_features_in = x.shape[1]
-        return self
+        if assignment_flag:
+            return self.fit(x)
+        else:
+            self.cluster_centers = centroids
+            self._centroid_norms = centroid_norms
+            self.labels = x_labels
+            self.n_iter = iter_
+            self.n_features_in = x.shape[1]
+            return self
 
     def fit_predict(
             self,
