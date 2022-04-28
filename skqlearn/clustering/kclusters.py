@@ -22,8 +22,7 @@ class GenericClustering(ABC):
             random_state: Union[int, np.random.RandomState, None],
             distance_calculation_method: str,
     ):
-        """Inits KMeans object.
-
+        """
         Args:
             n_clusters (int): Number of clusters to form and centroid to
                 generate.

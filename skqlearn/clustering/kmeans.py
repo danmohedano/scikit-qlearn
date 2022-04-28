@@ -1,5 +1,5 @@
 import numpy as np
-from ._kclusters import GenericClustering
+from .kclusters import GenericClustering
 
 
 class KMeans(GenericClustering):

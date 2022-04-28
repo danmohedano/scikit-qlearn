@@ -5,11 +5,13 @@
 
 Welcome to Scikit-QLearn's documentation!
 =========================================
+Still working on the documentation!
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+   generated/modules
 
 
 Indices and tables

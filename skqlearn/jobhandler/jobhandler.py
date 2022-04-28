@@ -15,6 +15,7 @@ class Singleton(type):
 
 
 class JobHandler(metaclass=Singleton):
+    """JobHandler class"""
     def __init__(self):
         self.backend = None
         self.run_options = {}
