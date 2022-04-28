@@ -1,0 +1,4 @@
+furo
+qiskit
+qiskit[visualization]
+numpy
