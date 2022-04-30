@@ -55,6 +55,8 @@ from skqlearn.jobhandler import *
 from skqlearn.utils import *
 '''
 
+autosummary_generate = True
+
 bibtex_bibfiles = ['refs.bib']
 
 # Add any paths that contain templates here, relative to this directory.
