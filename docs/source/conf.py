@@ -21,7 +21,7 @@ import skqlearn
 
 # -- Project information -----------------------------------------------------
 
-project = 'Scikit-QLearn'
+project = 'scikit-qlearn'
 copyright = '2022, Daniel Mohedano'
 author = 'Daniel Mohedano'
 
@@ -38,10 +38,24 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.napoleon',
+    'sphinx.ext.mathjax',
+    'sphinx.ext.doctest',
+    'sphinxcontrib.bibtex',
 ]
 
 autodoc_default_flags = ['members', 'inherited-members']
 autoclass_content = 'both'
+doctest_global_setup = '''
+import numpy as np
+from qiskit import *
+from skqlearn.clustering import *
+from skqlearn.encoding import *
+from skqlearn.gates import *
+from skqlearn.jobhandler import *
+from skqlearn.utils import *
+'''
+
+bibtex_bibfiles = ['refs.bib']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

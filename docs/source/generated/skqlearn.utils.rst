@@ -1,21 +1,13 @@
-skqlearn.utils package
+Utils
 ======================
 
-Submodules
-----------
+This module contains utility functions.
 
-skqlearn.utils.utils module
----------------------------
+**Quantum Algorithms**
 
-.. automodule:: skqlearn.utils.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. autosummary::
+   :toctree: autosummary
 
-Module contents
----------------
-
-.. automodule:: skqlearn.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   skqlearn.utils.fidelity_estimation
+   skqlearn.utils.distance_estimation
+   skqlearn.utils.inner_product_estimation

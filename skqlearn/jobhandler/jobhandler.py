@@ -15,7 +15,38 @@ class Singleton(type):
 
 
 class JobHandler(metaclass=Singleton):
-    """JobHandler class"""
+    """Singleton class to contain the configuration for quantum executions.
+
+    All quantum processes implemented in the library execute the quantum
+    circuits through this handler. Therefore, before executing any of them,
+    a backend should be correctly configured.
+
+    Attributes:
+        backend (qiskit.proviers.Backend): Backend where the quantum circuits
+            will be run.
+        shots (int): Amount of shots (repetitions) in the execution of the
+            circuits.
+        run_options (dict): Dictionary to provide the backend with extra
+            options when executing the `run` method.
+        compiled_circuits (Union[QuantumCircuit, List[QuantumCircuit]]):
+            Compiled circuits in the last `run_job` batch.
+
+    Examples:
+        The JobHandler can be configured with local simulators.
+
+        >>> from qiskit.providers.aer import AerSimulator
+        >>> JobHandler().configure(AerSimulator(), 10000)
+
+        And with remote systems and simulators accessed through your IBMQ
+        account.
+
+        >>> from qiskit import IBMQ
+        >>> provider = IBMQ.enable_account('MY_API_TOKEN')
+        >>> backend = provider.get_backend('ibmq_qasm_simulator')
+        >>> JobHandler().configure(backend, 10000)
+        >>> backend = provider.get_backend('ibmq_montreal')
+        >>> JobHandler().configure(backend, 10000)
+    """
     def __init__(self):
         self.backend = None
         self.run_options = {}

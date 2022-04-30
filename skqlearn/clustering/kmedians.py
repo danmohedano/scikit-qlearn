@@ -4,9 +4,19 @@ from skqlearn.utils import distance_estimation
 
 
 class KMedians(GenericClustering):
-    """K-Medians clustering
-    """
+    r"""K-Means clustering algorithm based on the generic clustering algorithm
+    structure.
 
+    The centroids are updated after each epoch by computing the median of all
+    input samples assigned to each centroid.
+
+    The median being defined as the geometric median:
+
+    .. math::
+
+       arg\,min_{\boldsymbol{x}_j}\sum_{i=1}^m||\boldsymbol{x}_i -
+       \boldsymbol{x}_j||_{2}
+    """
     def _centroid_update(
             self,
             x: np.ndarray,

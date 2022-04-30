@@ -1,21 +1,9 @@
-skqlearn.gates package
+Gates
 ======================
 
-Submodules
-----------
+This module contains custom quantum logic gates necessary for the algorithms implemented in the package.
 
-skqlearn.gates.gates module
----------------------------
+.. autosummary::
+   :toctree: autosummary
 
-.. automodule:: skqlearn.gates.gates
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: skqlearn.gates
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   skqlearn.gates.multiqubit_cswap

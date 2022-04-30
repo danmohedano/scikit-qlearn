@@ -1,7 +1,12 @@
-skqlearn
-========
+API Reference
+=============
 
 .. toctree::
-   :maxdepth: 4
+   :caption: Modules
+   :maxdepth: 2
 
-   skqlearn
+   skqlearn.clustering
+   skqlearn.encoding
+   skqlearn.gates
+   skqlearn.jobhandler
+   skqlearn.utils

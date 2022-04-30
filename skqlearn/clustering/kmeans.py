@@ -3,9 +3,19 @@ from .kclusters import GenericClustering
 
 
 class KMeans(GenericClustering):
-    """K-Means clustering
-    """
+    r"""K-Means clustering algorithm based on the generic clustering algorithm
+    structure.
 
+    The centroids are updated after each epoch by computing the mean of all
+    input samples assigned to each centroid.
+
+    .. math::
+       \boldsymbol{C}_i=\frac{1}{|\{\boldsymbol{C}_i\}|}\sum_{\boldsymbol{x}_j
+       \in \{\boldsymbol{C}_i\}}\boldsymbol{x}_j
+
+    With :math:`\{\boldsymbol{C}_i\}` being the set of vectors assigned to the cluster
+    centroid :math:`\boldsymbol{C}_i`.
+    """
     def _centroid_update(
             self,
             x: np.ndarray,

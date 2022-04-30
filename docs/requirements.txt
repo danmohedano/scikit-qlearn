@@ -1,4 +1,5 @@
 sphinx-rtd-theme
+sphinxcontrib-bibtex
 qiskit
 qiskit[visualization]
 numpy

@@ -1,21 +1,9 @@
-skqlearn.jobhandler package
+Job Handler
 ===========================
 
-Submodules
-----------
+This module enables the user to configure the quantum backend used by the library to execute the quantum circuits.
 
-skqlearn.jobhandler.jobhandler module
--------------------------------------
+.. autosummary::
+   :toctree: autosummary
 
-.. automodule:: skqlearn.jobhandler.jobhandler
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: skqlearn.jobhandler
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   skqlearn.jobhandler.JobHandler

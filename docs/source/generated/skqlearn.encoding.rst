@@ -1,61 +1,47 @@
-skqlearn.encoding package
+Data Encoding
 =========================
+The module contains a series of data encoding methods that allow the user to map real data into quantum states, described by their amplitude vectors. These mappings can be defined as feature maps of the form:
 
-Submodules
-----------
+.. math::
+    \phi: \mathcal{X} \rightarrow \mathcal{F}
 
-skqlearn.encoding.amplitude\_encoding module
---------------------------------------------
+Where the input :math:`x` is mapped from the input space into the feature space.
 
-.. automodule:: skqlearn.encoding.amplitude_encoding
-   :members:
-   :undoc-members:
-   :show-inheritance:
+The inner product of two inputs mapped to feature space defines a kernel via:
 
-skqlearn.encoding.angle\_encoding module
-----------------------------------------
+.. math::
+   k(x,x'):= \braket{\phi(x), \phi(x')}_\mathcal{F}
 
-.. automodule:: skqlearn.encoding.angle_encoding
-   :members:
-   :undoc-members:
-   :show-inheritance:
+Where :math:`\braket{.,.}_\mathcal{F}` is the inner product defined on :math:`\mathcal{F}`. :cite:`hilbert2019`
 
-skqlearn.encoding.basis\_encoding module
-----------------------------------------
+In this case, as the inputs are being mapped into quantum states, the kernel defined is of the form:
 
-.. automodule:: skqlearn.encoding.basis_encoding
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. math::
+   k(x,x')=\braket{\phi(x)|\phi(x')}
 
-skqlearn.encoding.encoding module
----------------------------------
+Encodings
+---------
 
-.. automodule:: skqlearn.encoding.encoding
-   :members:
-   :undoc-members:
-   :show-inheritance:
+To allow the expansion of the module in the future, an abstract class `Encoding` has been defined. To implement a new encoding, one must simply define a child class that implements the `encoding` method.
 
-skqlearn.encoding.expanded\_amplitude\_encoding module
-------------------------------------------------------
+.. autosummary::
+   :toctree: autosummary
 
-.. automodule:: skqlearn.encoding.expanded_amplitude_encoding
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   skqlearn.encoding.Encoding
 
-skqlearn.encoding.qsample\_encoding module
-------------------------------------------
+**Real data encodings**
 
-.. automodule:: skqlearn.encoding.qsample_encoding
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. autosummary::
+   :toctree: autosummary
 
-Module contents
----------------
+   skqlearn.encoding.AmplitudeEncoding
+   skqlearn.encoding.ExpandedAmplitudeEncoding
+   skqlearn.encoding.AngleEncoding
+   skqlearn.encoding.BasisEncoding
 
-.. automodule:: skqlearn.encoding
-   :members:
-   :undoc-members:
-   :show-inheritance:
+**Probability distribution encodings**
+
+.. autosummary::
+   :toctree: autosummary
+
+   skqlearn.encoding.QSampleEncoding

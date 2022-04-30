@@ -1,37 +1,11 @@
-skqlearn.clustering package
+Clustering
 ===========================
 
-Submodules
-----------
+This module contains implementations of basic distance-based clustering algorithms with the objective of illustrating and comparing classical distance calculation with quantum distance estimation.
 
-skqlearn.clustering.kclusters module
-------------------------------------
+.. autosummary::
+   :toctree: autosummary
 
-.. automodule:: skqlearn.clustering.kclusters
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-skqlearn.clustering.kmeans module
----------------------------------
-
-.. automodule:: skqlearn.clustering.kmeans
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-skqlearn.clustering.kmedians module
------------------------------------
-
-.. automodule:: skqlearn.clustering.kmedians
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: skqlearn.clustering
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   skqlearn.clustering.GenericClustering
+   skqlearn.clustering.KMeans
+   skqlearn.clustering.KMedians
