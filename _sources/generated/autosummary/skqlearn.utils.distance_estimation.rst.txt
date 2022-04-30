@@ -1,0 +1,6 @@
+distance\_estimation
+====================
+
+.. currentmodule:: skqlearn.utils
+
+.. autofunction:: distance_estimation

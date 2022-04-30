@@ -1,0 +1,26 @@
+AmplitudeEncoding
+=================
+
+.. currentmodule:: skqlearn.encoding
+
+.. autoclass:: AmplitudeEncoding
+   :show-inheritance:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AmplitudeEncoding.__init__
+      ~AmplitudeEncoding.classic_kernel
+      ~AmplitudeEncoding.encoding
+      ~AmplitudeEncoding.quantum_kernel
+   
+
+   
+   .. automethod:: __init__
+   .. automethod:: classic_kernel
+   .. automethod:: encoding
+   .. automethod:: quantum_kernel
+   

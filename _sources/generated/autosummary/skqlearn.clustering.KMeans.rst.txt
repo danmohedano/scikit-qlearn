@@ -1,0 +1,26 @@
+KMeans
+======
+
+.. currentmodule:: skqlearn.clustering
+
+.. autoclass:: KMeans
+   :show-inheritance:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~KMeans.__init__
+      ~KMeans.fit
+      ~KMeans.fit_predict
+      ~KMeans.predict
+   
+
+   
+   .. automethod:: __init__
+   .. automethod:: fit
+   .. automethod:: fit_predict
+   .. automethod:: predict
+   

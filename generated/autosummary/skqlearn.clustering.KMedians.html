@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KMedians &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data Encoding" href="../skqlearn.encoding.html" />
+    <link rel="prev" title="KMeans" href="skqlearn.clustering.KMeans.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> scikit-qlearn
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../skqlearn.clustering.html">Clustering</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="skqlearn.clustering.GenericClustering.html">GenericClustering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skqlearn.clustering.KMeans.html">KMeans</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">KMedians</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../skqlearn.encoding.html">Data Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../skqlearn.gates.html">Gates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../skqlearn.jobhandler.html">Job Handler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../skqlearn.utils.html">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">scikit-qlearn</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../modules.html">API Reference</a> &raquo;</li>
+          <li><a href="../skqlearn.clustering.html">Clustering</a> &raquo;</li>
+      <li>KMedians</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/generated/autosummary/skqlearn.clustering.KMedians.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="kmedians">
+<h1>KMedians<a class="headerlink" href="#kmedians" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="skqlearn.clustering.KMedians">
+<em class="property">class </em><code class="sig-prename descclassname">skqlearn.clustering.</code><code class="sig-name descname">KMedians</code><span class="sig-paren">(</span><em class="sig-param">n_clusters: int, max_iterations: int, random_state: Union[int, numpy.random.mtrand.RandomState, None], distance_calculation_method: str</em><span class="sig-paren">)</span><a class="headerlink" href="#skqlearn.clustering.KMedians" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">skqlearn.clustering.kclusters.GenericClustering</span></code></p>
+<p>K-Means clustering algorithm based on the generic clustering algorithm
+structure.</p>
+<p>The centroids are updated after each epoch by computing the median of all
+input samples assigned to each centroid.</p>
+<p>The median being defined as the geometric median:</p>
+<div class="math notranslate nohighlight">
+\[arg\,min_{\boldsymbol{x}_j}\sum_{i=1}^m||\boldsymbol{x}_i -
+\boldsymbol{x}_j||_{2}\]</div>
+<p>Construct a GenericClustering object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_clusters</strong> (<em>int</em>) – Number of clusters to form and centroids to
+generate.</p></li>
+<li><p><strong>max_iterations</strong> (<em>int</em>) – Max number of iterations of the algorithm.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>RandomState</em><em> or </em><em>None</em>) – Determines random number
+generation for centroid initialization. If provided as an int,
+it will be used as seed to make the randomness deterministic.</p></li>
+<li><p><strong>distance_calculation_method</strong> (<em>{'classic'</em><em>, </em><em>'quantum'}</em>) – <p>The distance
+calculation method:</p>
+<ul>
+<li><p>’classic’: Classically calculated using <cite>np.linalg.norm</cite>.</p></li>
+<li><p>’quantum’: Quantum distance estimation will be used.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skqlearn.clustering.KMedians.__init__" title="skqlearn.clustering.KMedians.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(n_clusters, max_iterations, …)</p></td>
+<td><p>Construct a GenericClustering object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skqlearn.clustering.KMedians.fit" title="skqlearn.clustering.KMedians.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>(x)</p></td>
+<td><p>Compute clustering of provided data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skqlearn.clustering.KMedians.fit_predict" title="skqlearn.clustering.KMedians.fit_predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit_predict</span></code></a>(x)</p></td>
+<td><p>Compute clustering of provided data and predict cluster index for each sample.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skqlearn.clustering.KMedians.predict" title="skqlearn.clustering.KMedians.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(x)</p></td>
+<td><p>Assigns a label to each input sample based on the closest centroid.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="skqlearn.clustering.KMedians.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">n_clusters: int, max_iterations: int, random_state: Union[int, numpy.random.mtrand.RandomState, None], distance_calculation_method: str</em><span class="sig-paren">)</span><a class="headerlink" href="#skqlearn.clustering.KMedians.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a GenericClustering object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_clusters</strong> (<em>int</em>) – Number of clusters to form and centroids to
+generate.</p></li>
+<li><p><strong>max_iterations</strong> (<em>int</em>) – Max number of iterations of the algorithm.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>RandomState</em><em> or </em><em>None</em>) – Determines random number
+generation for centroid initialization. If provided as an int,
+it will be used as seed to make the randomness deterministic.</p></li>
+<li><p><strong>distance_calculation_method</strong> (<em>{'classic'</em><em>, </em><em>'quantum'}</em>) – <p>The distance
+calculation method:</p>
+<ul>
+<li><p>’classic’: Classically calculated using <cite>np.linalg.norm</cite>.</p></li>
+<li><p>’quantum’: Quantum distance estimation will be used.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="skqlearn.clustering.KMedians.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; skqlearn.clustering.kclusters.GenericClustering<a class="headerlink" href="#skqlearn.clustering.KMedians.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute clustering of provided data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>np.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data to
+cluster.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Fitted estimator.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>self (object)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="skqlearn.clustering.KMedians.fit_predict">
+<code class="sig-name descname">fit_predict</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#skqlearn.clustering.KMedians.fit_predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute clustering of provided data and predict cluster
+index for each sample.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is equivalent to calling <cite>fit(x)</cite> followed by <cite>predict(x)</cite>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>np.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data to
+cluster and predict.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Index of the cluster each sample belongs to.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray of shape (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="skqlearn.clustering.KMedians.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#skqlearn.clustering.KMedians.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assigns a label to each input sample based on the closest centroid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>np.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Data to predict.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Index of the cluster each sample belongs to.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray of shape (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; skqlearn.clustering.kclusters.GenericClustering</dt>
+<dd><p>Compute clustering of provided data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>np.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data to
+cluster.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Fitted estimator.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>self (object)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">fit_predict</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray</dt>
+<dd><p>Compute clustering of provided data and predict cluster
+index for each sample.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is equivalent to calling <cite>fit(x)</cite> followed by <cite>predict(x)</cite>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>np.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data to
+cluster and predict.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Index of the cluster each sample belongs to.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray of shape (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray</dt>
+<dd><p>Assigns a label to each input sample based on the closest centroid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>np.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Data to predict.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Index of the cluster each sample belongs to.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray of shape (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="skqlearn.clustering.KMeans.html" class="btn btn-neutral float-left" title="KMeans" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../skqlearn.encoding.html" class="btn btn-neutral float-right" title="Data Encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Daniel Mohedano.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

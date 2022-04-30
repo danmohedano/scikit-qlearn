@@ -1,0 +1,26 @@
+Encoding
+========
+
+.. currentmodule:: skqlearn.encoding
+
+.. autoclass:: Encoding
+   :show-inheritance:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Encoding.__init__
+      ~Encoding.classic_kernel
+      ~Encoding.encoding
+      ~Encoding.quantum_kernel
+   
+
+   
+   .. automethod:: __init__
+   .. automethod:: classic_kernel
+   .. automethod:: encoding
+   .. automethod:: quantum_kernel
+   

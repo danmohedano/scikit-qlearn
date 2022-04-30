@@ -1,0 +1,6 @@
+inner\_product\_estimation
+==========================
+
+.. currentmodule:: skqlearn.utils
+
+.. autofunction:: inner_product_estimation

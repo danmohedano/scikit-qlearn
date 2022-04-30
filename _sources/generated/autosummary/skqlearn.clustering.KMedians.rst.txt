@@ -1,0 +1,26 @@
+KMedians
+========
+
+.. currentmodule:: skqlearn.clustering
+
+.. autoclass:: KMedians
+   :show-inheritance:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~KMedians.__init__
+      ~KMedians.fit
+      ~KMedians.fit_predict
+      ~KMedians.predict
+   
+
+   
+   .. automethod:: __init__
+   .. automethod:: fit
+   .. automethod:: fit_predict
+   .. automethod:: predict
+   

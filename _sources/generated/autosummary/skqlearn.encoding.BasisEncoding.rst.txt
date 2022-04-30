@@ -1,0 +1,26 @@
+BasisEncoding
+=============
+
+.. currentmodule:: skqlearn.encoding
+
+.. autoclass:: BasisEncoding
+   :show-inheritance:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BasisEncoding.__init__
+      ~BasisEncoding.classic_kernel
+      ~BasisEncoding.encoding
+      ~BasisEncoding.quantum_kernel
+   
+
+   
+   .. automethod:: __init__
+   .. automethod:: classic_kernel
+   .. automethod:: encoding
+   .. automethod:: quantum_kernel
+   

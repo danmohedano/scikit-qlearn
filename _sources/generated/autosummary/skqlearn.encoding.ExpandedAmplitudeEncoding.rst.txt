@@ -1,0 +1,26 @@
+ExpandedAmplitudeEncoding
+=========================
+
+.. currentmodule:: skqlearn.encoding
+
+.. autoclass:: ExpandedAmplitudeEncoding
+   :show-inheritance:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ExpandedAmplitudeEncoding.__init__
+      ~ExpandedAmplitudeEncoding.classic_kernel
+      ~ExpandedAmplitudeEncoding.encoding
+      ~ExpandedAmplitudeEncoding.quantum_kernel
+   
+
+   
+   .. automethod:: __init__
+   .. automethod:: classic_kernel
+   .. automethod:: encoding
+   .. automethod:: quantum_kernel
+   

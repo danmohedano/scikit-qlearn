@@ -1,0 +1,24 @@
+JobHandler
+==========
+
+.. currentmodule:: skqlearn.jobhandler
+
+.. autoclass:: JobHandler
+   :show-inheritance:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~JobHandler.__init__
+      ~JobHandler.configure
+      ~JobHandler.run_job
+   
+
+   
+   .. automethod:: __init__
+   .. automethod:: configure
+   .. automethod:: run_job
+   

@@ -1,0 +1,6 @@
+fidelity\_estimation
+====================
+
+.. currentmodule:: skqlearn.utils
+
+.. autofunction:: fidelity_estimation

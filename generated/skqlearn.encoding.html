@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Encoding &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Encoding" href="autosummary/skqlearn.encoding.Encoding.html" />
+    <link rel="prev" title="KMedians" href="autosummary/skqlearn.clustering.KMedians.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> scikit-qlearn
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="skqlearn.clustering.html">Clustering</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Data Encoding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#encodings">Encodings</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="autosummary/skqlearn.encoding.Encoding.html">Encoding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autosummary/skqlearn.encoding.AmplitudeEncoding.html">AmplitudeEncoding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autosummary/skqlearn.encoding.ExpandedAmplitudeEncoding.html">ExpandedAmplitudeEncoding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autosummary/skqlearn.encoding.AngleEncoding.html">AngleEncoding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autosummary/skqlearn.encoding.BasisEncoding.html">BasisEncoding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autosummary/skqlearn.encoding.QSampleEncoding.html">QSampleEncoding</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skqlearn.gates.html">Gates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skqlearn.jobhandler.html">Job Handler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skqlearn.utils.html">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">scikit-qlearn</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">API Reference</a> &raquo;</li>
+      <li>Data Encoding</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/skqlearn.encoding.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-encoding">
+<h1>Data Encoding<a class="headerlink" href="#data-encoding" title="Permalink to this headline">¶</a></h1>
+<p>The module contains a series of data encoding methods that allow the user to map real data into quantum states, described by their amplitude vectors. These mappings can be defined as feature maps of the form:</p>
+<div class="math notranslate nohighlight">
+\[\phi: \mathcal{X} \rightarrow \mathcal{F}\]</div>
+<p>Where the input <span class="math notranslate nohighlight">\(x\)</span> is mapped from the input space into the feature space.</p>
+<p>The inner product of two inputs mapped to feature space defines a kernel via:</p>
+<div class="math notranslate nohighlight">
+\[k(x,x'):= \braket{\phi(x), \phi(x')}_\mathcal{F}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(\braket{.,.}_\mathcal{F}\)</span> is the inner product defined on <span class="math notranslate nohighlight">\(\mathcal{F}\)</span>. <span id="id1">[<a class="reference internal" href="../references.html#id4" title="Maria Schuld and Nathan Killoran. Quantum machine learning in feature hilbert spaces. Phys. Rev. Lett., 122:040504, Feb 2019. doi:10.1103/PhysRevLett.122.040504.">SK19</a>]</span></p>
+<p>In this case, as the inputs are being mapped into quantum states, the kernel defined is of the form:</p>
+<div class="math notranslate nohighlight">
+\[k(x,x')=\braket{\phi(x)|\phi(x')}\]</div>
+<section id="encodings">
+<h2>Encodings<a class="headerlink" href="#encodings" title="Permalink to this headline">¶</a></h2>
+<p>To allow the expansion of the module in the future, an abstract class <cite>Encoding</cite> has been defined. To implement a new encoding, one must simply define a child class that implements the <cite>encoding</cite> method.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="autosummary/skqlearn.encoding.Encoding.html#skqlearn.encoding.Encoding" title="skqlearn.encoding.Encoding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skqlearn.encoding.Encoding</span></code></a></p></td>
+<td><p>Abstract class to define a data encoding method.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Real data encodings</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="autosummary/skqlearn.encoding.AmplitudeEncoding.html#skqlearn.encoding.AmplitudeEncoding" title="skqlearn.encoding.AmplitudeEncoding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skqlearn.encoding.AmplitudeEncoding</span></code></a></p></td>
+<td><p>Amplitude encoding method.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="autosummary/skqlearn.encoding.ExpandedAmplitudeEncoding.html#skqlearn.encoding.ExpandedAmplitudeEncoding" title="skqlearn.encoding.ExpandedAmplitudeEncoding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skqlearn.encoding.ExpandedAmplitudeEncoding</span></code></a></p></td>
+<td><p>Expanded amplitude encoding method.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="autosummary/skqlearn.encoding.AngleEncoding.html#skqlearn.encoding.AngleEncoding" title="skqlearn.encoding.AngleEncoding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skqlearn.encoding.AngleEncoding</span></code></a></p></td>
+<td><p>Angle encoding method.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="autosummary/skqlearn.encoding.BasisEncoding.html#skqlearn.encoding.BasisEncoding" title="skqlearn.encoding.BasisEncoding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skqlearn.encoding.BasisEncoding</span></code></a></p></td>
+<td><p>Basis encoding method.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Probability distribution encodings</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="autosummary/skqlearn.encoding.QSampleEncoding.html#skqlearn.encoding.QSampleEncoding" title="skqlearn.encoding.QSampleEncoding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skqlearn.encoding.QSampleEncoding</span></code></a></p></td>
+<td><p>QSample encoding method.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="autosummary/skqlearn.clustering.KMedians.html" class="btn btn-neutral float-left" title="KMedians" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="autosummary/skqlearn.encoding.Encoding.html" class="btn btn-neutral float-right" title="Encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Daniel Mohedano.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

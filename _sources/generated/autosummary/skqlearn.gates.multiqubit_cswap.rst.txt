@@ -1,0 +1,6 @@
+multiqubit\_cswap
+=================
+
+.. currentmodule:: skqlearn.gates
+
+.. autofunction:: multiqubit_cswap

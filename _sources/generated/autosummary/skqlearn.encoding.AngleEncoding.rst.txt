@@ -1,0 +1,26 @@
+AngleEncoding
+=============
+
+.. currentmodule:: skqlearn.encoding
+
+.. autoclass:: AngleEncoding
+   :show-inheritance:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AngleEncoding.__init__
+      ~AngleEncoding.classic_kernel
+      ~AngleEncoding.encoding
+      ~AngleEncoding.quantum_kernel
+   
+
+   
+   .. automethod:: __init__
+   .. automethod:: classic_kernel
+   .. automethod:: encoding
+   .. automethod:: quantum_kernel
+   

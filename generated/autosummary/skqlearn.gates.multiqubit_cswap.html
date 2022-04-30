@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>multiqubit_cswap &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Job Handler" href="../skqlearn.jobhandler.html" />
+    <link rel="prev" title="Gates" href="../skqlearn.gates.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> scikit-qlearn
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../skqlearn.clustering.html">Clustering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../skqlearn.encoding.html">Data Encoding</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../skqlearn.gates.html">Gates</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">multiqubit_cswap</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../skqlearn.jobhandler.html">Job Handler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../skqlearn.utils.html">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">scikit-qlearn</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../modules.html">API Reference</a> &raquo;</li>
+          <li><a href="../skqlearn.gates.html">Gates</a> &raquo;</li>
+      <li>multiqubit_cswap</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/generated/autosummary/skqlearn.gates.multiqubit_cswap.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="multiqubit-cswap">
+<h1>multiqubit_cswap<a class="headerlink" href="#multiqubit-cswap" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="skqlearn.gates.multiqubit_cswap">
+<code class="sig-prename descclassname">skqlearn.gates.</code><code class="sig-name descname">multiqubit_cswap</code><span class="sig-paren">(</span><em class="sig-param">qubit_size_a: int</em>, <em class="sig-param">qubit_size_b: int</em>, <em class="sig-param">name: str = 'MQ-CSWAP'</em><span class="sig-paren">)</span> &#x2192; qiskit.circuit.instruction.Instruction<a class="headerlink" href="#skqlearn.gates.multiqubit_cswap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a multi-qubit controlled SWAP quantum gate.</p>
+<p>Composes a multi-qubit controlled SWAP gate as a quantum circuit by
+applying CSWAP gates, qubit-wise, to registers a and b, using as control
+an ancilla qubit. If the dimensions of a and b differ, then the CSWAP’s are
+applied until there are no more qubits in one of the states.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">QuantumRegister</span><span class="p">,</span> <span class="n">QuantumCircuit</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q_reg</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">circ</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">q_reg</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">circ</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">multiqubit_cswap</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">q_reg</span><span class="p">)</span>
+<span class="go">&lt;qiskit.circuit.instructionset.InstructionSet object at ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">circ</span><span class="o">.</span><span class="n">decompose</span><span class="p">())</span>
+
+<span class="go">q0_0: ────X─</span>
+<span class="go">          │</span>
+<span class="go">q0_1: ─X──┼─</span>
+<span class="go">       │  │</span>
+<span class="go">q0_2: ─┼──┼─</span>
+<span class="go">       │  │</span>
+<span class="go">q0_3: ─┼──X─</span>
+<span class="go">       │  │</span>
+<span class="go">q0_4: ─X──┼─</span>
+<span class="go">       │  │</span>
+<span class="go">q0_5: ─■──■─</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">multiqubit_cswap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+ <span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">Invalid qubit sizes. Must be &gt; 0.</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>qubit_size_a</strong> (<em>int</em>) – Size in qubits for register a.</p></li>
+<li><p><strong>qubit_size_b</strong> (<em>int</em>) – Size in qubits for register b.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Name for the circuit.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The gate composed as a quantum circuit. It
+can then be appended in other quantum circuits.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>qiskit.circuit.Instruction</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If negative or zero sizes are provided.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../skqlearn.gates.html" class="btn btn-neutral float-left" title="Gates" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../skqlearn.jobhandler.html" class="btn btn-neutral float-right" title="Job Handler" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Daniel Mohedano.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

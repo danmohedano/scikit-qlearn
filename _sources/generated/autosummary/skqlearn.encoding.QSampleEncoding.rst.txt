@@ -1,0 +1,26 @@
+QSampleEncoding
+===============
+
+.. currentmodule:: skqlearn.encoding
+
+.. autoclass:: QSampleEncoding
+   :show-inheritance:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~QSampleEncoding.__init__
+      ~QSampleEncoding.classic_kernel
+      ~QSampleEncoding.encoding
+      ~QSampleEncoding.quantum_kernel
+   
+
+   
+   .. automethod:: __init__
+   .. automethod:: classic_kernel
+   .. automethod:: encoding
+   .. automethod:: quantum_kernel
+   

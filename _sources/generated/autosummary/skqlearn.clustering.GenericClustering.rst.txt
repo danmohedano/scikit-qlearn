@@ -1,0 +1,26 @@
+GenericClustering
+=================
+
+.. currentmodule:: skqlearn.clustering
+
+.. autoclass:: GenericClustering
+   :show-inheritance:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GenericClustering.__init__
+      ~GenericClustering.fit
+      ~GenericClustering.fit_predict
+      ~GenericClustering.predict
+   
+
+   
+   .. automethod:: __init__
+   .. automethod:: fit
+   .. automethod:: fit_predict
+   .. automethod:: predict
+   
