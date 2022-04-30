@@ -16,6 +16,13 @@ class KMedians(GenericClustering):
 
        arg\,min_{\boldsymbol{x}_j}\sum_{i=1}^m||\boldsymbol{x}_i -
        \boldsymbol{x}_j||_{2}
+
+    Attributes:
+        cluster_centers (np.ndarray of shape (n_clusters, n_features)):
+            Coordinates for the cluster centroids.
+        labels (np.ndarray of shape (n_samples,)): Labels of each input sample.
+        n_features_in (int): Number of features seen during fit.
+        n_iter (int): Number of iterations run.
     """
     def _centroid_update(
             self,

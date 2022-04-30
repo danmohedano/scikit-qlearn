@@ -207,6 +207,9 @@ def distance_estimation(
 
     Returns:
         float: Euclidean distance estimated.
+
+    Raises:
+        ValueError: If there is a dimension disparity between the vectors.
     """
     if a.shape != b.shape:
         raise ValueError(f'Vector dimensions disparity between {a.shape} '

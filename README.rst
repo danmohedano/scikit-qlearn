@@ -31,5 +31,5 @@ Requirements
 --------------
 *scikit-qlearn* depends on the following packages:
 
-* `qiskit <https://github.com/Qiskit>`_: Open-source SDK for working with quantum computers at the level of pulses, circuits, and algorithms.
+* `qiskit <https://github.com/Qiskit>`_ - Open-source SDK for working with quantum computers at the level of pulses, circuits, and algorithms.
 * `numpy <https://github.com/numpy/numpy>`_ - The fundamental package for scientific computing with Python
