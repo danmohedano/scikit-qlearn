@@ -1,1 +1,1 @@
-from skqlearn.gates.gates import *
+from .gates import *

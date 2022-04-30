@@ -1,5 +1,6 @@
-from .encoding import Encoding
+from .base_encoding import Encoding
 import numpy as np
+import math
 
 
 class AmplitudeEncoding(Encoding):
@@ -46,6 +47,22 @@ class AmplitudeEncoding(Encoding):
         Raises:
             ValueError: If an invalid input type is provided or it is not
                 normalized.
+
+        Examples:
+            >>> a = np.array([0.5, 0.5, 0.5, 0.5])
+            >>> AmplitudeEncoding().encoding(a)
+            array([0.5, 0.5, 0.5, 0.5])
+
+            >>> a = np.array([0.0, 1.0, 0.0])
+            >>> AmplitudeEncoding().encoding(a)
+            array([0.0, 1.0, 0.0, 0.0])
+
+            >>> a = np.array([0.0, 1.0, 0.2, 0.0])
+            >>> AmplitudeEncoding().encoding(a)
+            Traceback (most recent call last):
+             ...
+            ValueError: Invalid input, must be normalized. Got |x| = 1.019803902718557 instead
+
         """
         if not isinstance(x, np.ndarray):
             raise ValueError(f'Invalid input type provided. Expected '
@@ -70,7 +87,7 @@ class AmplitudeEncoding(Encoding):
         Raises:
             ValueError: If the input is not normalized.
         """
-        if np.linalg.norm(x) != 1.0:
+        if not math.isclose(np.linalg.norm(x), 1.0, abs_tol=1e-8):
             raise ValueError(f'Invalid input, must be normalized. Got |x| = '
                              f'{np.linalg.norm(x)} instead')
 

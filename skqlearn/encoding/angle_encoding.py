@@ -1,4 +1,4 @@
-from .encoding import Encoding
+from .base_encoding import Encoding
 import numpy as np
 
 
@@ -38,6 +38,15 @@ class AngleEncoding(Encoding):
 
         Raises:
             ValueError: When an invalid input is provided.
+
+        Examples:
+            >>> a = np.array([0.0])
+            >>> AngleEncoding().encoding(a)
+            array([1.0, 0.0])
+
+            >>> a = np.array([np.pi / 2, 0])
+            >>> AngleEncoding().encoding(a)
+            array([6.123234e-17, 0.000000e+00, 1.000000e+00, 0.000000e+00])
         """
         if not isinstance(x, np.ndarray):
             raise ValueError(f'Invalid input type provided. Expected '

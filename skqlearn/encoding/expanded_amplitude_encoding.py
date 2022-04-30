@@ -1,4 +1,4 @@
-from .encoding import Encoding
+from .base_encoding import Encoding
 import numpy as np
 from .amplitude_encoding import AmplitudeEncoding
 
@@ -37,6 +37,11 @@ class ExpandedAmplitudeEncoding(Encoding):
 
         Raises:
             ValueError: If an invalid input is provided.
+
+        Examples:
+            >>> a = np.array([1.0, 1.0, 1.0])
+            >>> ExpandedAmplitudeEncoding().encoding(a)
+            array([0.5, 0.5, 0.5, 0.5])
         """
         if not isinstance(x, np.ndarray):
             raise ValueError(f'Invalid input type provided. Expected '

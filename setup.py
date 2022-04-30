@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 import codecs
 import os.path
 
@@ -57,7 +57,7 @@ if __name__ == '__main__':
             'Programming Language :: Python :: 3 :: Only',
         ],
         keywords='quantum, machine learning, ai',  # Optional
-        packages=[PACKAGE_NAME],  # Required
+        packages=find_packages(),  # Required
         python_requires='>=3.7, <4',
         install_requires=['qiskit',
                           'numpy',

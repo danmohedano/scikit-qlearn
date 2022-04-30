@@ -1,4 +1,4 @@
-from .encoding import Encoding
+from .base_encoding import Encoding
 import numpy as np
 
 
@@ -27,6 +27,11 @@ class QSampleEncoding(Encoding):
 
         Raises:
             ValueError: When an invalid input is provided.
+
+        Examples:
+            >>> a = np.array([0.5, 0.5])
+            >>> QSampleEncoding().encoding(a)
+            array([0.70710678, 0.70710678])
         """
         if not isinstance(x, np.ndarray):
             raise ValueError(f'Invalid input type provided. Expected '

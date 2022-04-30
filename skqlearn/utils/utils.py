@@ -300,10 +300,10 @@ def inner_product_estimation(
     psi = np.concatenate([state_a, state_b]) / np.sqrt(2)
     circuit.initialize(psi, quantum_register)
 
-    circuit.h(quantum_register[0])
+    circuit.h(quantum_register[-1])
 
     # Addition of measurement to classical bit register
-    circuit.measure(quantum_register[0], classical_register)
+    circuit.measure(quantum_register[-1], classical_register)
 
     # Execution of the circuit
     job_handler = JobHandler()

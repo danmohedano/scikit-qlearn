@@ -1,4 +1,4 @@
-from .encoding import Encoding
+from .base_encoding import Encoding
 from typing import Union
 import numpy as np
 
@@ -46,6 +46,15 @@ class BasisEncoding(Encoding):
 
         Raises:
             ValueError: When an invalid input type is provided.
+
+        Examples:
+            >>> a = 1
+            >>> BasisEncoding().encoding(a)
+            array([0., 1.])
+
+            >>> a = np.array([0, 1])
+            >>> BasisEncoding().encoding(a)
+            array([0.70710678, 0.70710678])
         """
         if isinstance(x, int) and x >= 0:
             return self._encoding_single(x)
