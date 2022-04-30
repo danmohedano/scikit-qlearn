@@ -1,5 +1,6 @@
-from .encoding import Encoding
+from .base_encoding import Encoding
 import numpy as np
+import math
 
 
 class AmplitudeEncoding(Encoding):
@@ -10,8 +11,8 @@ class AmplitudeEncoding(Encoding):
     quantum state, defining the encoding feature map as:
 
     .. math::
-       \phi:\boldsymbol{x}\rightarrow\ket{\psi_\boldsymbol{x}}=\sum_{i=1}^{N}
-       x_i\ket{i}
+       \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
+       \sum_{i=1}^{N}x_i\left|i\right>
 
     In order to represent a valid quantum state the amount of amplitudes, and
     therefore, the dimension of the vectors must be a power of 2,
@@ -20,8 +21,8 @@ class AmplitudeEncoding(Encoding):
     Therefore, the kernel defined by the inner product is the linear kernel:
 
     .. math::
-       k(\boldsymbol{x}, \boldsymbol{x'}) = \braket{\psi_{\boldsymbol{x}}|
-       \psi_{\boldsymbol{x'}}} = \boldsymbol{x}^T\boldsymbol{x'}
+       k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
+       \psi_{\boldsymbol{x'}}\right> = \boldsymbol{x}^T\boldsymbol{x'}
 
     A dataset can be encoded by concatenating all the input vectors.
     """
@@ -46,6 +47,22 @@ class AmplitudeEncoding(Encoding):
         Raises:
             ValueError: If an invalid input type is provided or it is not
                 normalized.
+
+        Examples:
+            >>> a = np.array([0.5, 0.5, 0.5, 0.5])
+            >>> AmplitudeEncoding().encoding(a)
+            array([0.5, 0.5, 0.5, 0.5])
+
+            >>> a = np.array([0.0, 1.0, 0.0])
+            >>> AmplitudeEncoding().encoding(a)
+            array([0.0, 1.0, 0.0, 0.0])
+
+            >>> a = np.array([0.0, 1.0, 0.2, 0.0])
+            >>> AmplitudeEncoding().encoding(a)
+            Traceback (most recent call last):
+             ...
+            ValueError: Invalid input, must be normalized. Got |x| = 1.019803902718557 instead
+
         """
         if not isinstance(x, np.ndarray):
             raise ValueError(f'Invalid input type provided. Expected '
@@ -70,7 +87,7 @@ class AmplitudeEncoding(Encoding):
         Raises:
             ValueError: If the input is not normalized.
         """
-        if np.linalg.norm(x) != 1.0:
+        if not math.isclose(np.linalg.norm(x), 1.0, abs_tol=1e-8):
             raise ValueError(f'Invalid input, must be normalized. Got |x| = '
                              f'{np.linalg.norm(x)} instead')
 

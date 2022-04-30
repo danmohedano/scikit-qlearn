@@ -7,6 +7,11 @@ The package makes use of the open-source `Qiskit SDK <https://qiskit.org/>`_ for
 
 It was orginally developed as part of my end-of-degree thesis for my Computer Engineering degree at UAM.
 
+Documentation
+=============
+
+The documentation is available at `danmohedano.github.io/scikit-qlearn/ <https://danmohedano.github.io/scikit-qlearn/>`_
+
 Installation
 =============
 Currently, the package is available for Python versions 3.7-3.10, regardless of platform. Stable versions are available for install via `PyPI <https://pypi.org/project/scikit-qlearn/>`_:
@@ -26,5 +31,5 @@ Requirements
 --------------
 *scikit-qlearn* depends on the following packages:
 
-* `qiskit <https://github.com/Qiskit>`_: Open-source SDK for working with quantum computers at the level of pulses, circuits, and algorithms.
+* `qiskit <https://github.com/Qiskit>`_ - Open-source SDK for working with quantum computers at the level of pulses, circuits, and algorithms.
 * `numpy <https://github.com/numpy/numpy>`_ - The fundamental package for scientific computing with Python

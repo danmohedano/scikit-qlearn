@@ -67,6 +67,9 @@ class JobHandler(metaclass=Singleton):
             shots (int): Number of executions.
             run_options (dict): Keyword dictionary used in the run method as
                 run time backend options.
+
+        Raises:
+            ValueError: If a non-positive amount of shots is provided.
         """
         if shots < 1:
             raise ValueError('Invalid value for shots provided. Expected '
@@ -86,6 +89,9 @@ class JobHandler(metaclass=Singleton):
 
         Returns:
             Result: Result object.
+
+        Raises:
+            ValueError: If no backend has been previously configured.
         """
         if not self.backend:
             raise ValueError('Backend not configured in the JobHandler. Must '

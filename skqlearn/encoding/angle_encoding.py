@@ -1,4 +1,4 @@
-from .encoding import Encoding
+from .base_encoding import Encoding
 import numpy as np
 
 
@@ -10,8 +10,8 @@ class AngleEncoding(Encoding):
     encoding feature map as:
 
     .. math::
-       \phi:\boldsymbol{x}\rightarrow\ket{\psi_\boldsymbol{x}}=
-       \bigotimes_{i=1}^{N}\cos{x_i}\ket{0}+\sin{x_i}\ket{1}
+       \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
+       \bigotimes_{i=1}^{N}\cos{x_i}\left|0\right>+\sin{x_i}\left|1\right>
 
     Because of the encoding feature map, the resulting quantum state is
     correctly normalized and therefore valid, as :math:`\cos{x}^2+\sin{x}^2=1`.
@@ -19,8 +19,8 @@ class AngleEncoding(Encoding):
     The kernel defined by the inner product is a cosine kernel:
 
     .. math::
-       k(\boldsymbol{x}, \boldsymbol{x'}) = \braket{\psi_{\boldsymbol{x}}|
-       \psi_{\boldsymbol{x'}}} = \prod_{i=1}^{N}\sin{x_i}\sin{x'_i} + \cos{x_i}
+       k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
+       \psi_{\boldsymbol{x'}}\right> = \prod_{i=1}^{N}\sin{x_i}\sin{x'_i} + \cos{x_i}
        \cos{x'_i}=\prod_{i=1}^{N}\cos{(x_i-x'_i)}
     """
 
@@ -38,6 +38,15 @@ class AngleEncoding(Encoding):
 
         Raises:
             ValueError: When an invalid input is provided.
+
+        Examples:
+            >>> a = np.array([0.0])
+            >>> AngleEncoding().encoding(a)
+            array([1.0, 0.0])
+
+            >>> a = np.array([np.pi / 2, 0])
+            >>> AngleEncoding().encoding(a)
+            array([6.123234e-17, 0.000000e+00, 1.000000e+00, 0.000000e+00])
         """
         if not isinstance(x, np.ndarray):
             raise ValueError(f'Invalid input type provided. Expected '

@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 import codecs
 import os.path
 
@@ -39,7 +39,7 @@ if __name__ == '__main__':
         version=get_version(os.path.join(PACKAGE_NAME, '_version.py')),  # Required
         description=DESCRIPTION,  # Optional
         long_description=LONG_DESCRIPTION,  # Optional
-        long_description_content_type='text/markdown',  # Optional (see note above)
+        long_description_content_type='text/x-rst',  # Optional (see note above)
         url=URL,  # Optional
         author=MAINTAINER,  # Optional
         author_email=MAINTAINER_EMAIL,  # Optional
@@ -57,9 +57,13 @@ if __name__ == '__main__':
             'Programming Language :: Python :: 3 :: Only',
         ],
         keywords='quantum, machine learning, ai',  # Optional
-        packages=[PACKAGE_NAME],  # Required
+        packages=find_packages(),  # Required
         python_requires='>=3.7, <4',
         install_requires=['qiskit',
                           'numpy',
                           'pytest'],  # Optional
+        project_urls={
+            'Documentation': 'https://danmohedano.github.io/scikit-qlearn/',
+            'Source': URL,
+        }
     )

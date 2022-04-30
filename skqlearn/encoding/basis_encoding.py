@@ -1,4 +1,4 @@
-from .encoding import Encoding
+from .base_encoding import Encoding
 from typing import Union
 import numpy as np
 
@@ -10,12 +10,13 @@ class BasisEncoding(Encoding):
     defining the encoding feature map as:
 
     .. math::
-       \phi:i\rightarrow \ket{i}
+       \phi:i\rightarrow \left|i\right>
 
     Therefore, the kernel defined by the inner product is:
 
     .. math::
-       k(i, j) = \braket{\phi(i)|\phi(j)} = \braket{i|j} = \delta_{ij}
+       k(i, j) = \left<\phi(i)|\phi(j)\right> = \left<i|j\right> = 
+       \delta_{ij}
 
     With :math:`\delta` being the Kronecker delta.
 
@@ -23,8 +24,8 @@ class BasisEncoding(Encoding):
     :math:`\mathcal{D}=\{\boldsymbol{x}^1,...,\boldsymbol{x}^m\}` together as:
 
     .. math::
-       \ket{\mathcal{D}} = \frac{1}{\sqrt{M}}\sum_{m=1}^{M}
-       \ket{\boldsymbol{x}^m}
+       \left|\mathcal{D}\right> = \frac{1}{\sqrt{M}}\sum_{m=1}^{M}
+       \left|\boldsymbol{x}^m\right>
     """
 
     def encoding(self, x: Union[int, np.ndarray]) -> np.ndarray:
@@ -45,6 +46,15 @@ class BasisEncoding(Encoding):
 
         Raises:
             ValueError: When an invalid input type is provided.
+
+        Examples:
+            >>> a = 1
+            >>> BasisEncoding().encoding(a)
+            array([0., 1.])
+
+            >>> a = np.array([0, 1])
+            >>> BasisEncoding().encoding(a)
+            array([0.70710678, 0.70710678])
         """
         if isinstance(x, int) and x >= 0:
             return self._encoding_single(x)

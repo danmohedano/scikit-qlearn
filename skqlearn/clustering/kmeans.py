@@ -15,6 +15,13 @@ class KMeans(GenericClustering):
 
     With :math:`\{\boldsymbol{C}_i\}` being the set of vectors assigned to the cluster
     centroid :math:`\boldsymbol{C}_i`.
+
+    Attributes:
+        cluster_centers (np.ndarray of shape (n_clusters, n_features)):
+            Coordinates for the cluster centroids.
+        labels (np.ndarray of shape (n_samples,)): Labels of each input sample.
+        n_features_in (int): Number of features seen during fit.
+        n_iter (int): Number of iterations run.
     """
     def _centroid_update(
             self,
