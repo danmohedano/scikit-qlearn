@@ -10,8 +10,8 @@ class AngleEncoding(Encoding):
     encoding feature map as:
 
     .. math::
-       \phi:\boldsymbol{x}\rightarrow\ket{\psi_\boldsymbol{x}}=
-       \bigotimes_{i=1}^{N}\cos{x_i}\ket{0}+\sin{x_i}\ket{1}
+       \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
+       \bigotimes_{i=1}^{N}\cos{x_i}\left|0\right>+\sin{x_i}\left|1\right>
 
     Because of the encoding feature map, the resulting quantum state is
     correctly normalized and therefore valid, as :math:`\cos{x}^2+\sin{x}^2=1`.
@@ -19,8 +19,8 @@ class AngleEncoding(Encoding):
     The kernel defined by the inner product is a cosine kernel:
 
     .. math::
-       k(\boldsymbol{x}, \boldsymbol{x'}) = \braket{\psi_{\boldsymbol{x}}|
-       \psi_{\boldsymbol{x'}}} = \prod_{i=1}^{N}\sin{x_i}\sin{x'_i} + \cos{x_i}
+       k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
+       \psi_{\boldsymbol{x'}}\right> = \prod_{i=1}^{N}\sin{x_i}\sin{x'_i} + \cos{x_i}
        \cos{x'_i}=\prod_{i=1}^{N}\cos{(x_i-x'_i)}
     """
 

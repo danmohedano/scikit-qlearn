@@ -10,8 +10,8 @@ class AmplitudeEncoding(Encoding):
     quantum state, defining the encoding feature map as:
 
     .. math::
-       \phi:\boldsymbol{x}\rightarrow\ket{\psi_\boldsymbol{x}}=\sum_{i=1}^{N}
-       x_i\ket{i}
+       \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
+       \sum_{i=1}^{N}x_i\left|i\right>
 
     In order to represent a valid quantum state the amount of amplitudes, and
     therefore, the dimension of the vectors must be a power of 2,
@@ -20,8 +20,8 @@ class AmplitudeEncoding(Encoding):
     Therefore, the kernel defined by the inner product is the linear kernel:
 
     .. math::
-       k(\boldsymbol{x}, \boldsymbol{x'}) = \braket{\psi_{\boldsymbol{x}}|
-       \psi_{\boldsymbol{x'}}} = \boldsymbol{x}^T\boldsymbol{x'}
+       k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
+       \psi_{\boldsymbol{x'}}\right> = \boldsymbol{x}^T\boldsymbol{x'}
 
     A dataset can be encoded by concatenating all the input vectors.
     """

@@ -10,14 +10,14 @@ Where the input :math:`x` is mapped from the input space into the feature space.
 The inner product of two inputs mapped to feature space defines a kernel via:
 
 .. math::
-   k(x,x'):= \braket{\phi(x), \phi(x')}_\mathcal{F}
+   k(x,x'):= \left<\phi(x), \phi(x')\right>_\mathcal{F}
 
-Where :math:`\braket{.,.}_\mathcal{F}` is the inner product defined on :math:`\mathcal{F}`. :cite:`hilbert2019`
+Where :math:`\left<.,.\right>_\mathcal{F}` is the inner product defined on :math:`\mathcal{F}`. :cite:`hilbert2019`
 
 In this case, as the inputs are being mapped into quantum states, the kernel defined is of the form:
 
 .. math::
-   k(x,x')=\braket{\phi(x)|\phi(x')}
+   k(x,x')=\left<\phi(x)|\phi(x')\right>
 
 Encodings
 ---------

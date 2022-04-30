@@ -9,7 +9,7 @@ class Encoding(ABC):
 
     Each implementation must define the `encoding` method as a feature map
     :math:`\phi : \mathcal{X} \rightarrow \mathcal{F}` taking a sample
-    :math:`x` from the input space :math: `\mathcal{X}` to the feature space
+    :math:`x` from the input space :math:`\mathcal{X}` to the feature space
     :math:`\mathcal{F}`.
     """
     @abstractmethod

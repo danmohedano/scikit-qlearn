@@ -14,7 +14,7 @@ def fidelity_estimation(
     The fidelity of two quantum states can be defined as:
 
     .. math::
-       Fid(\ket{a}, \ket{b})=|\braket{a|b}|^2
+       Fid(\left|a\right>, \left|b\right>)=|\left<a|b\right>|^2
 
     This is a similarity measure between two quantum states, its value ranging
     from 0 if the states are orthogonal to 1 if they are identical.
@@ -25,36 +25,38 @@ def fidelity_estimation(
     1. Initialize the state with an ancilla qubit and the two n-qubit
     quantum states:
 
-    .. math:: \ket{\psi_0}=\ket{0,a,b}
+    .. math:: \left|\psi_0\right>=\left|0,a,b\right>
 
     2. Apply a Hadamard gate to the control
     qubit:
 
     .. math::
-       \ket{\psi_1} = (H \bigotimes I^{\bigotimes n} \bigotimes
-       I^{\bigotimes n})\ket{\psi_0} = \frac{1}{\sqrt{2}}(\ket{0,a,b} +
-       \ket{1,a,b})
+       \left|\psi_1\right> = (H \bigotimes I^{\bigotimes n} \bigotimes
+       I^{\bigotimes n})\left|\psi_0\right> = \frac{1}{\sqrt{2}}(\left|0,a,b
+       \right> + \left|1,a,b\right>)
 
     3. Apply a CSWAP gate to the three states, using the ancilla qubit as
     control:
 
     .. math::
-       \ket{\psi_2}= \frac{1}{\sqrt{2}}(\ket{0,a,b} + \ket{1,b,a})
+       \left|\psi_2\right>= \frac{1}{\sqrt{2}}(\left|0,a,b\right> +
+       \left|1,b,a\right>)
 
     4. Apply a Hadamard gate to the control
     qubit:
 
     .. math::
-       \ket{\psi_3} = \frac{1}{2}\ket{0}(\ket{a,b}+\ket{b,a}) +
-       \frac{1}{2} \ket{1}(\ket{a,b}-\ket{b,a})
+       \left|\psi_3\right> = \frac{1}{2}\left|0\right>(\left|a,b\right>+
+       \left|b,a\right>) + \frac{1}{2} \left|1\right>(\left|a,b\right>
+       -\left|b,a\right>)
 
     5. Measure the probability of the control qubit being
-    in state :math:`\ket{0}`:
+    in state :math:`\left|0\right>`:
 
     .. math::
-       P(\ket{0}) &= |\braket{0|\psi_3}|^2 \\
-                  &= \frac{1}{4}|(\ket{a,b}+\ket{b,a})|^2 \\
-                  &= \frac{1}{2} + \frac{1}{2}|\braket{a|b}|^2
+       P(\left|0\right>) &= |\left<0|\psi_3\right>|^2 \\
+                  &= \frac{1}{4}|(\left|a,b\right>+\left|b,a\right>)|^2 \\
+                  &= \frac{1}{2} + \frac{1}{2}|\left<a|b\right>|^2
 
     The algorithm also works for quantum states with different sizes, though
     the notion of similiarity then becomes harder to define.
@@ -68,7 +70,7 @@ def fidelity_estimation(
 
         .. note::
            As it can be deduced from the expression, the probability of
-           measuring :math:`\ket{0}` has a theoretical lower bound of
+           measuring :math:`\left|0\right>` has a theoretical lower bound of
            :math:`0.5`, guaranteeing the lower bound for the fidelity of
            :math:`0`. In reality, the probability of measurement is estimated
            by sampling. This causes an imprecision in the value obtained,
@@ -138,28 +140,29 @@ def distance_estimation(
     states:
 
     .. math::
-       \ket{\psi} &= \frac{1}{\sqrt{2}}(\ket{0,\boldsymbol{a}}+
-       \ket{1,\boldsymbol{b}}) \\
-       \ket{\phi} &= \frac{1}{\sqrt{Z}}(|\boldsymbol{a}|\ket{0}-
-       |\boldsymbol{b}|\ket{1})
+       \left|\psi\right> &= \frac{1}{\sqrt{2}}(\left|0,\boldsymbol{a}\right>+
+       \left|1,\boldsymbol{b}\right>) \\
+       \left|\phi\right> &= \frac{1}{\sqrt{Z}}(|\boldsymbol{a}|\left|0\right>-
+       |\boldsymbol{b}|\left|1\right>)
 
-    Where :math:`Z=|\boldsymbol{a}|+|\boldsymbol{b}|` and :math:`\ket{a}` is
-    constructed using amplitude encoding:
+    Where :math:`Z=|\boldsymbol{a}|+|\boldsymbol{b}|` and
+    :math:`\left|a\right>` is constructed using amplitude encoding:
 
     .. math::
-       \ket{\boldsymbol{a}} = \sum_{i=1}^{N}|\boldsymbol{a}|^{-1}a_i\ket{i}
+       \left|\boldsymbol{a}\right> = \sum_{i=1}^{N}|\boldsymbol{a}|^{-1}
+       a_i\left|i\right>
 
     This will define an inner product:
 
     .. math::
-       \braket{\phi|\psi} &= \frac{1}{\sqrt{2Z}}(|\boldsymbol{a}|
-       \braket{0|0,\boldsymbol{a}} + |\boldsymbol{a}|
-       \braket{0|1,\boldsymbol{b}} - |\boldsymbol{b}|
-       \braket{1|0,\boldsymbol{a}} - |\boldsymbol{b}|
-       \braket{1|1,\boldsymbol{b}}) \\
+       \left<\phi|\psi\right> &= \frac{1}{\sqrt{2Z}}(|\boldsymbol{a}|
+       \left<0|0,\boldsymbol{a}\right> + |\boldsymbol{a}|
+       \left<0|1,\boldsymbol{b}\right> - |\boldsymbol{b}|
+       \left<1|0,\boldsymbol{a}\right> - |\boldsymbol{b}|
+       \left<1|1,\boldsymbol{b}\right>) \\
                           &= \frac{1}{\sqrt{2Z}}(|\boldsymbol{a}|
-                          \ket{\boldsymbol{a}} - |\boldsymbol{b}|
-                          \ket{\boldsymbol{b}})
+                          \left|\boldsymbol{a}\right> - |\boldsymbol{b}|
+                          \left|\boldsymbol{b}\right>)
 
     Because the quantum states do not have the same amount of qubits, the
     inner product can be interpreted as a projection resulting in another
@@ -169,27 +172,29 @@ def distance_estimation(
     of the two states:
 
     .. math::
-       |\braket{\phi|\psi}|^2 &= \braket{\phi|\psi}\cdot\braket{\phi|\psi} \\
+       |\left<\phi|\psi\right>|^2 &= \left<\phi|\psi\right>\cdot\left<
+       \phi|\psi\right> \\
                               &= \frac{1}{2Z}(|\boldsymbol{a}|^2 +
        |\boldsymbol{b}|^2 - |\boldsymbol{a}||\boldsymbol{b}|
-       \braket{\boldsymbol{a}|\boldsymbol{b}} - |\boldsymbol{a}||\boldsymbol{b}
-       |\braket{\boldsymbol{b}|\boldsymbol{a}})
+       \left<\boldsymbol{a}|\boldsymbol{b}\right> - |\boldsymbol{a}||
+       \boldsymbol{b}
+       |\left<\boldsymbol{b}|\boldsymbol{a}\right>)
 
     Taking into account that:
 
     .. math::
-       \braket{\boldsymbol{b}|\boldsymbol{a}}=
-       \braket{\boldsymbol{a}|\boldsymbol{b}}^* =
-       \braket{\boldsymbol{a}|\boldsymbol{b}}
+       \left<\boldsymbol{b}|\boldsymbol{a}\right>=
+       \left<\boldsymbol{a}|\boldsymbol{b}\right>^* =
+       \left<\boldsymbol{a}|\boldsymbol{b}\right>
 
     With :math:`^*` being the complex conjugate. This is possible because the
     input vectors only have real values, therefore, the quantum state's
     amplitudes are also real.
 
     .. math::
-       |\braket{\phi|\psi}|^2 &= \frac{1}{2Z}(|\boldsymbol{a}|^2 +
+       |\left<\phi|\psi\right>|^2 &= \frac{1}{2Z}(|\boldsymbol{a}|^2 +
        |\boldsymbol{b}|^2 - 2|\boldsymbol{a}||\boldsymbol{b}|
-       \braket{\boldsymbol{a}|\boldsymbol{b}}) \\
+       \left<\boldsymbol{a}|\boldsymbol{b}\right>) \\
        &= \frac{1}{2Z}(|\boldsymbol{a}|^2 +
        |\boldsymbol{b}|^2 - 2\boldsymbol{a}^T\cdot\boldsymbol{b}) \\
        &= \frac{1}{2Z}|\boldsymbol{a}-\boldsymbol{b}|^2
@@ -236,35 +241,39 @@ def inner_product_estimation(
     quantum state:
 
     .. math::
-       \ket{\psi_0} = \frac{1}{\sqrt{2}}(\ket{0,\boldsymbol{a}} +
-       \ket{1, \boldsymbol{b}})
+       \left|\psi_0\right> = \frac{1}{\sqrt{2}}(\left|0,\boldsymbol{a}\right> +
+       \left|1, \boldsymbol{b}\right>)
 
     Supposing the input vectors are normalized and the quantum states defined
-    as :math:`\ket{\boldsymbol{a}}=\sum_{i=1}^Na_i\ket{i}`
+    as :math:`\left|\boldsymbol{a}\right>=\sum_{i=1}^Na_i\left|i\right>`
 
     2. Apply a Hadamard gate to the ancilla qubit:
 
     .. math::
-       \ket{\psi_1} &= (H \bigotimes I^{\bigotimes n})\ket{\psi_0} \\
-       &= \frac{1}{2}(\ket{0}(\ket{\boldsymbol{a}} + \ket{\boldsymbol{b}}) +
-       \ket{1}(\ket{\boldsymbol{a}} - \ket{\boldsymbol{b}}))
+       \left|\psi_1\right> &= (H \bigotimes I^{\bigotimes n})
+       \left|\psi_0\right> \\
+       &= \frac{1}{2}(\left|0\right>(\left|\boldsymbol{a}\right> +
+       \left|\boldsymbol{b}\right>) + \left|1\right>(\left|
+       \boldsymbol{a}\right> - \left|\boldsymbol{b}\right>))
 
-    3. Estimate the probability of measuring :math:`\ket{0}`:
+    3. Estimate the probability of measuring :math:`\left|0\right>`:
 
     .. math::
-       P(\ket{0}) &= |\braket{0|\psi_1}|^2 \\
-       &= |\frac{1}{2}(\braket{0|0}(\ket{\boldsymbol{a}} +
-       \ket{\boldsymbol{b}}) + \braket{0|1}(\ket{\boldsymbol{a}} -
-       \ket{\boldsymbol{b}}))|^2 \\
-       &= |\frac{1}{2}(\ket{\boldsymbol{a}} + \ket{\boldsymbol{b}})|^2 \\
+       P(\left|0\right>) &= |\left<0|\psi_1\right>|^2 \\
+       &= |\frac{1}{2}(\left<0|0\right>(\left|\boldsymbol{a}\right> +
+       \left|\boldsymbol{b}\right>) + \left<0|1\right>
+       (\left|\boldsymbol{a}\right> -
+       \left|\boldsymbol{b}\right>))|^2 \\
+       &= |\frac{1}{2}(\left|\boldsymbol{a}\right> +
+       \left|\boldsymbol{b}\right>)|^2 \\
        &= \frac{1}{4}\sum_{i=1}^N(a_i+b_i)^2 \\
-       &= \frac{1}{4}\braket{\boldsymbol{a}+\boldsymbol{b}|
-       \boldsymbol{a}+\boldsymbol{b}} \\
-       &= \frac{1}{4}(\braket{\boldsymbol{a}|\boldsymbol{a}} +
-       \braket{\boldsymbol{a}|\boldsymbol{b}} +
-       \braket{\boldsymbol{b}|\boldsymbol{a}} +
-       \braket{\boldsymbol{b}|\boldsymbol{b}}) \\
-       &= \frac{1}{4} (2 + 2\braket{\boldsymbol{a}|\boldsymbol{b}})
+       &= \frac{1}{4}\left<\boldsymbol{a}+\boldsymbol{b}|
+       \boldsymbol{a}+\boldsymbol{b}\right> \\
+       &= \frac{1}{4}(\left<\boldsymbol{a}|\boldsymbol{a}\right> +
+       \left<\boldsymbol{a}|\boldsymbol{b}\right> +
+       \left<\boldsymbol{b}|\boldsymbol{a}\right> +
+       \left<\boldsymbol{b}|\boldsymbol{b}\right>) \\
+       &= \frac{1}{4} (2 + 2\left<\boldsymbol{a}|\boldsymbol{b}\right>)
 
     Args:
         state_a (np.ndarray): State a described by its amplitudes.
