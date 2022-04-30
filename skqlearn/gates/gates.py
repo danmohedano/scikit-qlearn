@@ -14,14 +14,41 @@ def multiqubit_cswap(
     an ancilla qubit. If the dimensions of a and b differ, then the CSWAP's are
     applied until there are no more qubits in one of the states.
 
+    Examples:
+        >>> from qiskit import QuantumRegister, QuantumCircuit
+        >>> q_reg = QuantumRegister(6)
+        >>> circ = QuantumCircuit(q_reg)
+        >>> circ.append(multiqubit_cswap(2, 3), q_reg)
+        <qiskit.circuit.instructionset.InstructionSet object at ...
+        >>> print(circ.decompose())
+        <BLANKLINE>
+        q0_0: ────X─
+                  │
+        q0_1: ─X──┼─
+               │  │
+        q0_2: ─┼──┼─
+               │  │
+        q0_3: ─┼──X─
+               │  │
+        q0_4: ─X──┼─
+               │  │
+        q0_5: ─■──■─
+        <BLANKLINE>
+
+        >>> multiqubit_cswap(0, 4)
+        Traceback (most recent call last):
+         ...
+        ValueError: Invalid qubit sizes. Must be > 0.
+
     Args:
         qubit_size_a (int): Size in qubits for register a.
         qubit_size_b (int): Size in qubits for register b.
         name (str): Name for the circuit.
 
     Returns:
-        qiskit.circuit.Instruction: The gate composed as a quantum circuit. It
-         can then be appended in other quantum circuits.
+        qiskit.circuit.Instruction:
+            The gate composed as a quantum circuit. It
+            can then be appended in other quantum circuits.
 
     Raises:
         ValueError: If negative or zero sizes are provided.

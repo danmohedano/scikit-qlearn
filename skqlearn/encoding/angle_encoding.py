@@ -3,7 +3,25 @@ import numpy as np
 
 
 class AngleEncoding(Encoding):
-    """Angle encoding method.
+    r"""Angle encoding method. :cite:`LaRose_2020`
+
+    In angle encoding, each component/feature of the input vector
+    :math:`\boldsymbol{x} \in \mathbb{R}^N` is mapped to a qubit, defining the
+    encoding feature map as:
+
+    .. math::
+       \phi:\boldsymbol{x}\rightarrow\ket{\psi_\boldsymbol{x}}=
+       \bigotimes_{i=1}^{N}\cos{x_i}\ket{0}+\sin{x_i}\ket{1}
+
+    Because of the encoding feature map, the resulting quantum state is
+    correctly normalized and therefore valid, as :math:`\cos{x}^2+\sin{x}^2=1`.
+
+    The kernel defined by the inner product is a cosine kernel:
+
+    .. math::
+       k(\boldsymbol{x}, \boldsymbol{x'}) = \braket{\psi_{\boldsymbol{x}}|
+       \psi_{\boldsymbol{x'}}} = \prod_{i=1}^{N}\sin{x_i}\sin{x'_i} + \cos{x_i}
+       \cos{x'_i}=\prod_{i=1}^{N}\cos{(x_i-x'_i)}
     """
 
     def encoding(self, x: np.ndarray) -> np.ndarray:
@@ -11,8 +29,6 @@ class AngleEncoding(Encoding):
 
         In angle encoding, each feature of the input vector is encoded into a
         qubit.
-
-        todo: Explanation
 
         Args:
             x (np.ndarray of shape (n_features,)): Input vector.

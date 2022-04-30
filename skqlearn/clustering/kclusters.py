@@ -8,10 +8,15 @@ from abc import abstractmethod, ABC
 class GenericClustering(ABC):
     """Generic clustering algorithm used as base for K-Means and K-Medians.
 
+    Through a series of epochs, the algorithm assigns each input sample/vector
+    to the closest centroid. Then, the centroids are recalculated based on the
+    metric implemented in each specific algorithm. The distance used is the
+    Euclidean or :math:`L^2` norm.
+
     Attributes:
         cluster_centers (np.ndarray of shape (n_clusters, n_features)):
             Coordinates for the cluster centroids.
-        labels (np.ndarray of shape (n_samples,)): Labels of each point.
+        labels (np.ndarray of shape (n_samples,)): Labels of each input sample.
         n_features_in (int): Number of features seen during fit.
         n_iter (int): Number of iterations run.
     """
@@ -22,20 +27,20 @@ class GenericClustering(ABC):
             random_state: Union[int, np.random.RandomState, None],
             distance_calculation_method: str,
     ):
-        """Inits KMeans object.
+        """Construct a GenericClustering object.
 
         Args:
-            n_clusters (int): Number of clusters to form and centroid to
+            n_clusters (int): Number of clusters to form and centroids to
                 generate.
-            max_iterations (int): Maximum number of iterations of the k-means
-                algorithm.
+            max_iterations (int): Max number of iterations of the algorithm.
             random_state (int, RandomState or None): Determines random number
                 generation for centroid initialization. If provided as an int,
                 it will be used as seed to make the randomness deterministic.
             distance_calculation_method ({'classic', 'quantum'}): The distance
                 calculation method:
-                'classic': Regular euclidean distance will be used.
-                'quantum': Quantum distance estimation will be used.
+
+                * 'classic': Classically calculated using `np.linalg.norm`.
+                * 'quantum': Quantum distance estimation will be used.
         """
         self.n_clusters = n_clusters
         self.max_iterations = max_iterations
@@ -83,8 +88,8 @@ class GenericClustering(ABC):
             x (np.ndarray of shape (n_samples, n_features)): Input samples.
 
         Returns:
-            np.ndarray of shape (n_clusters, n_features): Initial cluster
-                centroids.
+            np.ndarray of shape (n_clusters, n_features):
+                Initial cluster centroids.
 
         Raises:
             ValueError: If there are not enough unique input samples to define
@@ -214,7 +219,7 @@ class GenericClustering(ABC):
             self,
             x: np.ndarray,
     ) -> GenericClustering:
-        """Compute k-means clustering of provided data.
+        """Compute clustering of provided data.
 
         Args:
             x (np.ndarray of shape (n_samples, n_features)): Training data to
@@ -276,6 +281,8 @@ class GenericClustering(ABC):
                 break
 
         if assignment_flag:
+            # Encountered error provoked by incorrect distance estimation,
+            # therefore the process must be repeated.
             return self.fit(x)
         else:
             self.cluster_centers = centroids
@@ -289,19 +296,20 @@ class GenericClustering(ABC):
             self,
             x: np.ndarray,
     ) -> np.ndarray:
-        """Compute k-means clustering of provided data and predict cluster
+        """Compute clustering of provided data and predict cluster
         index for each sample.
 
-        Convenience method: It is equivalent to calling fit(x) followed by
-        predict(x).
+        .. note::
+
+           It is equivalent to calling `fit(x)` followed by `predict(x)`.
 
         Args:
             x (np.ndarray of shape (n_samples, n_features)): Training data to
                 cluster and predict.
 
         Returns:
-            ndarray of shape (n_samples,): Index of the cluster each sample
-                belongs to.
+            np.ndarray of shape (n_samples,):
+                Index of the cluster each sample belongs to.
         """
         return self.fit(x).predict(x)
 
@@ -309,14 +317,14 @@ class GenericClustering(ABC):
             self,
             x: np.ndarray,
     ) -> np.ndarray:
-        """Predict the closest cluster each sample in x belongs to.
+        """Assigns a label to each input sample based on the closest centroid.
 
         Args:
             x (np.ndarray of shape (n_samples, n_features)): Data to predict.
 
         Returns:
-            ndarray of shape (n_samples,): Index of the cluster each sample
-                belongs to.
+            np.ndarray of shape (n_samples,):
+                Index of the cluster each sample belongs to.
         """
         x_norms = [np.linalg.norm(x[i, :]) for i in range(x.shape[0])]
         x_norms = np.array(x_norms)

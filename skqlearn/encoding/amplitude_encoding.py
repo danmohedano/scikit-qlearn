@@ -3,7 +3,27 @@ import numpy as np
 
 
 class AmplitudeEncoding(Encoding):
-    """Amplitude encoding method.
+    r"""Amplitude encoding method. :cite:`schuld2018supervised`
+
+    In amplitude encoding, each component of the input vector
+    :math:`\boldsymbol{x} \in \mathbb{R}^N` is mapped to an amplitude of the
+    quantum state, defining the encoding feature map as:
+
+    .. math::
+       \phi:\boldsymbol{x}\rightarrow\ket{\psi_\boldsymbol{x}}=\sum_{i=1}^{N}
+       x_i\ket{i}
+
+    In order to represent a valid quantum state the amount of amplitudes, and
+    therefore, the dimension of the vectors must be a power of 2,
+    :math:`N=2^n`. If they are not, they will be padded with zeros at the end.
+
+    Therefore, the kernel defined by the inner product is the linear kernel:
+
+    .. math::
+       k(\boldsymbol{x}, \boldsymbol{x'}) = \braket{\psi_{\boldsymbol{x}}|
+       \psi_{\boldsymbol{x'}}} = \boldsymbol{x}^T\boldsymbol{x'}
+
+    A dataset can be encoded by concatenating all the input vectors.
     """
 
     def encoding(self, x: np.ndarray) -> np.ndarray:
@@ -12,15 +32,20 @@ class AmplitudeEncoding(Encoding):
         Args:
             x (np.ndarray of shape (n_features,) or (n_samples, n_features)):
                 Input. This can be a single sample of shape (n_features,) or a
-                dataset of shape (n_samples, n_features). The input MUST be
-                normalized.
+                dataset of shape (n_samples, n_features).
 
+                .. note::
+                   The input must be normalized in order to define a valid
+                   quantum state. Refer to `ExpandedAmplitudeEncoding` if the
+                   data is not normalized.
         Returns:
-            np.ndarray: Quantum state described as an amplitude vector. If a
+            np.ndarray:
+                Quantum state described as an amplitude vector. If a
                 dataset is provided, the states are concatenated.
 
         Raises:
-            ValueError: If an invalid input is provided.
+            ValueError: If an invalid input type is provided or it is not
+                normalized.
         """
         if not isinstance(x, np.ndarray):
             raise ValueError(f'Invalid input type provided. Expected '
@@ -41,6 +66,9 @@ class AmplitudeEncoding(Encoding):
 
         Returns:
             np.ndarray: Quantum state described as an amplitude vector.
+
+        Raises:
+            ValueError: If the input is not normalized.
         """
         if np.linalg.norm(x) != 1.0:
             raise ValueError(f'Invalid input, must be normalized. Got |x| = '

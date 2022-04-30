@@ -5,9 +5,13 @@ from skqlearn.utils import inner_product_estimation
 
 
 class Encoding(ABC):
-    """Abstract class to define a data encoding method.
-    """
+    r"""Abstract class to define a data encoding method.
 
+    Each implementation must define the `encoding` method as a feature map
+    :math:`\phi : \mathcal{X} \rightarrow \mathcal{F}` taking a sample
+    :math:`x` from the input space :math: `\mathcal{X}` to the feature space
+    :math:`\mathcal{F}`.
+    """
     @abstractmethod
     def encoding(self, x: Union[int, np.ndarray]) -> np.ndarray:
         pass
@@ -17,17 +21,16 @@ class Encoding(ABC):
             x: np.ndarray,
             y: np.ndarray,
     ) -> np.ndarray:
-        """Classical calculation of the kernel formed by the encoding.
-
-        todo: Elaborate
+        """Classical calculation of the kernel formed by the encoding and the
+        inner product.
 
         Args:
             x (np.ndarray of shape (n_samples_1, n_features)): First input.
             y (np.ndarray of shape (n_samples_2, n_features)): Second input.
 
         Returns:
-            np.ndarray of shape (n_samples_1, n_samples_2): Resulting kernel
-                matrix.
+            np.ndarray of shape (n_samples_1, n_samples_2):
+                Resulting kernel matrix.
         """
         # Application of the encoding to the inputs
         x_samples_list = [self.encoding(x[i, :]) for i in range(x.shape[0])]
@@ -43,17 +46,16 @@ class Encoding(ABC):
             x: np.ndarray,
             y: np.ndarray,
     ) -> np.ndarray:
-        """Quantum estimation of the kernel formed by the encoding.
-
-        todo: Elaborate
+        """Quantum estimation of the kernel formed by the encoding and the
+        inner product.
 
         Args:
             x (np.ndarray of shape (n_samples_1, n_features)): First input.
             y (np.ndarray of shape (n_samples_2, n_features)): Second input.
 
         Returns:
-            np.ndarray of shape (n_samples_1, n_samples_2): Resulting kernel
-                matrix.
+            np.ndarray of shape (n_samples_1, n_samples_2):
+                Resulting kernel matrix.
         """
         # Application of the encoding to the inputs
         x_samples_list = [self.encoding(x[i, :]) for i in range(x.shape[0])]

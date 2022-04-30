@@ -4,9 +4,27 @@ import numpy as np
 
 
 class BasisEncoding(Encoding):
-    """Basis encoding method.
+    r"""Basis encoding method. :cite:`schuld2018supervised`
 
-    In basis encoding, each classical bit is mapped into a single qubit.
+    In basis encoding, each classical bit is mapped into a single qubit,
+    defining the encoding feature map as:
+
+    .. math::
+       \phi:i\rightarrow \ket{i}
+
+    Therefore, the kernel defined by the inner product is:
+
+    .. math::
+       k(i, j) = \braket{\phi(i)|\phi(j)} = \braket{i|j} = \delta_{ij}
+
+    With :math:`\delta` being the Kronecker delta.
+
+    The encoding also permits encoding an entire dataset of binary strings
+    :math:`\mathcal{D}=\{\boldsymbol{x}^1,...,\boldsymbol{x}^m\}` together as:
+
+    .. math::
+       \ket{\mathcal{D}} = \frac{1}{\sqrt{M}}\sum_{m=1}^{M}
+       \ket{\boldsymbol{x}^m}
     """
 
     def encoding(self, x: Union[int, np.ndarray]) -> np.ndarray:
@@ -19,7 +37,8 @@ class BasisEncoding(Encoding):
                 shape (n_samples,).
 
         Returns:
-            np.ndarray: Amplitude vector describing the input encoded into a
+            np.ndarray:
+                Amplitude vector describing the input encoded into a
                 quantum state. If a dataset is provided, the quantum state will
                 be a superposition of the encodings of every sample in the
                 dataset.

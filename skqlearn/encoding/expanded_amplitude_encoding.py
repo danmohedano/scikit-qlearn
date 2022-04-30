@@ -4,7 +4,18 @@ from .amplitude_encoding import AmplitudeEncoding
 
 
 class ExpandedAmplitudeEncoding(Encoding):
-    """Expanded Amplitude encoding method.
+    r"""Expanded amplitude encoding method. :cite:`schuld2018supervised`
+
+    This encoding method tries to solve the normalization problem in regular
+    Amplitude Encoding. If non-normalized data is normalized for use on
+    Amplitude Encoding the data will lose one dimension of information. For
+    example, if a 2D point is normalized, it will be mapped into the unit
+    circle, a 1D shape. By adding an extra component to
+    :math:`\boldsymbol{x}\in\mathbb{R}^N` with a value of :math:`1`,
+    :math:`x_{N+1}=1`, and then normalizing, the information loss is avoided.
+
+    The encoding and produced kernel are identical to regular Amplitude
+    Encoding's.
     """
 
     def encoding(self, x: np.ndarray) -> np.ndarray:
@@ -12,9 +23,7 @@ class ExpandedAmplitudeEncoding(Encoding):
 
         Expanded amplitude encoding allows for non-normalized vector to be
         encoded as quantum states. This is achieved by the inclusion of an
-        extra feature with value 1.
-
-        todo: elaborate on explanation
+        extra feature/component with value 1.
 
         Args:
             x (np.ndarray of shape (n_features,) or (n_samples, n_features)):
@@ -22,7 +31,8 @@ class ExpandedAmplitudeEncoding(Encoding):
                 dataset of shape (n_samples, n_features).
 
         Returns:
-            np.ndarray: Quantum state described as an amplitude vector. If a
+            np.ndarray:
+                Quantum state described as an amplitude vector. If a
                 dataset is provided, the states are concatenated.
 
         Raises:
