@@ -27,7 +27,7 @@ URL = 'https://github.com/danmohedano/scikit-qlearn'
 LICENSE = 'MIT'
 DOWNLOAD_URL = URL
 PACKAGE_NAME = 'skqlearn'
-LONG_DESCRIPTION = read('README.md')
+LONG_DESCRIPTION = read('README.rst')
 
 # Arguments marked as "Required" below must be included for upload to PyPI.
 # Fields marked as "Optional" may be commented out.
