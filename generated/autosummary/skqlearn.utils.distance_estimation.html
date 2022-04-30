@@ -30,7 +30,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.0
+                1.0.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -98,47 +98,50 @@ between two quantum states by following these steps:</p>
 <p>1. Initialize two quantum
 states:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\ket{\psi} &amp;= \frac{1}{\sqrt{2}}(\ket{0,\boldsymbol{a}}+
-\ket{1,\boldsymbol{b}}) \\
-\ket{\phi} &amp;= \frac{1}{\sqrt{Z}}(|\boldsymbol{a}|\ket{0}-
-|\boldsymbol{b}|\ket{1})\end{split}\]</div>
-<p>Where <span class="math notranslate nohighlight">\(Z=|\boldsymbol{a}|+|\boldsymbol{b}|\)</span> and <span class="math notranslate nohighlight">\(\ket{a}\)</span> is
-constructed using amplitude encoding:</p>
+\[\begin{split}\left|\psi\right&gt; &amp;= \frac{1}{\sqrt{2}}(\left|0,\boldsymbol{a}\right&gt;+
+\left|1,\boldsymbol{b}\right&gt;) \\
+\left|\phi\right&gt; &amp;= \frac{1}{\sqrt{Z}}(|\boldsymbol{a}|\left|0\right&gt;-
+|\boldsymbol{b}|\left|1\right&gt;)\end{split}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(Z=|\boldsymbol{a}|+|\boldsymbol{b}|\)</span> and
+<span class="math notranslate nohighlight">\(\left|a\right&gt;\)</span> is constructed using amplitude encoding:</p>
 <div class="math notranslate nohighlight">
-\[\ket{\boldsymbol{a}} = \sum_{i=1}^{N}|\boldsymbol{a}|^{-1}a_i\ket{i}\]</div>
+\[\left|\boldsymbol{a}\right&gt; = \sum_{i=1}^{N}|\boldsymbol{a}|^{-1}
+a_i\left|i\right&gt;\]</div>
 <p>This will define an inner product:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\braket{\phi|\psi} &amp;= \frac{1}{\sqrt{2Z}}(|\boldsymbol{a}|
-\braket{0|0,\boldsymbol{a}} + |\boldsymbol{a}|
-\braket{0|1,\boldsymbol{b}} - |\boldsymbol{b}|
-\braket{1|0,\boldsymbol{a}} - |\boldsymbol{b}|
-\braket{1|1,\boldsymbol{b}}) \\
+\[\begin{split}\left&lt;\phi|\psi\right&gt; &amp;= \frac{1}{\sqrt{2Z}}(|\boldsymbol{a}|
+\left&lt;0|0,\boldsymbol{a}\right&gt; + |\boldsymbol{a}|
+\left&lt;0|1,\boldsymbol{b}\right&gt; - |\boldsymbol{b}|
+\left&lt;1|0,\boldsymbol{a}\right&gt; - |\boldsymbol{b}|
+\left&lt;1|1,\boldsymbol{b}\right&gt;) \\
                    &amp;= \frac{1}{\sqrt{2Z}}(|\boldsymbol{a}|
-                   \ket{\boldsymbol{a}} - |\boldsymbol{b}|
-                   \ket{\boldsymbol{b}})\end{split}\]</div>
+                   \left|\boldsymbol{a}\right&gt; - |\boldsymbol{b}|
+                   \left|\boldsymbol{b}\right&gt;)\end{split}\]</div>
 <p>Because the quantum states do not have the same amount of qubits, the
 inner product can be interpreted as a projection resulting in another
 quantum state, instead of a numerical value.</p>
 <p>2. Evaluate the fidelity
 of the two states:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}|\braket{\phi|\psi}|^2 &amp;= \braket{\phi|\psi}\cdot\braket{\phi|\psi} \\
+\[\begin{split}|\left&lt;\phi|\psi\right&gt;|^2 &amp;= \left&lt;\phi|\psi\right&gt;\cdot\left&lt;
+\phi|\psi\right&gt; \\
                        &amp;= \frac{1}{2Z}(|\boldsymbol{a}|^2 +
 |\boldsymbol{b}|^2 - |\boldsymbol{a}||\boldsymbol{b}|
-\braket{\boldsymbol{a}|\boldsymbol{b}} - |\boldsymbol{a}||\boldsymbol{b}
-|\braket{\boldsymbol{b}|\boldsymbol{a}})\end{split}\]</div>
+\left&lt;\boldsymbol{a}|\boldsymbol{b}\right&gt; - |\boldsymbol{a}||
+\boldsymbol{b}
+|\left&lt;\boldsymbol{b}|\boldsymbol{a}\right&gt;)\end{split}\]</div>
 <p>Taking into account that:</p>
 <div class="math notranslate nohighlight">
-\[\braket{\boldsymbol{b}|\boldsymbol{a}}=
-\braket{\boldsymbol{a}|\boldsymbol{b}}^* =
-\braket{\boldsymbol{a}|\boldsymbol{b}}\]</div>
+\[\left&lt;\boldsymbol{b}|\boldsymbol{a}\right&gt;=
+\left&lt;\boldsymbol{a}|\boldsymbol{b}\right&gt;^* =
+\left&lt;\boldsymbol{a}|\boldsymbol{b}\right&gt;\]</div>
 <p>With <span class="math notranslate nohighlight">\(^*\)</span> being the complex conjugate. This is possible because the
 input vectors only have real values, therefore, the quantum state’s
 amplitudes are also real.</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}|\braket{\phi|\psi}|^2 &amp;= \frac{1}{2Z}(|\boldsymbol{a}|^2 +
+\[\begin{split}|\left&lt;\phi|\psi\right&gt;|^2 &amp;= \frac{1}{2Z}(|\boldsymbol{a}|^2 +
 |\boldsymbol{b}|^2 - 2|\boldsymbol{a}||\boldsymbol{b}|
-\braket{\boldsymbol{a}|\boldsymbol{b}}) \\
+\left&lt;\boldsymbol{a}|\boldsymbol{b}\right&gt;) \\
 &amp;= \frac{1}{2Z}(|\boldsymbol{a}|^2 +
 |\boldsymbol{b}|^2 - 2\boldsymbol{a}^T\cdot\boldsymbol{b}) \\
 &amp;= \frac{1}{2Z}|\boldsymbol{a}-\boldsymbol{b}|^2\end{split}\]</div>
@@ -156,6 +159,9 @@ amplitudes are also real.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If there is a dimension disparity between the vectors.</p>
 </dd>
 </dl>
 </dd></dl>

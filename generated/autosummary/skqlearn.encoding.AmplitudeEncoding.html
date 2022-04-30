@@ -30,7 +30,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.0
+                1.0.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -96,21 +96,21 @@
 <dl class="class">
 <dt id="skqlearn.encoding.AmplitudeEncoding">
 <em class="property">class </em><code class="sig-prename descclassname">skqlearn.encoding.</code><code class="sig-name descname">AmplitudeEncoding</code><a class="headerlink" href="#skqlearn.encoding.AmplitudeEncoding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">skqlearn.encoding.encoding.Encoding</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">skqlearn.encoding.base_encoding.Encoding</span></code></p>
 <p>Amplitude encoding method. <span id="id1">[<a class="reference internal" href="../../references.html#id2" title="Maria Schuld and Francesco Petruccione. Supervised learning with quantum computers. Volume 17. Springer, 2018.">SP18</a>]</span></p>
 <p>In amplitude encoding, each component of the input vector
 <span class="math notranslate nohighlight">\(\boldsymbol{x} \in \mathbb{R}^N\)</span> is mapped to an amplitude of the
 quantum state, defining the encoding feature map as:</p>
 <div class="math notranslate nohighlight">
-\[\phi:\boldsymbol{x}\rightarrow\ket{\psi_\boldsymbol{x}}=\sum_{i=1}^{N}
-x_i\ket{i}\]</div>
+\[\phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right&gt;=
+\sum_{i=1}^{N}x_i\left|i\right&gt;\]</div>
 <p>In order to represent a valid quantum state the amount of amplitudes, and
 therefore, the dimension of the vectors must be a power of 2,
 <span class="math notranslate nohighlight">\(N=2^n\)</span>. If they are not, they will be padded with zeros at the end.</p>
 <p>Therefore, the kernel defined by the inner product is the linear kernel:</p>
 <div class="math notranslate nohighlight">
-\[k(\boldsymbol{x}, \boldsymbol{x'}) = \braket{\psi_{\boldsymbol{x}}|
-\psi_{\boldsymbol{x'}}} = \boldsymbol{x}^T\boldsymbol{x'}\]</div>
+\[k(\boldsymbol{x}, \boldsymbol{x'}) = \left&lt;\psi_{\boldsymbol{x}}|
+\psi_{\boldsymbol{x'}}\right&gt; = \boldsymbol{x}^T\boldsymbol{x'}\]</div>
 <p>A dataset can be encoded by concatenating all the input vectors.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -188,6 +188,24 @@ dataset is provided, the states are concatenated.</p>
     normalized.</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AmplitudeEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([0.5, 0.5, 0.5, 0.5])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AmplitudeEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([0.0, 1.0, 0.0, 0.0])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AmplitudeEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+ <span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">Invalid input, must be normalized. Got |x| = 1.019803902718557 instead</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -260,6 +278,24 @@ dataset is provided, the states are concatenated.</p>
     normalized.</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AmplitudeEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([0.5, 0.5, 0.5, 0.5])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AmplitudeEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([0.0, 1.0, 0.0, 0.0])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AmplitudeEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+ <span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">Invalid input, must be normalized. Got |x| = 1.019803902718557 instead</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">

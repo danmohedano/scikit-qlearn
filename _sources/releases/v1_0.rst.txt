@@ -4,7 +4,7 @@ Version 1.0
 Initial release version with the following features:
 
 * `clustering` module: Basic implementations of KMeans and KMedians algorithms. Classical and quantum methods for internal distance estimation.
-* `encoding` module: Set of encoding methods and corresponding kernels (calculated both classically and through quantum processes). Implemented  `BasisEncoding`, `AmplitudeEncoding`, `ExpandedAmplitudeEncoding`, 'AngleEncoding`, `QSampleEncoding`.
+* `encoding` module: Set of encoding methods and corresponding kernels (calculated both classically and through quantum processes). Implemented  `BasisEncoding`, `AmplitudeEncoding`, `ExpandedAmplitudeEncoding`, `AngleEncoding`, `QSampleEncoding`.
 * `gates` module: Implementation of a multi-qubit CSWAP gate.
 * `jobhandler` module: Responsible for the configuration of the Qiskit backend used in the quantum calculations.
 * `utils` module: Set of utilities. Implemented `fidelity_estimation`, `distance_estimation` and `inner_product_estimation`.

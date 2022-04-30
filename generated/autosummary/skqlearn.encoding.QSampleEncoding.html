@@ -30,7 +30,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.0
+                1.0.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -96,7 +96,7 @@
 <dl class="class">
 <dt id="skqlearn.encoding.QSampleEncoding">
 <em class="property">class </em><code class="sig-prename descclassname">skqlearn.encoding.</code><code class="sig-name descname">QSampleEncoding</code><a class="headerlink" href="#skqlearn.encoding.QSampleEncoding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">skqlearn.encoding.encoding.Encoding</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">skqlearn.encoding.base_encoding.Encoding</span></code></p>
 <p>QSample encoding method. <span id="id1">[<a class="reference internal" href="../../references.html#id2" title="Maria Schuld and Francesco Petruccione. Supervised learning with quantum computers. Volume 17. Springer, 2018.">SP18</a>]</span></p>
 <p>In QSample encoding, a discrete probability distribution is mapped into the
 amplitude vector of a quantum state, defining the encoding feature map as:</p>
@@ -171,6 +171,12 @@ inner product.</p>
 <dd class="field-even"><p><strong>ValueError</strong> – When an invalid input is provided.</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">QSampleEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([0.70710678, 0.70710678])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -233,6 +239,12 @@ inner product.</p>
 <dd class="field-even"><p><strong>ValueError</strong> – When an invalid input is provided.</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">QSampleEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([0.70710678, 0.70710678])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">

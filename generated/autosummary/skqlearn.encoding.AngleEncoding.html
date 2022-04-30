@@ -30,7 +30,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.0
+                1.0.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -96,20 +96,20 @@
 <dl class="class">
 <dt id="skqlearn.encoding.AngleEncoding">
 <em class="property">class </em><code class="sig-prename descclassname">skqlearn.encoding.</code><code class="sig-name descname">AngleEncoding</code><a class="headerlink" href="#skqlearn.encoding.AngleEncoding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">skqlearn.encoding.encoding.Encoding</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">skqlearn.encoding.base_encoding.Encoding</span></code></p>
 <p>Angle encoding method. <span id="id1">[<a class="reference internal" href="../../references.html#id3" title="Ryan LaRose and Brian Coyle. Robust data encodings for quantum classifiers. Physical Review A, sep 2020. doi:10.1103/physreva.102.032420.">LC20</a>]</span></p>
 <p>In angle encoding, each component/feature of the input vector
 <span class="math notranslate nohighlight">\(\boldsymbol{x} \in \mathbb{R}^N\)</span> is mapped to a qubit, defining the
 encoding feature map as:</p>
 <div class="math notranslate nohighlight">
-\[\phi:\boldsymbol{x}\rightarrow\ket{\psi_\boldsymbol{x}}=
-\bigotimes_{i=1}^{N}\cos{x_i}\ket{0}+\sin{x_i}\ket{1}\]</div>
+\[\phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right&gt;=
+\bigotimes_{i=1}^{N}\cos{x_i}\left|0\right&gt;+\sin{x_i}\left|1\right&gt;\]</div>
 <p>Because of the encoding feature map, the resulting quantum state is
 correctly normalized and therefore valid, as <span class="math notranslate nohighlight">\(\cos{x}^2+\sin{x}^2=1\)</span>.</p>
 <p>The kernel defined by the inner product is a cosine kernel:</p>
 <div class="math notranslate nohighlight">
-\[k(\boldsymbol{x}, \boldsymbol{x'}) = \braket{\psi_{\boldsymbol{x}}|
-\psi_{\boldsymbol{x'}}} = \prod_{i=1}^{N}\sin{x_i}\sin{x'_i} + \cos{x_i}
+\[k(\boldsymbol{x}, \boldsymbol{x'}) = \left&lt;\psi_{\boldsymbol{x}}|
+\psi_{\boldsymbol{x'}}\right&gt; = \prod_{i=1}^{N}\sin{x_i}\sin{x'_i} + \cos{x_i}
 \cos{x'_i}=\prod_{i=1}^{N}\cos{(x_i-x'_i)}\]</div>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -179,6 +179,17 @@ qubit.</p>
 <dd class="field-even"><p><strong>ValueError</strong> – When an invalid input is provided.</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AngleEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([1.0, 0.0])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AngleEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([6.123234e-17, 0.000000e+00, 1.000000e+00, 0.000000e+00])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -243,6 +254,17 @@ qubit.</p>
 <dd class="field-even"><p><strong>ValueError</strong> – When an invalid input is provided.</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AngleEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([1.0, 0.0])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AngleEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([6.123234e-17, 0.000000e+00, 1.000000e+00, 0.000000e+00])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">

@@ -30,7 +30,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.0
+                1.0.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -94,7 +94,7 @@
 SWAP-Test. <span id="id1">[<a class="reference internal" href="../../references.html#id5" title="Esma Aïmeur, Gilles Brassard, and Sébastien Gambs. Machine learning in a quantum world. In Luc Lamontagne and Mario Marchand, editors, Advances in Artificial Intelligence, 431–442. Berlin, Heidelberg, 2006. Springer Berlin Heidelberg.">AimeurBG06</a>]</span></p>
 <p>The fidelity of two quantum states can be defined as:</p>
 <div class="math notranslate nohighlight">
-\[Fid(\ket{a}, \ket{b})=|\braket{a|b}|^2\]</div>
+\[Fid(\left|a\right&gt;, \left|b\right&gt;)=|\left&lt;a|b\right&gt;|^2\]</div>
 <p>This is a similarity measure between two quantum states, its value ranging
 from 0 if the states are orthogonal to 1 if they are identical.</p>
 <p>It can be measured by performing a SWAP-Test, with the following
@@ -102,28 +102,30 @@ operations:</p>
 <p>1. Initialize the state with an ancilla qubit and the two n-qubit
 quantum states:</p>
 <div class="math notranslate nohighlight">
-\[\ket{\psi_0}=\ket{0,a,b}\]</div>
+\[\left|\psi_0\right&gt;=\left|0,a,b\right&gt;\]</div>
 <p>2. Apply a Hadamard gate to the control
 qubit:</p>
 <div class="math notranslate nohighlight">
-\[\ket{\psi_1} = (H \bigotimes I^{\bigotimes n} \bigotimes
-I^{\bigotimes n})\ket{\psi_0} = \frac{1}{\sqrt{2}}(\ket{0,a,b} +
-\ket{1,a,b})\]</div>
+\[\left|\psi_1\right&gt; = (H \bigotimes I^{\bigotimes n} \bigotimes
+I^{\bigotimes n})\left|\psi_0\right&gt; = \frac{1}{\sqrt{2}}(\left|0,a,b
+\right&gt; + \left|1,a,b\right&gt;)\]</div>
 <p>3. Apply a CSWAP gate to the three states, using the ancilla qubit as
 control:</p>
 <div class="math notranslate nohighlight">
-\[\ket{\psi_2}= \frac{1}{\sqrt{2}}(\ket{0,a,b} + \ket{1,b,a})\]</div>
+\[\left|\psi_2\right&gt;= \frac{1}{\sqrt{2}}(\left|0,a,b\right&gt; +
+\left|1,b,a\right&gt;)\]</div>
 <p>4. Apply a Hadamard gate to the control
 qubit:</p>
 <div class="math notranslate nohighlight">
-\[\ket{\psi_3} = \frac{1}{2}\ket{0}(\ket{a,b}+\ket{b,a}) +
-\frac{1}{2} \ket{1}(\ket{a,b}-\ket{b,a})\]</div>
+\[\left|\psi_3\right&gt; = \frac{1}{2}\left|0\right&gt;(\left|a,b\right&gt;+
+\left|b,a\right&gt;) + \frac{1}{2} \left|1\right&gt;(\left|a,b\right&gt;
+-\left|b,a\right&gt;)\]</div>
 <p>5. Measure the probability of the control qubit being
-in state <span class="math notranslate nohighlight">\(\ket{0}\)</span>:</p>
+in state <span class="math notranslate nohighlight">\(\left|0\right&gt;\)</span>:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}P(\ket{0}) &amp;= |\braket{0|\psi_3}|^2 \\
-           &amp;= \frac{1}{4}|(\ket{a,b}+\ket{b,a})|^2 \\
-           &amp;= \frac{1}{2} + \frac{1}{2}|\braket{a|b}|^2\end{split}\]</div>
+\[\begin{split}P(\left|0\right&gt;) &amp;= |\left&lt;0|\psi_3\right&gt;|^2 \\
+           &amp;= \frac{1}{4}|(\left|a,b\right&gt;+\left|b,a\right&gt;)|^2 \\
+           &amp;= \frac{1}{2} + \frac{1}{2}|\left&lt;a|b\right&gt;|^2\end{split}\]</div>
 <p>The algorithm also works for quantum states with different sizes, though
 the notion of similiarity then becomes harder to define.</p>
 <dl class="field-list simple">
@@ -138,7 +140,7 @@ the notion of similiarity then becomes harder to define.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>As it can be deduced from the expression, the probability of
-measuring <span class="math notranslate nohighlight">\(\ket{0}\)</span> has a theoretical lower bound of
+measuring <span class="math notranslate nohighlight">\(\left|0\right&gt;\)</span> has a theoretical lower bound of
 <span class="math notranslate nohighlight">\(0.5\)</span>, guaranteeing the lower bound for the fidelity of
 <span class="math notranslate nohighlight">\(0\)</span>. In reality, the probability of measurement is estimated
 by sampling. This causes an imprecision in the value obtained,

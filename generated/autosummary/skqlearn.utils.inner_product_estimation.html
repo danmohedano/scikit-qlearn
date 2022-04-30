@@ -30,7 +30,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.0
+                1.0.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -97,34 +97,38 @@ states. <span id="id1">[<a class="reference internal" href="../../references.htm
 <p>1. Initialize the
 quantum state:</p>
 <div class="math notranslate nohighlight">
-\[\ket{\psi_0} = \frac{1}{\sqrt{2}}(\ket{0,\boldsymbol{a}} +
-\ket{1, \boldsymbol{b}})\]</div>
+\[\left|\psi_0\right&gt; = \frac{1}{\sqrt{2}}(\left|0,\boldsymbol{a}\right&gt; +
+\left|1, \boldsymbol{b}\right&gt;)\]</div>
 <p>Supposing the input vectors are normalized and the quantum states defined
-as <span class="math notranslate nohighlight">\(\ket{\boldsymbol{a}}=\sum_{i=1}^Na_i\ket{i}\)</span></p>
+as <span class="math notranslate nohighlight">\(\left|\boldsymbol{a}\right&gt;=\sum_{i=1}^Na_i\left|i\right&gt;\)</span></p>
 <ol class="arabic simple" start="2">
 <li><p>Apply a Hadamard gate to the ancilla qubit:</p></li>
 </ol>
 <div class="math notranslate nohighlight">
-\[\begin{split}\ket{\psi_1} &amp;= (H \bigotimes I^{\bigotimes n})\ket{\psi_0} \\
-&amp;= \frac{1}{2}(\ket{0}(\ket{\boldsymbol{a}} + \ket{\boldsymbol{b}}) +
-\ket{1}(\ket{\boldsymbol{a}} - \ket{\boldsymbol{b}}))\end{split}\]</div>
+\[\begin{split}\left|\psi_1\right&gt; &amp;= (H \bigotimes I^{\bigotimes n})
+\left|\psi_0\right&gt; \\
+&amp;= \frac{1}{2}(\left|0\right&gt;(\left|\boldsymbol{a}\right&gt; +
+\left|\boldsymbol{b}\right&gt;) + \left|1\right&gt;(\left|
+\boldsymbol{a}\right&gt; - \left|\boldsymbol{b}\right&gt;))\end{split}\]</div>
 <ol class="arabic simple" start="3">
-<li><p>Estimate the probability of measuring <span class="math notranslate nohighlight">\(\ket{0}\)</span>:</p></li>
+<li><p>Estimate the probability of measuring <span class="math notranslate nohighlight">\(\left|0\right&gt;\)</span>:</p></li>
 </ol>
 <div class="math notranslate nohighlight">
-\[\begin{split}P(\ket{0}) &amp;= |\braket{0|\psi_1}|^2 \\
-&amp;= |\frac{1}{2}(\braket{0|0}(\ket{\boldsymbol{a}} +
-\ket{\boldsymbol{b}}) + \braket{0|1}(\ket{\boldsymbol{a}} -
-\ket{\boldsymbol{b}}))|^2 \\
-&amp;= |\frac{1}{2}(\ket{\boldsymbol{a}} + \ket{\boldsymbol{b}})|^2 \\
+\[\begin{split}P(\left|0\right&gt;) &amp;= |\left&lt;0|\psi_1\right&gt;|^2 \\
+&amp;= |\frac{1}{2}(\left&lt;0|0\right&gt;(\left|\boldsymbol{a}\right&gt; +
+\left|\boldsymbol{b}\right&gt;) + \left&lt;0|1\right&gt;
+(\left|\boldsymbol{a}\right&gt; -
+\left|\boldsymbol{b}\right&gt;))|^2 \\
+&amp;= |\frac{1}{2}(\left|\boldsymbol{a}\right&gt; +
+\left|\boldsymbol{b}\right&gt;)|^2 \\
 &amp;= \frac{1}{4}\sum_{i=1}^N(a_i+b_i)^2 \\
-&amp;= \frac{1}{4}\braket{\boldsymbol{a}+\boldsymbol{b}|
-\boldsymbol{a}+\boldsymbol{b}} \\
-&amp;= \frac{1}{4}(\braket{\boldsymbol{a}|\boldsymbol{a}} +
-\braket{\boldsymbol{a}|\boldsymbol{b}} +
-\braket{\boldsymbol{b}|\boldsymbol{a}} +
-\braket{\boldsymbol{b}|\boldsymbol{b}}) \\
-&amp;= \frac{1}{4} (2 + 2\braket{\boldsymbol{a}|\boldsymbol{b}})\end{split}\]</div>
+&amp;= \frac{1}{4}\left&lt;\boldsymbol{a}+\boldsymbol{b}|
+\boldsymbol{a}+\boldsymbol{b}\right&gt; \\
+&amp;= \frac{1}{4}(\left&lt;\boldsymbol{a}|\boldsymbol{a}\right&gt; +
+\left&lt;\boldsymbol{a}|\boldsymbol{b}\right&gt; +
+\left&lt;\boldsymbol{b}|\boldsymbol{a}\right&gt; +
+\left&lt;\boldsymbol{b}|\boldsymbol{b}\right&gt;) \\
+&amp;= \frac{1}{4} (2 + 2\left&lt;\boldsymbol{a}|\boldsymbol{b}\right&gt;)\end{split}\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

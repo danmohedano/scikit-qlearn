@@ -30,7 +30,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.0
+                1.0.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -99,6 +99,50 @@ input samples assigned to each centroid.</p>
 <div class="math notranslate nohighlight">
 \[arg\,min_{\boldsymbol{x}_j}\sum_{i=1}^m||\boldsymbol{x}_i -
 \boldsymbol{x}_j||_{2}\]</div>
+<dl class="attribute">
+<dt id="skqlearn.clustering.KMedians.cluster_centers">
+<code class="sig-name descname">cluster_centers</code><a class="headerlink" href="#skqlearn.clustering.KMedians.cluster_centers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Coordinates for the cluster centroids.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>np.ndarray of shape (n_clusters, n_features)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="skqlearn.clustering.KMedians.labels">
+<code class="sig-name descname">labels</code><a class="headerlink" href="#skqlearn.clustering.KMedians.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Labels of each input sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>np.ndarray of shape (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="skqlearn.clustering.KMedians.n_features_in">
+<code class="sig-name descname">n_features_in</code><a class="headerlink" href="#skqlearn.clustering.KMedians.n_features_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of features seen during fit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="skqlearn.clustering.KMedians.n_iter">
+<code class="sig-name descname">n_iter</code><a class="headerlink" href="#skqlearn.clustering.KMedians.n_iter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of iterations run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
 <p>Construct a GenericClustering object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

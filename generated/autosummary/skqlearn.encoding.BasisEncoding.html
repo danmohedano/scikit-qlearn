@@ -30,7 +30,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.0
+                1.0.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -96,21 +96,22 @@
 <dl class="class">
 <dt id="skqlearn.encoding.BasisEncoding">
 <em class="property">class </em><code class="sig-prename descclassname">skqlearn.encoding.</code><code class="sig-name descname">BasisEncoding</code><a class="headerlink" href="#skqlearn.encoding.BasisEncoding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">skqlearn.encoding.encoding.Encoding</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">skqlearn.encoding.base_encoding.Encoding</span></code></p>
 <p>Basis encoding method. <span id="id1">[<a class="reference internal" href="../../references.html#id2" title="Maria Schuld and Francesco Petruccione. Supervised learning with quantum computers. Volume 17. Springer, 2018.">SP18</a>]</span></p>
 <p>In basis encoding, each classical bit is mapped into a single qubit,
 defining the encoding feature map as:</p>
 <div class="math notranslate nohighlight">
-\[\phi:i\rightarrow \ket{i}\]</div>
+\[\phi:i\rightarrow \left|i\right&gt;\]</div>
 <p>Therefore, the kernel defined by the inner product is:</p>
 <div class="math notranslate nohighlight">
-\[k(i, j) = \braket{\phi(i)|\phi(j)} = \braket{i|j} = \delta_{ij}\]</div>
+\[k(i, j) = \left&lt;\phi(i)|\phi(j)\right&gt; = \left&lt;i|j\right&gt; =
+\delta_{ij}\]</div>
 <p>With <span class="math notranslate nohighlight">\(\delta\)</span> being the Kronecker delta.</p>
 <p>The encoding also permits encoding an entire dataset of binary strings
 <span class="math notranslate nohighlight">\(\mathcal{D}=\{\boldsymbol{x}^1,...,\boldsymbol{x}^m\}\)</span> together as:</p>
 <div class="math notranslate nohighlight">
-\[\ket{\mathcal{D}} = \frac{1}{\sqrt{M}}\sum_{m=1}^{M}
-\ket{\boldsymbol{x}^m}\]</div>
+\[\left|\mathcal{D}\right&gt; = \frac{1}{\sqrt{M}}\sum_{m=1}^{M}
+\left|\boldsymbol{x}^m\right&gt;\]</div>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -182,6 +183,17 @@ dataset.</p>
 <dd class="field-even"><p><strong>ValueError</strong> – When an invalid input type is provided.</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">BasisEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([0., 1.])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">BasisEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([0.70710678, 0.70710678])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -249,6 +261,17 @@ dataset.</p>
 <dd class="field-even"><p><strong>ValueError</strong> – When an invalid input type is provided.</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">BasisEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([0., 1.])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">BasisEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([0.70710678, 0.70710678])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">

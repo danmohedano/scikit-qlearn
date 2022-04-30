@@ -30,7 +30,7 @@
             <a href="../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.0
+                1.0.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -98,11 +98,11 @@
 <p>Where the input <span class="math notranslate nohighlight">\(x\)</span> is mapped from the input space into the feature space.</p>
 <p>The inner product of two inputs mapped to feature space defines a kernel via:</p>
 <div class="math notranslate nohighlight">
-\[k(x,x'):= \braket{\phi(x), \phi(x')}_\mathcal{F}\]</div>
-<p>Where <span class="math notranslate nohighlight">\(\braket{.,.}_\mathcal{F}\)</span> is the inner product defined on <span class="math notranslate nohighlight">\(\mathcal{F}\)</span>. <span id="id1">[<a class="reference internal" href="../references.html#id4" title="Maria Schuld and Nathan Killoran. Quantum machine learning in feature hilbert spaces. Phys. Rev. Lett., 122:040504, Feb 2019. doi:10.1103/PhysRevLett.122.040504.">SK19</a>]</span></p>
+\[k(x,x'):= \left&lt;\phi(x), \phi(x')\right&gt;_\mathcal{F}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(\left&lt;.,.\right&gt;_\mathcal{F}\)</span> is the inner product defined on <span class="math notranslate nohighlight">\(\mathcal{F}\)</span>. <span id="id1">[<a class="reference internal" href="../references.html#id4" title="Maria Schuld and Nathan Killoran. Quantum machine learning in feature hilbert spaces. Phys. Rev. Lett., 122:040504, Feb 2019. doi:10.1103/PhysRevLett.122.040504.">SK19</a>]</span></p>
 <p>In this case, as the inputs are being mapped into quantum states, the kernel defined is of the form:</p>
 <div class="math notranslate nohighlight">
-\[k(x,x')=\braket{\phi(x)|\phi(x')}\]</div>
+\[k(x,x')=\left&lt;\phi(x)|\phi(x')\right&gt;\]</div>
 <section id="encodings">
 <h2>Encodings<a class="headerlink" href="#encodings" title="Permalink to this headline">¶</a></h2>
 <p>To allow the expansion of the module in the future, an abstract class <cite>Encoding</cite> has been defined. To implement a new encoding, one must simply define a child class that implements the <cite>encoding</cite> method.</p>
