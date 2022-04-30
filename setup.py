@@ -27,7 +27,7 @@ URL = 'https://github.com/danmohedano/scikit-qlearn'
 LICENSE = 'MIT'
 DOWNLOAD_URL = URL
 PACKAGE_NAME = 'skqlearn'
-LONG_DESCRIPTION = read('README.md')
+LONG_DESCRIPTION = read('README.rst')
 
 # Arguments marked as "Required" below must be included for upload to PyPI.
 # Fields marked as "Optional" may be commented out.
@@ -39,7 +39,7 @@ if __name__ == '__main__':
         version=get_version(os.path.join(PACKAGE_NAME, '_version.py')),  # Required
         description=DESCRIPTION,  # Optional
         long_description=LONG_DESCRIPTION,  # Optional
-        long_description_content_type='text/markdown',  # Optional (see note above)
+        long_description_content_type='text/x-rst',  # Optional (see note above)
         url=URL,  # Optional
         author=MAINTAINER,  # Optional
         author_email=MAINTAINER_EMAIL,  # Optional
@@ -62,4 +62,8 @@ if __name__ == '__main__':
         install_requires=['qiskit',
                           'numpy',
                           'pytest'],  # Optional
+        project_urls={
+            'Documentation': 'https://danmohedano.github.io/scikit-qlearn/',
+            'Source': URL,
+        }
     )
