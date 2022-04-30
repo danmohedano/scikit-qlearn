@@ -69,8 +69,8 @@ class Encoding(ABC):
         # symmetric, therefore half of the matrix does not have to be computed
         gram = np.zeros([x.shape[0], y.shape[0]])
         for i in range(x.shape[0]):
-            for j in range(i, y.shape[0]):
+            for j in range(y.shape[0]):
                 gram[i, j] = inner_product_estimation(x_encoded[i, :],
                                                       y_encoded[j, :])
 
-        return np.maximum(gram, gram.transpose())
+        return gram
