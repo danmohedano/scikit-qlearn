@@ -62,11 +62,12 @@ def fidelity_estimation(
     the notion of similiarity then becomes harder to define.
 
     Args:
-        state_a (np.ndarray): State a described by its amplitudes.
-        state_b (np.ndarray): State b described by its amplitudes.
+        state_a (numpy.ndarray): State a described by its amplitudes.
+        state_b (numpy.ndarray): State b described by its amplitudes.
 
     Returns:
-        float: Estimation of the fidelity between the states.
+        float:
+            Estimation of the fidelity between the states.
 
         .. note::
            As it can be deduced from the expression, the probability of
@@ -200,13 +201,14 @@ def distance_estimation(
        &= \frac{1}{2Z}|\boldsymbol{a}-\boldsymbol{b}|^2
 
     Args:
-        a (np.ndarray): Input a.
+        a (numpy.ndarray): Input a.
         a_norm (float): L2-norm of input a.
-        b (np.ndarray): Input b.
+        b (numpy.ndarray): Input b.
         b_norm (float): L2-norm of input b.
 
     Returns:
-        float: Euclidean distance estimated.
+        float:
+            Euclidean distance estimated.
 
     Raises:
         ValueError: If there is a dimension disparity between the vectors.
@@ -279,11 +281,12 @@ def inner_product_estimation(
        &= \frac{1}{4} (2 + 2\left<\boldsymbol{a}|\boldsymbol{b}\right>)
 
     Args:
-        state_a (np.ndarray): State a described by its amplitudes.
-        state_b (np.ndarray): State b described by its amplitudes.
+        state_a (numpy.ndarray): State a described by its amplitudes.
+        state_b (numpy.ndarray): State b described by its amplitudes.
 
     Returns:
-        float: Estimation of the inner product between both quantum states.
+        float:
+            Estimation of the inner product between both quantum states.
     """
     if state_a.shape != state_b.shape:
         # Pad with 0s the amplitude vectors if necessary in order for both

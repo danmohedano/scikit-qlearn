@@ -20,10 +20,11 @@ class QSampleEncoding(Encoding):
         """Application of qsample encoding to the input distribution.
 
         Args:
-            x (np.ndarray of shape(n_probs)): Input probability distribution.
+            x (numpy.ndarray of shape(n_probs)): Input probability distribution.
 
         Returns:
-            np.ndarray: Quantum state described with an amplitude vector.
+            numpy.ndarray:
+                Quantum state described with an amplitude vector.
 
         Raises:
             ValueError: When an invalid input is provided.
@@ -46,10 +47,11 @@ class QSampleEncoding(Encoding):
         """Application of qsample encoding to the input distribution.
 
         Args:
-            x (np.ndarray of shape(n_probs)): Input probability distribution.
+            x (numpy.ndarray of shape(n_probs)): Input probability distribution.
 
         Returns:
-            np.ndarray: Quantum state described with an amplitude vector.
+            numpy.ndarray:
+                Quantum state described with an amplitude vector.
         """
         size = max(int(2 ** np.ceil(np.log2(x.shape[0]))), 2)
         state = np.zeros(size)

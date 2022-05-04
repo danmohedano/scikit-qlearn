@@ -26,12 +26,12 @@ class ExpandedAmplitudeEncoding(Encoding):
         extra feature/component with value 1.
 
         Args:
-            x (np.ndarray of shape (n_features,) or (n_samples, n_features)):
+            x (numpy.ndarray of shape (n_features) or (n_samples, n_features)):
                 Input. This can be a single sample of shape (n_features,) or a
                 dataset of shape (n_samples, n_features).
 
         Returns:
-            np.ndarray:
+            numpy.ndarray:
                 Quantum state described as an amplitude vector. If a
                 dataset is provided, the states are concatenated.
 
@@ -58,10 +58,11 @@ class ExpandedAmplitudeEncoding(Encoding):
         """Application of expanded amplitude encoding to a single sample.
 
         Args:
-            x (np.ndarray of shape (n_features,)): Input sample.
+            x (numpy.ndarray of shape (n_features,)): Input sample.
 
         Returns:
-            np.ndarray: Quantum state described as an amplitude vector.
+            numpy.ndarray:
+                Quantum state described as an amplitude vector.
         """
         # Encode the vector with an extra feature of value 1.0
         amp_encoding = AmplitudeEncoding()
@@ -76,10 +77,11 @@ class ExpandedAmplitudeEncoding(Encoding):
         """Application of expanded amplitude encoding to a dataset.
 
         Args:
-            x (np.ndarray of shape (n_samples, n_features)): Input dataset.
+            x (numpy.ndarray of shape (n_samples, n_features)): Input dataset.
 
         Returns:
-            np.ndarray: Quantum state described as an amplitude vector
+            numpy.ndarray:
+                Quantum state described as an amplitude vector
                 constructed by concatenating the quantum states for each
                 sample.
         """

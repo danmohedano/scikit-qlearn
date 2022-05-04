@@ -88,7 +88,8 @@ class JobHandler(metaclass=Singleton):
             circuits (QuantumCircuit or list): Quantum Circuit(s) to run.
 
         Returns:
-            Result: Result object.
+            Result:
+                Result object.
 
         Raises:
             ValueError: If no backend has been previously configured.

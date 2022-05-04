@@ -31,10 +31,11 @@ class AngleEncoding(Encoding):
         qubit.
 
         Args:
-            x (np.ndarray of shape (n_features,)): Input vector.
+            x (numpy.ndarray of shape (n_features,)): Input vector.
 
         Returns:
-            np.ndarray: Quantum state described with an amplitude vector.
+            numpy.ndarray:
+                Quantum state described with an amplitude vector.
 
         Raises:
             ValueError: When an invalid input is provided.
@@ -61,10 +62,11 @@ class AngleEncoding(Encoding):
         """Application of angle encoding to a single sample.
 
         Args:
-            x (np.ndarray of shape(n_features,)): Input sample.
+            x (numpy.ndarray of shape(n_features,)): Input sample.
 
         Returns:
-            np.ndarray: Quantum state described with an amplitude vector.
+            numpy.ndarray:
+                Quantum state described with an amplitude vector.
         """
         # Encoding of each feature into a qubit and use of Kronecker product to
         # build the amplitude vector.

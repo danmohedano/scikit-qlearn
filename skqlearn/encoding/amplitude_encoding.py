@@ -31,7 +31,7 @@ class AmplitudeEncoding(Encoding):
         """Application of amplitude encoding to the input.
 
         Args:
-            x (np.ndarray of shape (n_features,) or (n_samples, n_features)):
+            x (numpy.ndarray of shape (n_features) or (n_samples, n_features)):
                 Input. This can be a single sample of shape (n_features,) or a
                 dataset of shape (n_samples, n_features).
 
@@ -40,7 +40,7 @@ class AmplitudeEncoding(Encoding):
                    quantum state. Refer to `ExpandedAmplitudeEncoding` if the
                    data is not normalized.
         Returns:
-            np.ndarray:
+            numpy.ndarray:
                 Quantum state described as an amplitude vector. If a
                 dataset is provided, the states are concatenated.
 
@@ -79,10 +79,11 @@ class AmplitudeEncoding(Encoding):
         """Application of amplitude encoding to a single sample.
 
         Args:
-            x (np.ndarray of shape (n_features,)): Input sample.
+            x (numpy.ndarray of shape (n_features,)): Input sample.
 
         Returns:
-            np.ndarray: Quantum state described as an amplitude vector.
+            numpy.ndarray:
+                Quantum state described as an amplitude vector.
 
         Raises:
             ValueError: If the input is not normalized.
@@ -100,10 +101,11 @@ class AmplitudeEncoding(Encoding):
         """Application of amplitude encoding to a dataset.
 
         Args:
-            x (np.ndarray of shape (n_samples, n_features)): Input dataset.
+            x (numpy.ndarray of shape (n_samples, n_features)): Input dataset.
 
         Returns:
-            np.ndarray: Quantum state described as an amplitude vector
+            numpy.ndarray:
+                Quantum state described as an amplitude vector
                 constructed by concatenating the quantum states for each
                 sample.
         """

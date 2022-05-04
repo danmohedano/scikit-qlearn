@@ -34,11 +34,11 @@ class BasisEncoding(Encoding):
         In basis encoding, each classical bit is mapped into a qubit.
 
         Args:
-            x (int or np.ndarray): Either a single sample (int) or a dataset of
-                shape (n_samples,).
+            x (int or numpy.ndarray): Either a single sample (int) or a dataset
+                of shape (n_samples,).
 
         Returns:
-            np.ndarray:
+            numpy.ndarray:
                 Amplitude vector describing the input encoded into a
                 quantum state. If a dataset is provided, the quantum state will
                 be a superposition of the encodings of every sample in the
@@ -74,7 +74,8 @@ class BasisEncoding(Encoding):
                 determined by the next larger power of 2.
 
         Returns:
-            np.ndarray: Quantum state described as an amplitude vector.
+            numpy.ndarray:
+                Quantum state described as an amplitude vector.
         """
         if size == -1:
             # Calculate the closest larger power of 2 (equivalent 2 calculating
@@ -92,10 +93,11 @@ class BasisEncoding(Encoding):
         """Application of basis encoding to a dataset.
 
         Args:
-            x (np.ndarray of shape (n_samples,)): Input dataset.
+            x (numpy.ndarray of shape (n_samples,)): Input dataset.
 
         Returns:
-            np.ndarray: Quantum state described as an amplitude vector
+            numpy.ndarray:
+                Quantum state described as an amplitude vector
                 representing a superposition of all states in the dataset.
         """
         max_data = np.amax(x)

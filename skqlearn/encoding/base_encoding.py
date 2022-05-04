@@ -25,11 +25,11 @@ class Encoding(ABC):
         inner product.
 
         Args:
-            x (np.ndarray of shape (n_samples_1, n_features)): First input.
-            y (np.ndarray of shape (n_samples_2, n_features)): Second input.
+            x (numpy.ndarray of shape (n_samples_1, n_features)): First input.
+            y (numpy.ndarray of shape (n_samples_2, n_features)): Second input.
 
         Returns:
-            np.ndarray of shape (n_samples_1, n_samples_2):
+            numpy.ndarray of shape (n_samples_1, n_samples_2):
                 Resulting kernel matrix.
         """
         # Application of the encoding to the inputs
@@ -50,11 +50,11 @@ class Encoding(ABC):
         inner product.
 
         Args:
-            x (np.ndarray of shape (n_samples_1, n_features)): First input.
-            y (np.ndarray of shape (n_samples_2, n_features)): Second input.
+            x (numpy.ndarray of shape (n_samples_1, n_features)): First input.
+            y (numpy.ndarray of shape (n_samples_2, n_features)): Second input.
 
         Returns:
-            np.ndarray of shape (n_samples_1, n_samples_2):
+            numpy.ndarray of shape (n_samples_1, n_samples_2):
                 Resulting kernel matrix.
         """
         # Application of the encoding to the inputs
