@@ -51,7 +51,6 @@ from qiskit import *
 from skqlearn.clustering import *
 from skqlearn.encoding import *
 from skqlearn.gates import *
-from skqlearn.jobhandler import *
 from skqlearn.utils import *
 '''
 

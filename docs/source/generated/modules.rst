@@ -8,5 +8,4 @@ API Reference
    skqlearn.clustering
    skqlearn.encoding
    skqlearn.gates
-   skqlearn.jobhandler
    skqlearn.utils
