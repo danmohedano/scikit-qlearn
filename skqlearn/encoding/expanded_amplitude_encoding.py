@@ -1,6 +1,6 @@
-from .base_encoding import Encoding
 import numpy as np
 from .amplitude_encoding import AmplitudeEncoding
+from .base_encoding import Encoding
 
 
 class ExpandedAmplitudeEncoding(Encoding):
@@ -16,7 +16,25 @@ class ExpandedAmplitudeEncoding(Encoding):
 
     The encoding and produced kernel are identical to regular Amplitude
     Encoding's.
+
+    Attributes:
+        degree (int): Desired degree of the polynomial kernel defined by the
+            encoding. In turn, it defines the amount of copies of each input
+            vector that are encoded into the quantum state.
     """
+    def __init__(self, degree: int = 1):
+        """Construct a ExpandedAmplitudeEncoding object.
+
+        Args:
+            degree (int): Degree of the encoding (number of copies of the
+                states that will be created).
+
+        Raises:
+            ValueError: if the degree is smaller than 1.
+        """
+        if degree < 1:
+            raise ValueError(f'Invalid degree provided. Got {degree} instead.')
+        self.degree = degree
 
     def encoding(self, x: np.ndarray) -> np.ndarray:
         """Application of expanded amplitude encoding to the input.
@@ -65,10 +83,9 @@ class ExpandedAmplitudeEncoding(Encoding):
                 Quantum state described as an amplitude vector.
         """
         # Encode the vector with an extra feature of value 1.0
-        amp_encoding = AmplitudeEncoding()
         normalized_x = np.pad(x, (0, 1), constant_values=1.0)
         normalized_x /= np.linalg.norm(normalized_x)
-        state = amp_encoding.encoding(normalized_x)
+        state = AmplitudeEncoding(self.degree).encoding(normalized_x)
 
         # Normalize the vector to make it a viable quantum state
         return state
@@ -85,7 +102,10 @@ class ExpandedAmplitudeEncoding(Encoding):
                 constructed by concatenating the quantum states for each
                 sample.
         """
-        vector_size = max(int(2 ** np.ceil(np.log2(x.shape[1] + 1))), 2)
+        # Calculate the size of a single state, accounting for the degree
+        vector_size = max(int(2 ** np.ceil(np.log2(x.shape[1]))), 2)
+        vector_size = vector_size ** self.degree
+
         states = np.zeros(vector_size * x.shape[0])
         for i in range(x.shape[0]):
             states[i * vector_size:(i + 1) * vector_size] = \
