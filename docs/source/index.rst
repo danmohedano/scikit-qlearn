@@ -32,6 +32,7 @@ The latest version can also be manually installed by cloning the main branch of 
    :caption: Contents:
 
    generated/modules
+   generated/auto_tutorials/index
    references
    changelog
 

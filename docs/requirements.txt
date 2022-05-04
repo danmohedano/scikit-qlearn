@@ -1,5 +1,7 @@
 sphinx-rtd-theme
 sphinxcontrib-bibtex
+sphinx-gallery
+matplotlib
 jinja2<3.1.0
 qiskit
 qiskit[visualization]

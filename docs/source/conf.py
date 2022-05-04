@@ -41,6 +41,8 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.doctest',
     'sphinxcontrib.bibtex',
+    'sphinx_gallery.gen_gallery',
+    'sphinx.ext.intersphinx',
 ]
 
 autodoc_default_flags = ['members', 'inherited-members']
@@ -53,6 +55,26 @@ from skqlearn.encoding import *
 from skqlearn.gates import *
 from skqlearn.utils import *
 '''
+
+# Configuration of sphinx-gallery
+sphinx_gallery_conf = {
+    'examples_dirs': '../../tutorials',
+    'gallery_dirs': 'generated/auto_tutorials',
+    'reference_url': {
+         # The module you locally document uses None
+        'skqlearn': None,
+    },
+}
+
+# Configuration of intersphinx
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/{.major}'.format(
+        sys.version_info), None),
+    'numpy': ('https://docs.scipy.org/doc/numpy/', None),
+    'sklearn': ('https://scikit-learn.org/stable', None),
+    'matplotlib': ('https://matplotlib.org/', None),
+    'skqlearn': ('https://danmohedano.github.io/scikit-qlearn/', None),
+}
 
 autosummary_generate = True
 
