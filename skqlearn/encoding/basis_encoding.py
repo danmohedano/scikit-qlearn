@@ -86,7 +86,6 @@ class BasisEncoding(Encoding):
             else:
                 size = int(2 ** np.ceil(np.log2(x)))
 
-        print(size)
         state = np.zeros(size)
         state[x] = 1.0
 

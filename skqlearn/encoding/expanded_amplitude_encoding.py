@@ -111,4 +111,7 @@ class ExpandedAmplitudeEncoding(Encoding):
             states[i * vector_size:(i + 1) * vector_size] = \
                 self._encoding_single(x[i, :])
 
-        return np.array(states)
+        # Normalization of the concatenated vectors
+        states /= np.sqrt(x.shape[0])
+
+        return states
