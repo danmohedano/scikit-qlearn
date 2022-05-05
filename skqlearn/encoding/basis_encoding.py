@@ -81,7 +81,10 @@ class BasisEncoding(Encoding):
             # Calculate the closest larger power of 2 (equivalent 2 calculating
             # the amount of qubits necessary and the size of the amplitude
             # vector needed to represent that state)
-            size = max(int(2 ** np.ceil(np.log2(x))), 2)
+            if x < 2:
+                size = 2
+            else:
+                size = int(2 ** np.ceil(np.log2(x)))
 
         print(size)
         state = np.zeros(size)
@@ -99,7 +102,13 @@ class BasisEncoding(Encoding):
             numpy.ndarray:
                 Quantum state described as an amplitude vector
                 representing a superposition of all states in the dataset.
+
+        Raises:
+            ValueError: When an invalid input is provided.
         """
+        if np.amin(x) < 0:
+            raise ValueError('Invalid input provided.')
+
         max_data = np.amax(x)
         size = max(int(2 ** np.ceil(np.log2(max_data))), 2)
         state = np.zeros(size)
