@@ -1,16 +1,23 @@
 scikit-qlearn: Quantum Enhanced Machine Learning
 =================================================
 
+Quantum-enhanced Machine Learning focuses on the improvement of classical machine learning algorithms with the help of
+quantum subroutines.
+
 This package offers a variety of functions and classes related to quantum computing and quantum enhanced machine learning algorithms.
+From data encoding to clustering algorithms based on quantum subroutines. For further information on the features of the package, refer to the documentation.
 
-The package makes use of the open-source `Qiskit SDK <https://qiskit.org/>`_ for the execution of quantum processes.
+The package makes use of the open-source `Qiskit SDK <https://qiskit.org/>`_ for the execution of the quantum subroutines, which gives access
+to simulators and real quantum computers.
 
-It was orginally developed as part of my end-of-degree thesis for my Computer Engineering degree at UAM.
+The package was orginally developed as a proof of concept as part of my end-of-degree thesis for my Computer Engineering degree at UAM.
 
 Documentation
 =============
 
-The documentation is available at `danmohedano.github.io/scikit-qlearn/ <https://danmohedano.github.io/scikit-qlearn/>`_
+The documentation is available at `danmohedano.github.io/scikit-qlearn/ <https://danmohedano.github.io/scikit-qlearn/>`_.
+It includes detaild information of the classes and methods offered by the package, tutorials to guide the user and gathers
+the changes made on every version.
 
 Installation
 =============
@@ -31,5 +38,5 @@ Requirements
 --------------
 *scikit-qlearn* depends on the following packages:
 
-* `qiskit <https://github.com/Qiskit>`_ - Open-source SDK for working with quantum computers at the level of pulses, circuits, and algorithms.
+* `qiskit <https://github.com/Qiskit>`_ - Open-source SDK for working with quantum computers at the level of pulses, circuits, and algorithms
 * `numpy <https://github.com/numpy/numpy>`_ - The fundamental package for scientific computing with Python
