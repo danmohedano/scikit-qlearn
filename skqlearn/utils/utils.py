@@ -43,14 +43,20 @@ class JobHandler(metaclass=Singleton):
         >>> JobHandler().configure(AerSimulator(), 10000)
 
         And with remote systems and simulators accessed through your IBMQ
-        account.
+        account. The following code will raise an exception because an invalid
+        API token is provided. But describes the correct steps to follow.
 
         >>> from qiskit import IBMQ
-        >>> provider = IBMQ.enable_account('MY_API_TOKEN')
-        >>> backend = provider.get_backend('ibmq_qasm_simulator')
+        >>> try:
+        ...     provider = IBMQ.enable_account('MY_API_TOKEN')
+        ... except qiskit.providers.ibmq.api.exceptions.RequestsApiError:
+        ...     pass
+        >>> try:
+        ...     backend = provider.get_backend('ibmq_qasm_simulator')
+        ... except NameError:
+        ...     backend = None
         >>> JobHandler().configure(backend, 10000)
-        >>> backend = provider.get_backend('ibmq_montreal')
-        >>> JobHandler().configure(backend, 10000)
+
     """
     def __init__(self):
         self.backend = None

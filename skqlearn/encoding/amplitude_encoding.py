@@ -87,7 +87,7 @@ class AmplitudeEncoding(Encoding):
 
             >>> a = np.array([0.0, 1.0, 0.0])
             >>> AmplitudeEncoding().encoding(a)
-            array([0.0, 1.0, 0.0, 0.0])
+            array([0., 1., 0., 0.])
 
             >>> a = np.array([0.0, 1.0, 0.2, 0.0])
             >>> AmplitudeEncoding().encoding(a)

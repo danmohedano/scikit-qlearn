@@ -43,7 +43,7 @@ class AngleEncoding(Encoding):
         Examples:
             >>> a = np.array([0.0])
             >>> AngleEncoding().encoding(a)
-            array([1.0, 0.0])
+            array([1., 0.])
 
             >>> a = np.array([np.pi / 2, 0])
             >>> AngleEncoding().encoding(a)
