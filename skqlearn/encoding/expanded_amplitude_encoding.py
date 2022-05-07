@@ -83,7 +83,7 @@ class ExpandedAmplitudeEncoding(Encoding):
                 Quantum state described as an amplitude vector.
         """
         # Encode the vector with an extra feature of value 1.0
-        normalized_x = np.pad(x, (0, 1), constant_values=1.0)
+        normalized_x = np.pad(x.astype(float), (0, 1), constant_values=1.0)
         normalized_x /= np.linalg.norm(normalized_x)
         state = AmplitudeEncoding(self.degree).encoding(normalized_x)
 

@@ -84,7 +84,7 @@ class BasisEncoding(Encoding):
             if x < 2:
                 size = 2
             else:
-                size = int(2 ** np.ceil(np.log2(x)))
+                size = int(2 ** np.ceil(np.log2(x + 1)))
 
         state = np.zeros(size)
         state[x] = 1.0
@@ -109,7 +109,7 @@ class BasisEncoding(Encoding):
             raise ValueError('Invalid input provided.')
 
         max_data = np.amax(x)
-        size = max(int(2 ** np.ceil(np.log2(max_data))), 2)
+        size = max(int(2 ** np.ceil(np.log2(max_data + 1))), 2)
         state = np.zeros(size)
 
         for i in range(x.shape[0]):

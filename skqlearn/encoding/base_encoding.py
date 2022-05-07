@@ -36,6 +36,14 @@ class Encoding(ABC):
         x_samples_list = [self.encoding(x[i, :]) for i in range(x.shape[0])]
         y_samples_list = [self.encoding(y[i, :]) for i in range(y.shape[0])]
 
+        # Pad with zeros if dimensions differ
+        x_size = max([x.shape[0] for x in x_samples_list])
+        y_size = max([y.shape[0] for y in y_samples_list])
+        x_samples_list = [np.pad(x, (0, x_size - x.shape[0]))
+                          for x in x_samples_list]
+        y_samples_list = [np.pad(y, (0, y_size - y.shape[0]))
+                          for y in y_samples_list]
+
         x_encoded = np.vstack(x_samples_list)
         y_encoded = np.vstack(y_samples_list)
 
@@ -60,6 +68,14 @@ class Encoding(ABC):
         # Application of the encoding to the inputs
         x_samples_list = [self.encoding(x[i, :]) for i in range(x.shape[0])]
         y_samples_list = [self.encoding(y[i, :]) for i in range(y.shape[0])]
+
+        # Pad with zeros if dimensions differ
+        x_size = max([x.shape[0] for x in x_samples_list])
+        y_size = max([y.shape[0] for y in y_samples_list])
+        x_samples_list = [np.pad(x, (0, x_size - x.shape[0]))
+                          for x in x_samples_list]
+        y_samples_list = [np.pad(y, (0, y_size - y.shape[0]))
+                          for y in y_samples_list]
 
         x_encoded = np.vstack(x_samples_list)
         y_encoded = np.vstack(y_samples_list)
