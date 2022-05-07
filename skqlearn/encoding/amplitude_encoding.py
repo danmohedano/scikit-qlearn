@@ -24,14 +24,45 @@ class AmplitudeEncoding(Encoding):
        k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
        \psi_{\boldsymbol{x'}}\right> = \boldsymbol{x}^T\boldsymbol{x'}
 
+    By, instead, mapping the input to :math:`d` copies of an amplitude
+    encoded quantum state, a polynomial kernel can be defined:
+
+    .. math::
+       \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>
+       ^{\bigotimes d}
+
+    .. math::
+       k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
+       \psi_{\boldsymbol{x'}}\right> \bigotimes ... \bigotimes
+       \left<\psi_{\boldsymbol{x}}|\psi_{\boldsymbol{x'}}\right> =
+       (\boldsymbol{x}^T\boldsymbol{x'})^d
+
     A dataset can be encoded by concatenating all the input vectors.
+
+    Attributes:
+        degree (int): Desired degree of the polynomial kernel defined by the
+            encoding. In turn, it defines the amount of copies of each input
+            vector that are encoded into the quantum state.
     """
+    def __init__(self, degree: int = 1):
+        """Construct a AmplitudeEncoding object.
+
+        Args:
+            degree (int): Degree of the encoding (number of copies of the
+                states that will be created).
+
+        Raises:
+            ValueError: if the degree is smaller than 1.
+        """
+        if degree < 1:
+            raise ValueError(f'Invalid degree provided. Got {degree} instead.')
+        self.degree = degree
 
     def encoding(self, x: np.ndarray) -> np.ndarray:
         """Application of amplitude encoding to the input.
 
         Args:
-            x (np.ndarray of shape (n_features,) or (n_samples, n_features)):
+            x (numpy.ndarray of shape (n_features) or (n_samples, n_features)):
                 Input. This can be a single sample of shape (n_features,) or a
                 dataset of shape (n_samples, n_features).
 
@@ -40,8 +71,9 @@ class AmplitudeEncoding(Encoding):
                    quantum state. Refer to `ExpandedAmplitudeEncoding` if the
                    data is not normalized.
         Returns:
-            np.ndarray:
-                Quantum state described as an amplitude vector. If a
+            numpy.ndarray:
+                Quantum state described as an amplitude vector with the amount
+                of copies of the state indicated in the constructor. If a
                 dataset is provided, the states are concatenated.
 
         Raises:
@@ -55,7 +87,7 @@ class AmplitudeEncoding(Encoding):
 
             >>> a = np.array([0.0, 1.0, 0.0])
             >>> AmplitudeEncoding().encoding(a)
-            array([0.0, 1.0, 0.0, 0.0])
+            array([0., 1., 0., 0.])
 
             >>> a = np.array([0.0, 1.0, 0.2, 0.0])
             >>> AmplitudeEncoding().encoding(a)
@@ -79,10 +111,11 @@ class AmplitudeEncoding(Encoding):
         """Application of amplitude encoding to a single sample.
 
         Args:
-            x (np.ndarray of shape (n_features,)): Input sample.
+            x (numpy.ndarray of shape (n_features,)): Input sample.
 
         Returns:
-            np.ndarray: Quantum state described as an amplitude vector.
+            numpy.ndarray:
+                Quantum state described as an amplitude vector.
 
         Raises:
             ValueError: If the input is not normalized.
@@ -93,24 +126,38 @@ class AmplitudeEncoding(Encoding):
 
         size = max(int(2 ** np.ceil(np.log2(x.shape[0]))), 2)
 
-        # Return array with padded 0s at the end
-        return np.pad(x, (0, size - x.shape[0]))
+        # Pad 0s at the end of the state to make it whole qubit-sized
+        base_state = np.pad(x, (0, size - x.shape[0]))
+
+        # Create the amount of copies defined by degree
+        state = 1
+        for i in range(self.degree):
+            state = np.kron(state, base_state)
+
+        return state
 
     def _encoding_dataset(self, x: np.ndarray) -> np.ndarray:
         """Application of amplitude encoding to a dataset.
 
         Args:
-            x (np.ndarray of shape (n_samples, n_features)): Input dataset.
+            x (numpy.ndarray of shape (n_samples, n_features)): Input dataset.
 
         Returns:
-            np.ndarray: Quantum state described as an amplitude vector
+            numpy.ndarray:
+                Quantum state described as an amplitude vector
                 constructed by concatenating the quantum states for each
                 sample.
         """
+        # Calculate the size of a single state, accounting for the degree
         vector_size = max(int(2 ** np.ceil(np.log2(x.shape[1]))), 2)
+        vector_size = vector_size ** self.degree
+
         states = np.zeros(vector_size * x.shape[0])
         for i in range(x.shape[0]):
             states[i * vector_size:(i + 1) * vector_size] = \
                 self._encoding_single(x[i, :])
 
-        return np.array(states)
+        # Normalization of the concatenated vectors
+        states /= np.sqrt(x.shape[0])
+
+        return states

@@ -20,20 +20,6 @@ def multiqubit_cswap(
         >>> circ = QuantumCircuit(q_reg)
         >>> circ.append(multiqubit_cswap(2, 3), q_reg)
         <qiskit.circuit.instructionset.InstructionSet object at ...
-        >>> print(circ.decompose())
-        <BLANKLINE>
-        q0_0: ────X─
-                  │
-        q0_1: ─X──┼─
-               │  │
-        q0_2: ─┼──┼─
-               │  │
-        q0_3: ─┼──X─
-               │  │
-        q0_4: ─X──┼─
-               │  │
-        q0_5: ─■──■─
-        <BLANKLINE>
 
         >>> multiqubit_cswap(0, 4)
         Traceback (most recent call last):

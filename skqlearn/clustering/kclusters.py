@@ -14,9 +14,10 @@ class GenericClustering(ABC):
     Euclidean or :math:`L^2` norm.
 
     Attributes:
-        cluster_centers (np.ndarray of shape (n_clusters, n_features)):
+        cluster_centers (numpy.ndarray of shape (n_clusters, n_features)):
             Coordinates for the cluster centroids.
-        labels (np.ndarray of shape (n_samples,)): Labels of each input sample.
+        labels (numpy.ndarray of shape (n_samples,)): Labels of each input
+            sample.
         n_features_in (int): Number of features seen during fit.
         n_iter (int): Number of iterations run.
     """
@@ -85,10 +86,10 @@ class GenericClustering(ABC):
         """Computation of initial centroids.
 
         Args:
-            x (np.ndarray of shape (n_samples, n_features)): Input samples.
+            x (numpy.ndarray of shape (n_samples, n_features)): Input samples.
 
         Returns:
-            np.ndarray of shape (n_clusters, n_features):
+            numpy.ndarray of shape (n_clusters, n_features):
                 Initial cluster centroids.
 
         Raises:
@@ -115,15 +116,16 @@ class GenericClustering(ABC):
         """Euclidean distance between two data points.
 
         Args:
-            a: Input a.
-            a_norm: L2-norm of input a. Not used, defined to conform to
+            a (numpy.ndarray of shape (n_features,)): Input a.
+            a_norm (float): L2-norm of input a. Not used, defined to conform to
                 distance_estimation's prototype.
-            b: Input b.
-            b_norm: L2-norm of input b. Not used, defined to conform to
+            b (numpy.ndarray of shape (n_features,)): Input b.
+            b_norm (float): L2-norm of input b. Not used, defined to conform to
                 distance_estimation's prototype.
 
         Returns:
-            float: Euclidean distance between a and b.
+            float:
+                Euclidean distance between a and b.
         """
         return np.linalg.norm(a - b)
 
@@ -137,16 +139,16 @@ class GenericClustering(ABC):
         """Update function for the centroids.
 
         Args:
-            x (np.ndarray of shape (n_samples, n_features)): Input samples.
-            x_norms (np.ndarray of shape (n_samples)): L2-norm of every
+            x (numpy.ndarray of shape (n_samples, n_features)): Input samples.
+            x_norms (numpy.ndarray of shape (n_samples)): L2-norm of every
                 instance. Only needed if quantum estimation is used.
             cluster_assignments (dict): Index assignments for each cluster of
                 each instance index. The dictionary is of the form
                 {cluster_index: [instance_indices]}
 
         Returns:
-            np.ndarray of shape (n_clusters, n_features): Updated cluster
-                centroids.
+            numpy.ndarray of shape (n_clusters, n_features):
+                Updated cluster centroids.
         """
         pass
 
@@ -161,17 +163,17 @@ class GenericClustering(ABC):
         determines the closest one.
 
         Args:
-            x (np.ndarray of shape (n_samples, n_features)): Input data.
-            x_norms (np.ndarray of shape (n_samples)): L2-norm of every
+            x (numpy.ndarray of shape (n_samples, n_features)): Input data.
+            x_norms (numpy.ndarray of shape (n_samples)): L2-norm of every
                 instance. Only needed if quantum estimation is used.
-            centroids (np.ndarray of shape (n_clusters, n_features)): Cluster
-                centroids.
-            centroid_norms (np.ndarray of shape (n_clusters)): L2-norm of
+            centroids (numpy.ndarray of shape (n_clusters, n_features)):
+                Cluster centroids.
+            centroid_norms (numpy.ndarray of shape (n_clusters)): L2-norm of
                 centroids. Only needed if quantum estimation is used.
 
         Returns:
-            np.ndarray of shape (n_samples,): Label for each of the instances
-                provided
+            numpy.ndarray of shape (n_samples,):
+                Label for each of the instances provided.
 
         Raises:
             ValueError: If dimension mismatch between x and centroids, x and
@@ -222,11 +224,12 @@ class GenericClustering(ABC):
         """Compute clustering of provided data.
 
         Args:
-            x (np.ndarray of shape (n_samples, n_features)): Training data to
-                cluster.
+            x (numpy.ndarray of shape (n_samples, n_features)): Training data
+                to cluster.
 
         Returns:
-            self (object): Fitted estimator.
+            self (GenericClustering):
+                Fitted estimator.
         """
         centroids = self._init_centroids(x)
         x_labels = np.ones(x.shape[0], dtype=int) * -1
@@ -304,11 +307,11 @@ class GenericClustering(ABC):
            It is equivalent to calling `fit(x)` followed by `predict(x)`.
 
         Args:
-            x (np.ndarray of shape (n_samples, n_features)): Training data to
-                cluster and predict.
+            x (numpy.ndarray of shape (n_samples, n_features)): Training data
+                to cluster and predict.
 
         Returns:
-            np.ndarray of shape (n_samples,):
+            numpy.ndarray of shape (n_samples,):
                 Index of the cluster each sample belongs to.
         """
         return self.fit(x).predict(x)
@@ -320,10 +323,11 @@ class GenericClustering(ABC):
         """Assigns a label to each input sample based on the closest centroid.
 
         Args:
-            x (np.ndarray of shape (n_samples, n_features)): Data to predict.
+            x (numpy.ndarray of shape (n_samples, n_features)): Data to
+                predict.
 
         Returns:
-            np.ndarray of shape (n_samples,):
+            numpy.ndarray of shape (n_samples,):
                 Index of the cluster each sample belongs to.
         """
         x_norms = [np.linalg.norm(x[i, :]) for i in range(x.shape[0])]

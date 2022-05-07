@@ -17,9 +17,10 @@ class KMeans(GenericClustering):
     centroid :math:`\boldsymbol{C}_i`.
 
     Attributes:
-        cluster_centers (np.ndarray of shape (n_clusters, n_features)):
+        cluster_centers (numpy.ndarray of shape (n_clusters, n_features)):
             Coordinates for the cluster centroids.
-        labels (np.ndarray of shape (n_samples,)): Labels of each input sample.
+        labels (numpy.ndarray of shape (n_samples,)): Labels of each input
+            sample.
         n_features_in (int): Number of features seen during fit.
         n_iter (int): Number of iterations run.
     """
@@ -35,16 +36,16 @@ class KMeans(GenericClustering):
         cluster.
 
         Args:
-            x (np.ndarray of shape (n_samples, n_features)): Input samples.
-            x_norms (np.ndarray of shape (n_samples)): L2-norm of every
+            x (numpy.ndarray of shape (n_samples, n_features)): Input samples.
+            x_norms (numpy.ndarray of shape (n_samples)): L2-norm of every
                 instance. Only needed if quantum estimation is used.
             cluster_assignments (dict): Index assignments for each cluster of
                 each instance index. The dictionary is of the form
                 {cluster_index: [instance_indices]}
 
         Returns:
-            np.ndarray of shape (n_clusters, n_features): Updated cluster
-                centroids.
+            numpy.ndarray of shape (n_clusters, n_features):
+                Updated cluster centroids.
         """
         centroids = np.zeros((self.n_clusters, x.shape[1]))
         for i in range(self.n_clusters):

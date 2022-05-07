@@ -1,7 +1,121 @@
 import numpy as np
 from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
+from qiskit.providers import Backend
+from qiskit.result import Result
+import qiskit
+from typing import Union
 from skqlearn.gates import multiqubit_cswap
-from skqlearn.jobhandler import JobHandler
+
+
+class Singleton(type):
+    """Singleton class implementation.
+    """
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args,
+                                                                 **kwargs)
+        return cls._instances[cls]
+
+
+class JobHandler(metaclass=Singleton):
+    """Singleton class to contain the configuration for quantum executions.
+
+    All quantum subroutines implemented in the package execute the quantum
+    circuits through this handler. Therefore, before executing any of them,
+    a backend should be correctly configured.
+
+    Attributes:
+        backend (qiskit.proviers.Backend): Backend where the quantum circuits
+            will be run.
+        shots (int): Amount of shots (repetitions) in the execution of the
+            circuits.
+        run_options (dict): Dictionary to provide the backend with extra
+            options when executing the `run` method.
+        compiled_circuits (Union[QuantumCircuit, List[QuantumCircuit]]):
+            Compiled circuits in the last `run_job` batch.
+
+    Examples:
+        The JobHandler can be configured with local simulators.
+
+        >>> from qiskit.providers.aer import AerSimulator
+        >>> JobHandler().configure(AerSimulator(), 10000)
+
+        And with remote systems and simulators accessed through your IBMQ
+        account. The following code will raise an exception because an invalid
+        API token is provided. But describes the correct steps to follow.
+
+        >>> from qiskit import IBMQ
+        >>> try:
+        ...     provider = IBMQ.enable_account('MY_API_TOKEN')
+        ... except qiskit.providers.ibmq.api.exceptions.RequestsApiError:
+        ...     pass
+        >>> try:
+        ...     backend = provider.get_backend('ibmq_qasm_simulator')
+        ... except NameError:
+        ...     backend = None
+        >>> JobHandler().configure(backend, 10000)
+
+    """
+    def __init__(self):
+        self.backend = None
+        self.run_options = {}
+        self.shots = None
+        self.compiled_circuits = None
+
+    def configure(
+            self,
+            backend: Backend,
+            shots: int,
+            run_options: dict = {},
+    ):
+        """Configuration of the job handler.
+
+        Args:
+            backend (Backend): Desired backend to use when
+                running circuits (either simulator or real backends).
+            shots (int): Number of executions.
+            run_options (dict): Keyword dictionary used in the run method as
+                run time backend options.
+
+        Raises:
+            ValueError: If a non-positive amount of shots is provided.
+        """
+        if shots < 1:
+            raise ValueError('Invalid value for shots provided. Expected '
+                             f'positive integer, got {shots} instead.')
+        self.backend = backend
+        self.shots = shots
+        self.run_options = run_options
+
+    def run_job(
+            self,
+            circuits: Union[QuantumCircuit, list]
+    ) -> Result:
+        """Runs the provided circuit with the configured backend.
+
+        Args:
+            circuits (QuantumCircuit or list): Quantum Circuit(s) to run.
+
+        Returns:
+            Result:
+                Result object.
+
+        Raises:
+            ValueError: If no backend has been previously configured.
+        """
+        if not self.backend:
+            raise ValueError('Backend not configured in the JobHandler. Must '
+                             'configured before trying to run quantum '
+                             'operations.')
+
+        self.compiled_circuits = qiskit.transpile(circuits, self.backend)
+        job = self.backend.run(self.compiled_circuits,
+                               shots=self.shots,
+                               **self.run_options)
+
+        return job.result()
 
 
 def fidelity_estimation(
@@ -62,11 +176,12 @@ def fidelity_estimation(
     the notion of similiarity then becomes harder to define.
 
     Args:
-        state_a (np.ndarray): State a described by its amplitudes.
-        state_b (np.ndarray): State b described by its amplitudes.
+        state_a (numpy.ndarray): State a described by its amplitudes.
+        state_b (numpy.ndarray): State b described by its amplitudes.
 
     Returns:
-        float: Estimation of the fidelity between the states.
+        float:
+            Estimation of the fidelity between the states.
 
         .. note::
            As it can be deduced from the expression, the probability of
@@ -120,7 +235,10 @@ def fidelity_estimation(
     shots = job_handler.shots
     comp = job_handler.compiled_circuits
 
-    return max(2.0 * result.get_counts(comp)['0'] / shots - 1.0, 0)
+    try:
+        return max(2.0 * result.get_counts(comp)['0'] / shots - 1.0, 0)
+    except KeyError:
+        return -1.0
 
 
 def distance_estimation(
@@ -200,13 +318,14 @@ def distance_estimation(
        &= \frac{1}{2Z}|\boldsymbol{a}-\boldsymbol{b}|^2
 
     Args:
-        a (np.ndarray): Input a.
+        a (numpy.ndarray): Input a.
         a_norm (float): L2-norm of input a.
-        b (np.ndarray): Input b.
+        b (numpy.ndarray): Input b.
         b_norm (float): L2-norm of input b.
 
     Returns:
-        float: Euclidean distance estimated.
+        float:
+            Euclidean distance estimated.
 
     Raises:
         ValueError: If there is a dimension disparity between the vectors.
@@ -279,11 +398,12 @@ def inner_product_estimation(
        &= \frac{1}{4} (2 + 2\left<\boldsymbol{a}|\boldsymbol{b}\right>)
 
     Args:
-        state_a (np.ndarray): State a described by its amplitudes.
-        state_b (np.ndarray): State b described by its amplitudes.
+        state_a (numpy.ndarray): State a described by its amplitudes.
+        state_b (numpy.ndarray): State b described by its amplitudes.
 
     Returns:
-        float: Estimation of the inner product between both quantum states.
+        float:
+            Estimation of the inner product between both quantum states.
     """
     if state_a.shape != state_b.shape:
         # Pad with 0s the amplitude vectors if necessary in order for both
@@ -316,4 +436,7 @@ def inner_product_estimation(
     shots = job_handler.shots
     comp = job_handler.compiled_circuits
 
-    return 2.0 * result.get_counts(comp)['0'] / shots - 1.0
+    try:
+        return 2.0 * result.get_counts(comp)['0'] / shots - 1.0
+    except KeyError:
+        return -1.0

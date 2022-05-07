@@ -5,7 +5,7 @@ import numpy as np
 class AngleEncoding(Encoding):
     r"""Angle encoding method. :cite:`LaRose_2020`
 
-    In angle encoding, each component/feature of the input vector
+    In angle encoding, each component of the input vector
     :math:`\boldsymbol{x} \in \mathbb{R}^N` is mapped to a qubit, defining the
     encoding feature map as:
 
@@ -20,8 +20,8 @@ class AngleEncoding(Encoding):
 
     .. math::
        k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
-       \psi_{\boldsymbol{x'}}\right> = \prod_{i=1}^{N}\sin{x_i}\sin{x'_i} + \cos{x_i}
-       \cos{x'_i}=\prod_{i=1}^{N}\cos{(x_i-x'_i)}
+       \psi_{\boldsymbol{x'}}\right> = \prod_{i=1}^{N}\sin{x_i}\sin{x'_i} +
+       \cos{x_i}\cos{x'_i}=\prod_{i=1}^{N}\cos{(x_i-x'_i)}
     """
 
     def encoding(self, x: np.ndarray) -> np.ndarray:
@@ -31,10 +31,11 @@ class AngleEncoding(Encoding):
         qubit.
 
         Args:
-            x (np.ndarray of shape (n_features,)): Input vector.
+            x (numpy.ndarray of shape (n_features,)): Input vector.
 
         Returns:
-            np.ndarray: Quantum state described with an amplitude vector.
+            numpy.ndarray:
+                Quantum state described with an amplitude vector.
 
         Raises:
             ValueError: When an invalid input is provided.
@@ -42,7 +43,7 @@ class AngleEncoding(Encoding):
         Examples:
             >>> a = np.array([0.0])
             >>> AngleEncoding().encoding(a)
-            array([1.0, 0.0])
+            array([1., 0.])
 
             >>> a = np.array([np.pi / 2, 0])
             >>> AngleEncoding().encoding(a)
@@ -61,10 +62,11 @@ class AngleEncoding(Encoding):
         """Application of angle encoding to a single sample.
 
         Args:
-            x (np.ndarray of shape(n_features,)): Input sample.
+            x (numpy.ndarray of shape(n_features,)): Input sample.
 
         Returns:
-            np.ndarray: Quantum state described with an amplitude vector.
+            numpy.ndarray:
+                Quantum state described with an amplitude vector.
         """
         # Encoding of each feature into a qubit and use of Kronecker product to
         # build the amplitude vector.

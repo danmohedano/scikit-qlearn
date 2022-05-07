@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
 from skqlearn.clustering import KMedians, KMeans
-from skqlearn.jobhandler import JobHandler
+from skqlearn.utils import JobHandler
 from qiskit.providers.aer import AerSimulator
 
 

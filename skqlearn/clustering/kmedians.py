@@ -18,9 +18,10 @@ class KMedians(GenericClustering):
        \boldsymbol{x}_j||_{2}
 
     Attributes:
-        cluster_centers (np.ndarray of shape (n_clusters, n_features)):
+        cluster_centers (numpy.ndarray of shape (n_clusters, n_features)):
             Coordinates for the cluster centroids.
-        labels (np.ndarray of shape (n_samples,)): Labels of each input sample.
+        labels (numpy.ndarray of shape (n_samples,)): Labels of each input
+            sample.
         n_features_in (int): Number of features seen during fit.
         n_iter (int): Number of iterations run.
     """
@@ -37,16 +38,16 @@ class KMedians(GenericClustering):
         distance to all other instances in the cluster (aggregated).
 
         Args:
-            x (np.ndarray of shape (n_samples, n_features)): Input samples.
-            x_norms (np.ndarray of shape (n_samples)): L2-norm of every
+            x (numpy.ndarray of shape (n_samples, n_features)): Input samples.
+            x_norms (numpy.ndarray of shape (n_samples)): L2-norm of every
                 instance. Only needed if quantum estimation is used.
             cluster_assignments (dict): Index assignments for each cluster of
                 each instance index. The dictionary is of the form
                 {cluster_index: [instance_indices]}
 
         Returns:
-            np.ndarray of shape (n_clusters, n_features): Updated cluster
-                centroids.
+            numpy.ndarray of shape (n_clusters, n_features):
+                Updated cluster centroids.
         """
         if self.distance_calculation_method == 'classic':
             distance_fn = self._distance

@@ -19,12 +19,17 @@ class TestAmplitudeEncoding:
     def encoding_method(self):
         return AmplitudeEncoding()
 
-    @pytest.mark.parametrize('value_in, expected_out',
+    @pytest.mark.parametrize('value_in, degree, expected_out',
                              [
                                  [np.array([0.5, 0.5, 0.5, 0.5]),
+                                  1,
+                                  np.array([0.5, 0.5, 0.5, 0.5])],
+                                 [np.array([1/np.sqrt(2), 1/np.sqrt(2)]),
+                                  2,
                                   np.array([0.5, 0.5, 0.5, 0.5])],
                              ])
-    def test_correct(self, value_in, expected_out, encoding_method):
+    def test_correct(self, value_in, degree, expected_out, encoding_method):
+        encoding_method.degree = degree
         regular_test_correct(value_in, expected_out, encoding_method)
 
     @pytest.mark.parametrize('value_in',
@@ -67,6 +72,7 @@ class TestBasisEncoding:
 
     @pytest.mark.parametrize('value_in, expected_out',
                              [
+                                 [0, np.array([1, 0])],
                                  [1, np.array([0, 1])],
                                  [np.array([0, 1]),
                                   np.array([1 / np.sqrt(2), 1 / np.sqrt(2)])]
@@ -89,12 +95,17 @@ class TestExpandedAmplitudeEncoding:
     def encoding_method(self):
         return ExpandedAmplitudeEncoding()
 
-    @pytest.mark.parametrize('value_in, expected_out',
+    @pytest.mark.parametrize('value_in, degree, expected_out',
                              [
                                  [np.array([1.0, 1.0, 1.0]),
+                                  1,
+                                  np.array([0.5, 0.5, 0.5, 0.5])],
+                                 [np.array([1.0]),
+                                  2,
                                   np.array([0.5, 0.5, 0.5, 0.5])],
                              ])
-    def test_correct(self, value_in, expected_out, encoding_method):
+    def test_correct(self, value_in, degree, expected_out, encoding_method):
+        encoding_method.degree = degree
         regular_test_correct(value_in, expected_out, encoding_method)
 
     @pytest.mark.parametrize('value_in',
