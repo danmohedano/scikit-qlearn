@@ -229,7 +229,10 @@ def fidelity_estimation(
     shots = job_handler.shots
     comp = job_handler.compiled_circuits
 
-    return max(2.0 * result.get_counts(comp)['0'] / shots - 1.0, 0)
+    try:
+        return max(2.0 * result.get_counts(comp)['0'] / shots - 1.0, 0)
+    except KeyError:
+        return -1.0
 
 
 def distance_estimation(
@@ -427,4 +430,7 @@ def inner_product_estimation(
     shots = job_handler.shots
     comp = job_handler.compiled_circuits
 
-    return 2.0 * result.get_counts(comp)['0'] / shots - 1.0
+    try:
+        return 2.0 * result.get_counts(comp)['0'] / shots - 1.0
+    except KeyError:
+        return -1.0
