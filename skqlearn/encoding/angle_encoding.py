@@ -5,7 +5,7 @@ import numpy as np
 class AngleEncoding(Encoding):
     r"""Angle encoding method. :cite:`LaRose_2020`
 
-    In angle encoding, each component/feature of the input vector
+    In angle encoding, each component of the input vector
     :math:`\boldsymbol{x} \in \mathbb{R}^N` is mapped to a qubit, defining the
     encoding feature map as:
 
@@ -20,8 +20,8 @@ class AngleEncoding(Encoding):
 
     .. math::
        k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
-       \psi_{\boldsymbol{x'}}\right> = \prod_{i=1}^{N}\sin{x_i}\sin{x'_i} + \cos{x_i}
-       \cos{x'_i}=\prod_{i=1}^{N}\cos{(x_i-x'_i)}
+       \psi_{\boldsymbol{x'}}\right> = \prod_{i=1}^{N}\sin{x_i}\sin{x'_i} +
+       \cos{x_i}\cos{x'_i}=\prod_{i=1}^{N}\cos{(x_i-x'_i)}
     """
 
     def encoding(self, x: np.ndarray) -> np.ndarray:

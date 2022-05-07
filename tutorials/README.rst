@@ -1,4 +1,4 @@
 Tutorials
 =========
 
-Step by step guide on how to use the main functionalities of the package.
+Step by step tutorials on how to use the main functionalities of the package.

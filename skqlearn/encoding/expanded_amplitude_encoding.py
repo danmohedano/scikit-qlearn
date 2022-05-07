@@ -8,11 +8,11 @@ class ExpandedAmplitudeEncoding(Encoding):
 
     This encoding method tries to solve the normalization problem in regular
     Amplitude Encoding. If non-normalized data is normalized for use on
-    Amplitude Encoding the data will lose one dimension of information. For
+    Amplitude Encoding, the data will lose one dimension of information. For
     example, if a 2D point is normalized, it will be mapped into the unit
     circle, a 1D shape. By adding an extra component to
     :math:`\boldsymbol{x}\in\mathbb{R}^N` with a value of :math:`1`,
-    :math:`x_{N+1}=1`, and then normalizing, the information loss is avoided.
+    :math:`x_{N+1}=1`, and then normalizing, the information loss is mitigated.
 
     The encoding and produced kernel are identical to regular Amplitude
     Encoding's.
