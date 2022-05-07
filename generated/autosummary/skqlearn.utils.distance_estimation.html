@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>distance_estimation &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -30,7 +34,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.0.1
+                1.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -40,14 +44,18 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Contents:</span></p>
+              <p><span class="caption-text">Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../auto_tutorials/index.html">Tutorials</a></li>
+</ul>
+<p><span class="caption-text">Further Information</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../modules.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../skqlearn.clustering.html">Clustering</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../skqlearn.encoding.html">Data Encoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../skqlearn.gates.html">Gates</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../skqlearn.jobhandler.html">Job Handler</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../skqlearn.utils.html">Utils</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="skqlearn.utils.JobHandler.html">JobHandler</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skqlearn.utils.fidelity_estimation.html">fidelity_estimation</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">distance_estimation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skqlearn.utils.inner_product_estimation.html">inner_product_estimation</a></li>
@@ -55,8 +63,8 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
 </ul>
 
         </div>
@@ -148,20 +156,20 @@ amplitudes are also real.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> (<em>np.ndarray</em>) – Input a.</p></li>
-<li><p><strong>a_norm</strong> (<em>float</em>) – L2-norm of input a.</p></li>
-<li><p><strong>b</strong> (<em>np.ndarray</em>) – Input b.</p></li>
-<li><p><strong>b_norm</strong> (<em>float</em>) – L2-norm of input b.</p></li>
+<li><p><strong>a</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><em>numpy.ndarray</em></a>) – Input a.</p></li>
+<li><p><strong>a_norm</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – L2-norm of input a.</p></li>
+<li><p><strong>b</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><em>numpy.ndarray</em></a>) – Input b.</p></li>
+<li><p><strong>b_norm</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – L2-norm of input b.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Euclidean distance estimated.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If there is a dimension disparity between the vectors.</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><strong>ValueError</strong></a> – If there is a dimension disparity between the vectors.</p>
 </dd>
 </dl>
 </dd></dl>

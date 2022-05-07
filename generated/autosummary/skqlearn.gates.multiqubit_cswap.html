@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>multiqubit_cswap &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -18,7 +22,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Job Handler" href="../skqlearn.jobhandler.html" />
+    <link rel="next" title="Utils" href="../skqlearn.utils.html" />
     <link rel="prev" title="Gates" href="../skqlearn.gates.html" /> 
 </head>
 
@@ -30,7 +34,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.0.1
+                1.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -40,7 +44,11 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Contents:</span></p>
+              <p><span class="caption-text">Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../auto_tutorials/index.html">Tutorials</a></li>
+</ul>
+<p><span class="caption-text">Further Information</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../modules.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../skqlearn.clustering.html">Clustering</a></li>
@@ -49,12 +57,11 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">multiqubit_cswap</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../skqlearn.jobhandler.html">Job Handler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../skqlearn.utils.html">Utils</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
 </ul>
 
         </div>
@@ -99,19 +106,6 @@ applied until there are no more qubits in one of the states.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">circ</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">q_reg</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">circ</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">multiqubit_cswap</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">q_reg</span><span class="p">)</span>
 <span class="go">&lt;qiskit.circuit.instructionset.InstructionSet object at ...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">circ</span><span class="o">.</span><span class="n">decompose</span><span class="p">())</span>
-
-<span class="go">q0_0: ────X─</span>
-<span class="go">          │</span>
-<span class="go">q0_1: ─X──┼─</span>
-<span class="go">       │  │</span>
-<span class="go">q0_2: ─┼──┼─</span>
-<span class="go">       │  │</span>
-<span class="go">q0_3: ─┼──X─</span>
-<span class="go">       │  │</span>
-<span class="go">q0_4: ─X──┼─</span>
-<span class="go">       │  │</span>
-<span class="go">q0_5: ─■──■─</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">multiqubit_cswap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
@@ -123,9 +117,9 @@ applied until there are no more qubits in one of the states.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>qubit_size_a</strong> (<em>int</em>) – Size in qubits for register a.</p></li>
-<li><p><strong>qubit_size_b</strong> (<em>int</em>) – Size in qubits for register b.</p></li>
-<li><p><strong>name</strong> (<em>str</em>) – Name for the circuit.</p></li>
+<li><p><strong>qubit_size_a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Size in qubits for register a.</p></li>
+<li><p><strong>qubit_size_b</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Size in qubits for register b.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name for the circuit.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -136,7 +130,7 @@ can then be appended in other quantum circuits.</p>
 <dd class="field-odd"><p>qiskit.circuit.Instruction</p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If negative or zero sizes are provided.</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><strong>ValueError</strong></a> – If negative or zero sizes are provided.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -148,7 +142,7 @@ can then be appended in other quantum circuits.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../skqlearn.gates.html" class="btn btn-neutral float-left" title="Gates" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../skqlearn.jobhandler.html" class="btn btn-neutral float-right" title="Job Handler" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../skqlearn.utils.html" class="btn btn-neutral float-right" title="Utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

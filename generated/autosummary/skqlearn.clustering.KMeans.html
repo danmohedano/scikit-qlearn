@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KMeans &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -30,7 +34,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.0.1
+                1.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -40,7 +44,11 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Contents:</span></p>
+              <p><span class="caption-text">Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../auto_tutorials/index.html">Tutorials</a></li>
+</ul>
+<p><span class="caption-text">Further Information</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../modules.html">API Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../skqlearn.clustering.html">Clustering</a><ul class="current">
@@ -51,12 +59,11 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../skqlearn.encoding.html">Data Encoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../skqlearn.gates.html">Gates</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../skqlearn.jobhandler.html">Job Handler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../skqlearn.utils.html">Utils</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
 </ul>
 
         </div>
@@ -106,7 +113,7 @@ centroid <span class="math notranslate nohighlight">\(\boldsymbol{C}_i\)</span>.
 <dd><p>Coordinates for the cluster centroids.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>np.ndarray of shape (n_clusters, n_features)</p>
+<dd class="field-odd"><p>numpy.ndarray of shape (n_clusters, n_features)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -114,10 +121,11 @@ centroid <span class="math notranslate nohighlight">\(\boldsymbol{C}_i\)</span>.
 <dl class="attribute">
 <dt id="skqlearn.clustering.KMeans.labels">
 <code class="sig-name descname">labels</code><a class="headerlink" href="#skqlearn.clustering.KMeans.labels" title="Permalink to this definition">¶</a></dt>
-<dd><p>Labels of each input sample.</p>
+<dd><p>Labels of each input
+sample.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>np.ndarray of shape (n_samples,)</p>
+<dd class="field-odd"><p>numpy.ndarray of shape (n_samples,)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -128,7 +136,7 @@ centroid <span class="math notranslate nohighlight">\(\boldsymbol{C}_i\)</span>.
 <dd><p>Number of features seen during fit.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -139,7 +147,7 @@ centroid <span class="math notranslate nohighlight">\(\boldsymbol{C}_i\)</span>.
 <dd><p>Number of iterations run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>int</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -148,10 +156,10 @@ centroid <span class="math notranslate nohighlight">\(\boldsymbol{C}_i\)</span>.
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n_clusters</strong> (<em>int</em>) – Number of clusters to form and centroids to
+<li><p><strong>n_clusters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Number of clusters to form and centroids to
 generate.</p></li>
-<li><p><strong>max_iterations</strong> (<em>int</em>) – Max number of iterations of the algorithm.</p></li>
-<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>RandomState</em><em> or </em><em>None</em>) – Determines random number
+<li><p><strong>max_iterations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Max number of iterations of the algorithm.</p></li>
+<li><p><strong>random_state</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>RandomState</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – Determines random number
 generation for centroid initialization. If provided as an int,
 it will be used as seed to make the randomness deterministic.</p></li>
 <li><p><strong>distance_calculation_method</strong> (<em>{'classic'</em><em>, </em><em>'quantum'}</em>) – <p>The distance
@@ -192,10 +200,10 @@ calculation method:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n_clusters</strong> (<em>int</em>) – Number of clusters to form and centroids to
+<li><p><strong>n_clusters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Number of clusters to form and centroids to
 generate.</p></li>
-<li><p><strong>max_iterations</strong> (<em>int</em>) – Max number of iterations of the algorithm.</p></li>
-<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>RandomState</em><em> or </em><em>None</em>) – Determines random number
+<li><p><strong>max_iterations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Max number of iterations of the algorithm.</p></li>
+<li><p><strong>random_state</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>RandomState</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><em>None</em></a>) – Determines random number
 generation for centroid initialization. If provided as an int,
 it will be used as seed to make the randomness deterministic.</p></li>
 <li><p><strong>distance_calculation_method</strong> (<em>{'classic'</em><em>, </em><em>'quantum'}</em>) – <p>The distance
@@ -216,14 +224,14 @@ calculation method:</p>
 <dd><p>Compute clustering of provided data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>x</strong> (<em>np.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data to
-cluster.</p>
+<dd class="field-odd"><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data
+to cluster.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Fitted estimator.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>self (object)</p>
+<dd class="field-odd"><p>self (<a class="reference internal" href="skqlearn.clustering.GenericClustering.html#skqlearn.clustering.GenericClustering" title="skqlearn.clustering.GenericClustering">GenericClustering</a>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -239,14 +247,14 @@ index for each sample.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>x</strong> (<em>np.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data to
-cluster and predict.</p>
+<dd class="field-odd"><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data
+to cluster and predict.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Index of the cluster each sample belongs to.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.ndarray of shape (n_samples,)</p>
+<dd class="field-odd"><p>numpy.ndarray of shape (n_samples,)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -257,13 +265,14 @@ cluster and predict.</p>
 <dd><p>Assigns a label to each input sample based on the closest centroid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>x</strong> (<em>np.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Data to predict.</p>
+<dd class="field-odd"><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Data to
+predict.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Index of the cluster each sample belongs to.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.ndarray of shape (n_samples,)</p>
+<dd class="field-odd"><p>numpy.ndarray of shape (n_samples,)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -274,14 +283,14 @@ cluster and predict.</p>
 <dd><p>Compute clustering of provided data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>x</strong> (<em>np.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data to
-cluster.</p>
+<dd class="field-odd"><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data
+to cluster.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Fitted estimator.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>self (object)</p>
+<dd class="field-odd"><p>self (<a class="reference internal" href="skqlearn.clustering.GenericClustering.html#skqlearn.clustering.GenericClustering" title="skqlearn.clustering.GenericClustering">GenericClustering</a>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -297,14 +306,14 @@ index for each sample.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>x</strong> (<em>np.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data to
-cluster and predict.</p>
+<dd class="field-odd"><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data
+to cluster and predict.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Index of the cluster each sample belongs to.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.ndarray of shape (n_samples,)</p>
+<dd class="field-odd"><p>numpy.ndarray of shape (n_samples,)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -315,13 +324,14 @@ cluster and predict.</p>
 <dd><p>Assigns a label to each input sample based on the closest centroid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>x</strong> (<em>np.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Data to predict.</p>
+<dd class="field-odd"><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Data to
+predict.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Index of the cluster each sample belongs to.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.ndarray of shape (n_samples,)</p>
+<dd class="field-odd"><p>numpy.ndarray of shape (n_samples,)</p>
 </dd>
 </dl>
 </dd></dl>

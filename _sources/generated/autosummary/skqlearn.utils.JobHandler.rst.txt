@@ -1,7 +1,7 @@
 JobHandler
 ==========
 
-.. currentmodule:: skqlearn.jobhandler
+.. currentmodule:: skqlearn.utils
 
 .. autoclass:: JobHandler
    :show-inheritance:

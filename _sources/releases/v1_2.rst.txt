@@ -1,0 +1,9 @@
+Version 1.2
+==============
+
+Changes:
+
+* Included tutorials in the documentation.
+* Implementation of degrees in :py:class:`AmplitudeEncoding` and :py:class:`ExpandedAmplitudeEncoding` to define the amount of repetitions of the quantum state. This in turns makes possible the implementation of polynomial kernels.
+* Unification of :py:mod:`utils` and :py:mod:`jobhandler` modules to reduce code cluttering and better comprehension of the package structure.
+* Minor bugfixes.

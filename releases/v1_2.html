@@ -4,8 +4,12 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Job Handler &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>Version 1.2 &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-rendered-html.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -18,8 +22,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="JobHandler" href="autosummary/skqlearn.jobhandler.JobHandler.html" />
-    <link rel="prev" title="multiqubit_cswap" href="autosummary/skqlearn.gates.multiqubit_cswap.html" /> 
+    <link rel="next" title="Version 1.0.1" href="v1_0_1.html" />
+    <link rel="prev" title="Changelog" href="../changelog.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -30,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.0.1
+                1.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -40,21 +44,20 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="skqlearn.clustering.html">Clustering</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skqlearn.encoding.html">Data Encoding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skqlearn.gates.html">Gates</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Job Handler</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="autosummary/skqlearn.jobhandler.JobHandler.html">JobHandler</a></li>
+              <p><span class="caption-text">Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../generated/auto_tutorials/index.html">Tutorials</a></li>
 </ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="skqlearn.utils.html">Utils</a></li>
+<p><span class="caption-text">Further Information</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../generated/modules.html">API Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../changelog.html">Changelog</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Version 1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v1_0_1.html">Version 1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="v1_0.html">Version 1.0</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
 </ul>
 
         </div>
@@ -71,10 +74,10 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="modules.html">API Reference</a> &raquo;</li>
-      <li>Job Handler</li>
+          <li><a href="../changelog.html">Changelog</a> &raquo;</li>
+      <li>Version 1.2</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/generated/skqlearn.jobhandler.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/releases/v1_2.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -82,28 +85,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="job-handler">
-<h1>Job Handler<a class="headerlink" href="#job-handler" title="Permalink to this headline">¶</a></h1>
-<p>This module enables the user to configure the quantum backend used by the library to execute the quantum circuits.</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="autosummary/skqlearn.jobhandler.JobHandler.html#skqlearn.jobhandler.JobHandler" title="skqlearn.jobhandler.JobHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skqlearn.jobhandler.JobHandler</span></code></a>()</p></td>
-<td><p>Singleton class to contain the configuration for quantum executions.</p></td>
-</tr>
-</tbody>
-</table>
+  <section id="version-1-2">
+<h1>Version 1.2<a class="headerlink" href="#version-1-2" title="Permalink to this headline">¶</a></h1>
+<p>Changes:</p>
+<ul class="simple">
+<li><p>Included tutorials in the documentation.</p></li>
+<li><p>Implementation of degrees in <code class="xref py py-class docutils literal notranslate"><span class="pre">AmplitudeEncoding</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">ExpandedAmplitudeEncoding</span></code> to define the amount of repetitions of the quantum state. This in turns makes possible the implementation of polynomial kernels.</p></li>
+<li><p>Unification of <code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code> and <code class="xref py py-mod docutils literal notranslate"><span class="pre">jobhandler</span></code> modules to reduce code cluttering and better comprehension of the package structure.</p></li>
+<li><p>Minor bugfixes.</p></li>
+</ul>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="autosummary/skqlearn.gates.multiqubit_cswap.html" class="btn btn-neutral float-left" title="multiqubit_cswap" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="autosummary/skqlearn.jobhandler.JobHandler.html" class="btn btn-neutral float-right" title="JobHandler" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../changelog.html" class="btn btn-neutral float-left" title="Changelog" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="v1_0_1.html" class="btn btn-neutral float-right" title="Version 1.0.1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

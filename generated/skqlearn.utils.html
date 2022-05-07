@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Utils &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery-rendered-html.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -18,8 +22,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="fidelity_estimation" href="autosummary/skqlearn.utils.fidelity_estimation.html" />
-    <link rel="prev" title="JobHandler" href="autosummary/skqlearn.jobhandler.JobHandler.html" /> 
+    <link rel="next" title="JobHandler" href="autosummary/skqlearn.utils.JobHandler.html" />
+    <link rel="prev" title="multiqubit_cswap" href="autosummary/skqlearn.gates.multiqubit_cswap.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -30,7 +34,7 @@
             <a href="../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.0.1
+                1.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -40,14 +44,18 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Contents:</span></p>
+              <p><span class="caption-text">Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="auto_tutorials/index.html">Tutorials</a></li>
+</ul>
+<p><span class="caption-text">Further Information</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="skqlearn.clustering.html">Clustering</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skqlearn.encoding.html">Data Encoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skqlearn.gates.html">Gates</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skqlearn.jobhandler.html">Job Handler</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="autosummary/skqlearn.utils.JobHandler.html">JobHandler</a></li>
 <li class="toctree-l3"><a class="reference internal" href="autosummary/skqlearn.utils.fidelity_estimation.html">fidelity_estimation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="autosummary/skqlearn.utils.distance_estimation.html">distance_estimation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="autosummary/skqlearn.utils.inner_product_estimation.html">inner_product_estimation</a></li>
@@ -55,8 +63,8 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
 </ul>
 
         </div>
@@ -86,8 +94,22 @@
              
   <section id="utils">
 <h1>Utils<a class="headerlink" href="#utils" title="Permalink to this headline">¶</a></h1>
-<p>This module contains utility functions.</p>
-<p><strong>Quantum Algorithms</strong></p>
+<p>This module contains utility functions and classes that support the rest of the package.</p>
+<p><strong>Job handling</strong></p>
+<p>In order to facilitate the configuration of the quantum backends where the quantum subroutines are execute,
+a singleton class has been implemented. This must be configured before trying to perform any quantum computation.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="autosummary/skqlearn.utils.JobHandler.html#skqlearn.utils.JobHandler" title="skqlearn.utils.JobHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skqlearn.utils.JobHandler</span></code></a>()</p></td>
+<td><p>Singleton class to contain the configuration for quantum executions.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Quantum Subroutines</strong></p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
@@ -111,8 +133,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="autosummary/skqlearn.jobhandler.JobHandler.html" class="btn btn-neutral float-left" title="JobHandler" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="autosummary/skqlearn.utils.fidelity_estimation.html" class="btn btn-neutral float-right" title="fidelity_estimation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="autosummary/skqlearn.gates.multiqubit_cswap.html" class="btn btn-neutral float-left" title="multiqubit_cswap" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="autosummary/skqlearn.utils.JobHandler.html" class="btn btn-neutral float-right" title="JobHandler" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

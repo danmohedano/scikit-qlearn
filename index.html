@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Welcome to scikit-qlearn’s documentation! &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery-rendered-html.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -18,7 +22,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API Reference" href="generated/modules.html" /> 
+    <link rel="next" title="Tutorials" href="generated/auto_tutorials/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -29,7 +33,7 @@
             <a href="#" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.0.1
+                1.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -39,11 +43,15 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Contents:</span></p>
+              <p><span class="caption-text">Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="generated/auto_tutorials/index.html">Tutorials</a></li>
+</ul>
+<p><span class="caption-text">Further Information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="generated/modules.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 </ul>
 
         </div>
@@ -72,9 +80,12 @@
              
   <section id="welcome-to-scikit-qlearn-s-documentation">
 <h1>Welcome to scikit-qlearn’s documentation!<a class="headerlink" href="#welcome-to-scikit-qlearn-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>This package offers a variety of functions and classes related to quantum computing and quantum enhanced machine learning algorithms.</p>
-<p>The package makes use of the open-source <a class="reference external" href="https://qiskit.org/">Qiskit SDK</a> for the execution of quantum processes.</p>
-<p>It was orginally developed as part of my end-of-degree thesis for my Computer Engineering degree at UAM.</p>
+<p>This package offers a variety of functions and classes related to quantum computing and quantum enhanced machine learning algorithms.
+From data encoding to clustering algorithms based on quantum subroutines.</p>
+<p>The package makes use of the open-source <a class="reference external" href="https://qiskit.org/">Qiskit SDK</a> for the execution of the quantum subroutines, which gives access
+to simulators and real quantum computers.</p>
+<p>The package was orginally developed as a proof of concept as part of my end-of-degree thesis for my Computer Engineering degree at UAM.</p>
+<p>You can find more information about the package and development in the <a class="reference external" href="https://github.com/danmohedano/scikit-qlearn">project page</a> on Github.</p>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Currently, the package is available for Python versions 3.7-3.10, regardless of platform. Stable versions are available for install via <a class="reference external" href="https://pypi.org/project/scikit-qlearn/">PyPI</a>:</p>
@@ -86,40 +97,25 @@
 pip install ./scikit-qlearn
 </pre></div>
 </div>
+</section>
+<section id="where-to-start">
+<h2>Where to start?<a class="headerlink" href="#where-to-start" title="Permalink to this headline">¶</a></h2>
+<p>For a quick rundown of the main functionalities of the package, how to use them and a bit of the theoretical background,
+a series of tutorials are available in the <a class="reference internal" href="generated/auto_tutorials/index.html"><span class="doc">Tutorials</span></a> section.
+For more specific information about the implementation of the modules, take a look at the <a class="reference internal" href="generated/modules.html"><span class="doc">API Reference</span></a>.
+To see what changes were made in the last version of the package, go to the <a class="reference internal" href="changelog.html"><span class="doc">Changelog</span></a>.</p>
 <div class="toctree-wrapper compound">
-<p><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="generated/modules.html">API Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="generated/skqlearn.clustering.html">Clustering</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/skqlearn.encoding.html">Data Encoding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/skqlearn.gates.html">Gates</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/skqlearn.jobhandler.html">Job Handler</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/skqlearn.utils.html">Utils</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="releases/v1_0_1.html">Version 1.0.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="releases/v1_0.html">Version 1.0</a></li>
-</ul>
-</li>
-</ul>
+</div>
+<div class="toctree-wrapper compound">
 </div>
 </section>
-</section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="generated/modules.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="generated/auto_tutorials/index.html" class="btn btn-neutral float-right" title="Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
