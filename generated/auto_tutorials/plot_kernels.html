@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kernels &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -34,7 +33,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.2
+                1.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -44,7 +43,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Usage</span></p>
+              <p class="caption"><span class="caption-text">Usage</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="plot_clustering.html">Clustering</a></li>
@@ -53,7 +52,7 @@
 </ul>
 </li>
 </ul>
-<p><span class="caption-text">Further Information</span></p>
+<p class="caption"><span class="caption-text">Further Information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../modules.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
@@ -90,11 +89,11 @@
 <p>Click <a class="reference internal" href="#sphx-glr-download-generated-auto-tutorials-plot-kernels-py"><span class="std std-ref">here</span></a>
 to download the full example code</p>
 </div>
-<section class="sphx-glr-example-title" id="kernels">
+<div class="sphx-glr-example-title section" id="kernels">
 <span id="sphx-glr-generated-auto-tutorials-plot-kernels-py"></span><h1>Kernels<a class="headerlink" href="#kernels" title="Permalink to this headline">¶</a></h1>
 <p>This tutorial aims to explain and visualize the kernels obtained from the data
 encoding methods implemented in the package.</p>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>As described in the <a class="reference internal" href="plot_encodings.html#encodingstutorial"><span class="std std-ref">Data Encodings</span></a> tutorial, the encoding methods
 can be interpreted as feature maps of the form:</p>
@@ -122,18 +121,18 @@ These methods compute the Gram matrix of the input set of vectors.</p>
 <p>Throughout this tutorial, both the classical computation and quantum
 estimation of the kernels will be tested, so the quantum backend will
 be initialized with one of the simulators provided by Qiskit.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skqlearn.utils</span> <span class="kn">import</span> <span class="n">JobHandler</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skqlearn.utils</span> <span class="kn">import</span> <a href="https://danmohedano.github.io/scikit-qlearn/generated/autosummary/skqlearn.utils.JobHandler.html#skqlearn.utils.JobHandler" title="skqlearn.utils.JobHandler" class="sphx-glr-backref-module-skqlearn-utils sphx-glr-backref-type-py-class"><span class="n">JobHandler</span></a>
 <span class="kn">from</span> <span class="nn">skqlearn.encoding</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">qiskit.providers.aer</span> <span class="kn">import</span> <a href="https://docs.python.org/3/library/abc.html#abc.ABC" title="abc.ABC" class="sphx-glr-backref-module-abc sphx-glr-backref-type-py-class"><span class="n">AerSimulator</span></a>
 <span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC" title="sklearn.svm.SVC" class="sphx-glr-backref-module-sklearn-svm sphx-glr-backref-type-py-class"><span class="n">SVC</span></a>
 
-<span class="n">JobHandler</span><span class="p">()</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><a href="https://docs.python.org/3/library/abc.html#abc.ABC" title="abc.ABC" class="sphx-glr-backref-module-abc sphx-glr-backref-type-py-class"><span class="n">AerSimulator</span></a><span class="p">(),</span> <span class="n">shots</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<a href="https://danmohedano.github.io/scikit-qlearn/generated/autosummary/skqlearn.utils.JobHandler.html#skqlearn.utils.JobHandler" title="skqlearn.utils.JobHandler" class="sphx-glr-backref-module-skqlearn-utils sphx-glr-backref-type-py-class"><span class="n">JobHandler</span></a><span class="p">()</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><a href="https://docs.python.org/3/library/abc.html#abc.ABC" title="abc.ABC" class="sphx-glr-backref-module-abc sphx-glr-backref-type-py-class"><span class="n">AerSimulator</span></a><span class="p">(),</span> <span class="n">shots</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-<section id="basis-encoding">
+</div>
+<div class="section" id="basis-encoding">
 <h2>Basis Encoding<a class="headerlink" href="#basis-encoding" title="Permalink to this headline">¶</a></h2>
 <p>Basis Encoding’s feature map was:</p>
 <div class="math notranslate nohighlight">
@@ -159,14 +158,14 @@ result would be the identity matrix.</p>
  [0. 0. 1. 0.]
  [0. 0. 0. 1.]]
 Gram matrix with quantum computation:
-[[ 1.00e+00 -1.60e-03 -5.00e-03 -7.80e-03]
- [ 4.80e-03  1.00e+00  7.20e-03 -1.74e-02]
- [-8.00e-03  1.06e-02  1.00e+00 -1.00e-02]
- [ 4.40e-03  8.00e-04  8.00e-04  1.00e+00]]
+[[ 1.00e+00 -1.54e-02  1.80e-02  7.40e-03]
+ [ 1.30e-02  1.00e+00 -2.18e-02  8.00e-04]
+ [ 8.20e-03  8.00e-03  1.00e+00 -1.80e-03]
+ [-1.00e-02 -2.30e-02 -6.60e-03  1.00e+00]]
 </pre></div>
 </div>
-</section>
-<section id="amplitude-encoding">
+</div>
+<div class="section" id="amplitude-encoding">
 <h2>Amplitude Encoding<a class="headerlink" href="#amplitude-encoding" title="Permalink to this headline">¶</a></h2>
 <p>Amplitude Encoding’s feature map was:</p>
 <div class="math notranslate nohighlight">
@@ -245,8 +244,8 @@ proposed data for the SVM to classify is the XOR problem.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_kernels_003.png" srcset="../../_images/sphx_glr_plot_kernels_003.png" alt="plot kernels" class = "sphx-glr-single-img"/></section>
-<section id="expanded-amplitude-encoding">
+<img src="../../_images/sphx_glr_plot_kernels_003.png" srcset="../../_images/sphx_glr_plot_kernels_003.png" alt="plot kernels" class = "sphx-glr-single-img"/></div>
+<div class="section" id="expanded-amplitude-encoding">
 <h2>Expanded Amplitude Encoding<a class="headerlink" href="#expanded-amplitude-encoding" title="Permalink to this headline">¶</a></h2>
 <p>Expanded Amplitude Encoding’s feature map was identical to regular Amplitude
 Encoding’s. The only difference being that the input vectors were expanded
@@ -303,8 +302,8 @@ main features of SVMs and kernels, commonly refered to as the kernel trick.</p>
                 <a href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC" title="sklearn.svm.SVC" class="sphx-glr-backref-module-sklearn-svm sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">clf_expamp_q</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">X0</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">X1</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_kernels_006.png" srcset="../../_images/sphx_glr_plot_kernels_006.png" alt="Expanded Amplitude Encoding (Degree=4), Classic, Quantum" class = "sphx-glr-single-img"/></section>
-<section id="angle-encoding">
+<img src="../../_images/sphx_glr_plot_kernels_006.png" srcset="../../_images/sphx_glr_plot_kernels_006.png" alt="Expanded Amplitude Encoding (Degree=4), Classic, Quantum" class = "sphx-glr-single-img"/></div>
+<div class="section" id="angle-encoding">
 <h2>Angle Encoding<a class="headerlink" href="#angle-encoding" title="Permalink to this headline">¶</a></h2>
 <p>Angle Encoding’s feature map was:</p>
 <div class="math notranslate nohighlight">
@@ -321,7 +320,7 @@ main features of SVMs and kernels, commonly refered to as the kernel trick.</p>
 <span class="n">plot_comparison</span><span class="p">(</span><span class="s1">&#39;Angle Encoding&#39;</span><span class="p">,</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC" title="sklearn.svm.SVC" class="sphx-glr-backref-module-sklearn-svm sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">clf_ang_c</span></a><span class="p">,</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC" title="sklearn.svm.SVC" class="sphx-glr-backref-module-sklearn-svm sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">clf_ang_q</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">X0</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">X1</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_kernels_007.png" srcset="../../_images/sphx_glr_plot_kernels_007.png" alt="Angle Encoding, Classic, Quantum" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 1 minutes  6.328 seconds)</p>
+<img src="../../_images/sphx_glr_plot_kernels_007.png" srcset="../../_images/sphx_glr_plot_kernels_007.png" alt="Angle Encoding, Classic, Quantum" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 1 minutes  1.330 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-generated-auto-tutorials-plot-kernels-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/1538e0b1305778a1e9a25a860f0c8eb0/plot_kernels.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_kernels.py</span></code></a></p>
@@ -331,8 +330,8 @@ main features of SVMs and kernels, commonly refered to as the kernel trick.</p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

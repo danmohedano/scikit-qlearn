@@ -135,10 +135,10 @@ result would be the identity matrix.
      [0. 0. 1. 0.]
      [0. 0. 0. 1.]]
     Gram matrix with quantum computation:
-    [[ 1.00e+00 -1.60e-03 -5.00e-03 -7.80e-03]
-     [ 4.80e-03  1.00e+00  7.20e-03 -1.74e-02]
-     [-8.00e-03  1.06e-02  1.00e+00 -1.00e-02]
-     [ 4.40e-03  8.00e-04  8.00e-04  1.00e+00]]
+    [[ 1.00e+00 -1.54e-02  1.80e-02  7.40e-03]
+     [ 1.30e-02  1.00e+00 -2.18e-02  8.00e-04]
+     [ 8.20e-03  8.00e-03  1.00e+00 -1.80e-03]
+     [-1.00e-02 -2.30e-02 -6.60e-03  1.00e+00]]
 
 
 
@@ -450,7 +450,7 @@ The kernel defined by the inner product is a cosine kernel:
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  6.328 seconds)
+   **Total running time of the script:** ( 1 minutes  1.330 seconds)
 
 
 .. _sphx_glr_download_generated_auto_tutorials_plot_kernels.py:

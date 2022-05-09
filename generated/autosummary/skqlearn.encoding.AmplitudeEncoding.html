@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AmplitudeEncoding &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -34,7 +33,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.2
+                1.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -44,11 +43,11 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Usage</span></p>
+              <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../auto_tutorials/index.html">Tutorials</a></li>
 </ul>
-<p><span class="caption-text">Further Information</span></p>
+<p class="caption"><span class="caption-text">Further Information</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../modules.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../skqlearn.clustering.html">Clustering</a></li>
@@ -95,7 +94,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="amplitudeencoding">
+  <div class="section" id="amplitudeencoding">
 <h1>AmplitudeEncoding<a class="headerlink" href="#amplitudeencoding" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="skqlearn.encoding.AmplitudeEncoding">
@@ -276,100 +275,9 @@ inner product.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">classic_kernel</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em>, <em class="sig-param">y: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray</dt>
-<dd><p>Classical calculation of the kernel formed by the encoding and the
-inner product.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples_1</em><em>, </em><em>n_features</em><em>)</em>) – First input.</p></li>
-<li><p><strong>y</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples_2</em><em>, </em><em>n_features</em><em>)</em>) – Second input.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Resulting kernel matrix.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray of shape (n_samples_1, n_samples_2)</p>
-</dd>
-</dl>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">encoding</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray</dt>
-<dd><p>Application of amplitude encoding to the input.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_features</em><em>) or </em><em>(</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – <p>Input. This can be a single sample of shape (n_features,) or a
-dataset of shape (n_samples, n_features).</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The input must be normalized in order to define a valid
-quantum state. Refer to <cite>ExpandedAmplitudeEncoding</cite> if the
-data is not normalized.</p>
 </div>
-</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Quantum state described as an amplitude vector with the amount
-of copies of the state indicated in the constructor. If a
-dataset is provided, the states are concatenated.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)">numpy.ndarray</a></p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><strong>ValueError</strong></a> – If an invalid input type is provided or it is not
-    normalized.</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">AmplitudeEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="go">array([0.5, 0.5, 0.5, 0.5])</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">AmplitudeEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="go">array([0., 1., 0., 0.])</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">AmplitudeEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="gt">Traceback (most recent call last):</span>
- <span class="c">...</span>
-<span class="gr">ValueError</span>: <span class="n">Invalid input, must be normalized. Got |x| = 1.019803902718557 instead</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt>
-<code class="sig-name descname">quantum_kernel</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em>, <em class="sig-param">y: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray</dt>
-<dd><p>Quantum estimation of the kernel formed by the encoding and the
-inner product.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples_1</em><em>, </em><em>n_features</em><em>)</em>) – First input.</p></li>
-<li><p><strong>y</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples_2</em><em>, </em><em>n_features</em><em>)</em>) – Second input.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Resulting kernel matrix.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray of shape (n_samples_1, n_samples_2)</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-</section>
 
 
            </div>

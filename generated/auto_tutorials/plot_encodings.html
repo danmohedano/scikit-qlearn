@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Data Encodings &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -34,7 +33,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.2
+                1.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -44,7 +43,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Usage</span></p>
+              <p class="caption"><span class="caption-text">Usage</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="plot_clustering.html">Clustering</a></li>
@@ -53,7 +52,7 @@
 </ul>
 </li>
 </ul>
-<p><span class="caption-text">Further Information</span></p>
+<p class="caption"><span class="caption-text">Further Information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../modules.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
@@ -90,11 +89,11 @@
 <p>Click <a class="reference internal" href="#sphx-glr-download-generated-auto-tutorials-plot-encodings-py"><span class="std std-ref">here</span></a>
 to download the full example code</p>
 </div>
-<section class="sphx-glr-example-title" id="data-encodings">
+<div class="sphx-glr-example-title section" id="data-encodings">
 <span id="encodingstutorial"></span><span id="sphx-glr-generated-auto-tutorials-plot-encodings-py"></span><h1>Data Encodings<a class="headerlink" href="#data-encodings" title="Permalink to this headline">¶</a></h1>
 <p>This tutorial aims to explain and visualize the different data encoding methods
 implemented in the package.</p>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>Machine Learning algorithms rely on sample data in order to train and learn.
 When trying to enhance these algorithms with quantum subroutines, the first
@@ -141,8 +140,8 @@ spherical coordinates is then made by defining the quantum state as:</p>
 \[\left|\psi\right&gt; = c_0\left|0\right&gt;+c_1\left|1\right&gt; = \cos{
 \frac{\theta}{2}}\left|0\right&gt;+e^{i\phi}\sin{\frac{\theta}{2}}
 \left|1\right&gt;\]</div>
-</section>
-<section id="basis-encoding">
+</div>
+<div class="section" id="basis-encoding">
 <h2>Basis Encoding<a class="headerlink" href="#basis-encoding" title="Permalink to this headline">¶</a></h2>
 <p>In basis encoding, each classical bit of a value is mapped into a single
 qubit, defining the encoding feature map as:</p>
@@ -211,8 +210,8 @@ in the right-most position.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">state</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;bloch&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_encodings_003.png" srcset="../../_images/sphx_glr_plot_encodings_003.png" alt=", qubit 0, qubit 1" class = "sphx-glr-single-img"/></section>
-<section id="amplitude-encoding">
+<img src="../../_images/sphx_glr_plot_encodings_003.png" srcset="../../_images/sphx_glr_plot_encodings_003.png" alt=", qubit 0, qubit 1" class = "sphx-glr-single-img"/></div>
+<div class="section" id="amplitude-encoding">
 <h2>Amplitude Encoding<a class="headerlink" href="#amplitude-encoding" title="Permalink to this headline">¶</a></h2>
 <p>In amplitude encoding, each component of the input vector
 <span class="math notranslate nohighlight">\(\boldsymbol{x} \in \mathbb{R}^N\)</span> is mapped to an amplitude of the
@@ -271,8 +270,8 @@ in Qiskit’s representation) and so on.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">state</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;bloch&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_encodings_006.png" srcset="../../_images/sphx_glr_plot_encodings_006.png" alt=", qubit 0, qubit 1" class = "sphx-glr-single-img"/></section>
-<section id="expanded-amplitude-encoding">
+<img src="../../_images/sphx_glr_plot_encodings_006.png" srcset="../../_images/sphx_glr_plot_encodings_006.png" alt=", qubit 0, qubit 1" class = "sphx-glr-single-img"/></div>
+<div class="section" id="expanded-amplitude-encoding">
 <h2>Expanded Amplitude Encoding<a class="headerlink" href="#expanded-amplitude-encoding" title="Permalink to this headline">¶</a></h2>
 <p>This encoding method tries to solve the normalization problem in regular
 Amplitude Encoding. If non-normalized data is normalized for use on
@@ -335,8 +334,8 @@ circle, a 1D shape.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">state</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;bloch&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_encodings_009.png" srcset="../../_images/sphx_glr_plot_encodings_009.png" alt=", qubit 0, qubit 1" class = "sphx-glr-single-img"/></section>
-<section id="angle-encoding">
+<img src="../../_images/sphx_glr_plot_encodings_009.png" srcset="../../_images/sphx_glr_plot_encodings_009.png" alt=", qubit 0, qubit 1" class = "sphx-glr-single-img"/></div>
+<div class="section" id="angle-encoding">
 <h2>Angle Encoding<a class="headerlink" href="#angle-encoding" title="Permalink to this headline">¶</a></h2>
 <p>In angle encoding, each component of the input vector
 <span class="math notranslate nohighlight">\(\boldsymbol{x} \in \mathbb{R}^N\)</span> is mapped to a qubit, defining the
@@ -362,13 +361,14 @@ are represented in the sphere.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">state</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;bloch&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_encodings_010.png" srcset="../../_images/sphx_glr_plot_encodings_010.png" alt=", qubit 0, qubit 1, qubit 2, qubit 3" class = "sphx-glr-single-img"/></section>
-<section id="qsample-encoding">
+<img src="../../_images/sphx_glr_plot_encodings_010.png" srcset="../../_images/sphx_glr_plot_encodings_010.png" alt=", qubit 0, qubit 1, qubit 2, qubit 3" class = "sphx-glr-single-img"/></div>
+<div class="section" id="qsample-encoding">
 <h2>QSample Encoding<a class="headerlink" href="#qsample-encoding" title="Permalink to this headline">¶</a></h2>
 <p>In QSample encoding, a discrete probability distribution is mapped into the
 amplitude vector of a quantum state, defining the encoding feature map as:</p>
 <div class="math notranslate nohighlight">
-\[\phi:p(x)\rightarrow \ket{p(x)}=\sum_{X} \sqrt{p(x_i)}\ket{x_i}\]</div>
+\[\phi:p(x)\rightarrow \left|p(x)\right&gt;=\sum_{X} \sqrt{p(x_i)}
+\left|x_i\right&gt;\]</div>
 <p>Because the amplitudes are defined as <span class="math notranslate nohighlight">\(\alpha_i = \sqrt{p(x_i)}\)</span>,
 the resulting quantum state is valid:
 <span class="math notranslate nohighlight">\(\sum |\alpha_i|^2=\sum p(x_i) = 1\)</span>.</p>
@@ -383,7 +383,7 @@ a sampling of the discrete probability distribution.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[0.5       +0.j,0.70710678+0.j,0.5       +0.j,0.        +0.j]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.945 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  1.893 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-generated-auto-tutorials-plot-encodings-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/958d2472975d2e97cccc15993ee82abf/plot_encodings.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_encodings.py</span></code></a></p>
@@ -393,8 +393,8 @@ a sampling of the discrete probability distribution.</p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

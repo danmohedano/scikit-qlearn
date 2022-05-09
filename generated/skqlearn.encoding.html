@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Data Encoding &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -34,7 +33,7 @@
             <a href="../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.2
+                1.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -44,11 +43,11 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Usage</span></p>
+              <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="auto_tutorials/index.html">Tutorials</a></li>
 </ul>
-<p><span class="caption-text">Further Information</span></p>
+<p class="caption"><span class="caption-text">Further Information</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="skqlearn.clustering.html">Clustering</a></li>
@@ -94,7 +93,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="data-encoding">
+  <div class="section" id="data-encoding">
 <h1>Data Encoding<a class="headerlink" href="#data-encoding" title="Permalink to this headline">¶</a></h1>
 <p>The module contains a series of data encoding methods that allow the user to map real data into quantum states, described by their amplitude vectors. These mappings can be defined as feature maps of the form:</p>
 <div class="math notranslate nohighlight">
@@ -107,7 +106,7 @@
 <p>In this case, as the inputs are being mapped into quantum states, the kernel defined is of the form:</p>
 <div class="math notranslate nohighlight">
 \[k(x,x')=\left&lt;\phi(x)|\phi(x')\right&gt;\]</div>
-<section id="encodings">
+<div class="section" id="encodings">
 <h2>Encodings<a class="headerlink" href="#encodings" title="Permalink to this headline">¶</a></h2>
 <p>To allow the expansion of the module in the future, an abstract class <cite>Encoding</cite> has been defined. To implement a new encoding, one must simply define a child class that implements the <cite>encoding</cite> method.</p>
 <table class="longtable docutils align-default">
@@ -154,8 +153,8 @@
 </tr>
 </tbody>
 </table>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

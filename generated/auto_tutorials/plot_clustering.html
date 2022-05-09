@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Clustering &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -34,7 +33,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.2
+                1.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -44,7 +43,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Usage</span></p>
+              <p class="caption"><span class="caption-text">Usage</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Clustering</a></li>
@@ -53,7 +52,7 @@
 </ul>
 </li>
 </ul>
-<p><span class="caption-text">Further Information</span></p>
+<p class="caption"><span class="caption-text">Further Information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../modules.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
@@ -90,11 +89,11 @@
 <p>Click <a class="reference internal" href="#sphx-glr-download-generated-auto-tutorials-plot-clustering-py"><span class="std std-ref">here</span></a>
 to download the full example code</p>
 </div>
-<section class="sphx-glr-example-title" id="clustering">
+<div class="sphx-glr-example-title section" id="clustering">
 <span id="sphx-glr-generated-auto-tutorials-plot-clustering-py"></span><h1>Clustering<a class="headerlink" href="#clustering" title="Permalink to this headline">¶</a></h1>
 <p>This tutorial aims to explain and visualize the use of the clustering
 algorithms implemented in the package.</p>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>Clustering is a form of unsupervised learning where data samples are grouped
 in clusters by using some metric of similarity between the samples.</p>
@@ -105,7 +104,7 @@ the Euclidean distance or L2-norm.</p>
 with a quantum subroutine.</p>
 <p>In order to represent the cluster assignments, a utility function is defined
 that plots the data assignments as well as the center of each cluster.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skqlearn.utils</span> <span class="kn">import</span> <span class="n">JobHandler</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skqlearn.utils</span> <span class="kn">import</span> <a href="https://danmohedano.github.io/scikit-qlearn/generated/autosummary/skqlearn.utils.JobHandler.html#skqlearn.utils.JobHandler" title="skqlearn.utils.JobHandler" class="sphx-glr-backref-module-skqlearn-utils sphx-glr-backref-type-py-class"><span class="n">JobHandler</span></a>
 <span class="kn">from</span> <span class="nn">skqlearn.clustering</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -122,7 +121,7 @@ that plots the data assignments as well as the center of each cluster.</p>
 </div>
 <p>Because the tutorial will also test the quantum distance estimation
 algorithm, the quantum backend must be configured.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">JobHandler</span><span class="p">()</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><a href="https://docs.python.org/3/library/abc.html#abc.ABC" title="abc.ABC" class="sphx-glr-backref-module-abc sphx-glr-backref-type-py-class"><span class="n">AerSimulator</span></a><span class="p">(),</span> <span class="n">shots</span><span class="o">=</span><span class="mi">50000</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://danmohedano.github.io/scikit-qlearn/generated/autosummary/skqlearn.utils.JobHandler.html#skqlearn.utils.JobHandler" title="skqlearn.utils.JobHandler" class="sphx-glr-backref-module-skqlearn-utils sphx-glr-backref-type-py-class"><span class="n">JobHandler</span></a><span class="p">()</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><a href="https://docs.python.org/3/library/abc.html#abc.ABC" title="abc.ABC" class="sphx-glr-backref-module-abc sphx-glr-backref-type-py-class"><span class="n">AerSimulator</span></a><span class="p">(),</span> <span class="n">shots</span><span class="o">=</span><span class="mi">50000</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>First, random data is generated centered around two points.</p>
@@ -135,8 +134,8 @@ algorithm, the quantum backend must be configured.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_clustering_001.png" srcset="../../_images/sphx_glr_plot_clustering_001.png" alt="plot clustering" class = "sphx-glr-single-img"/></section>
-<section id="kmeans">
+<img src="../../_images/sphx_glr_plot_clustering_001.png" srcset="../../_images/sphx_glr_plot_clustering_001.png" alt="plot clustering" class = "sphx-glr-single-img"/></div>
+<div class="section" id="kmeans">
 <h2>KMeans<a class="headerlink" href="#kmeans" title="Permalink to this headline">¶</a></h2>
 <p>The implementation of the KMeans algorithm is based on an iterative
 refinement technique. The cluster centers are initially chosen at random
@@ -183,11 +182,11 @@ clusters by using the <cite>predict</cite> method.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[1 0]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[0 1]
 </pre></div>
 </div>
-</section>
-<section id="kmedians">
+</div>
+<div class="section" id="kmedians">
 <h2>KMedians<a class="headerlink" href="#kmedians" title="Permalink to this headline">¶</a></h2>
 <p>KMedians follows the same structure as KMeans. The only difference between
 the two algorithms is how the centroids are updated after every iteration.
@@ -222,7 +221,7 @@ the distance to all other samples:</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_clustering_003.png" srcset="../../_images/sphx_glr_plot_clustering_003.png" alt="KMedians, Classic, Quantum" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 2 minutes  24.748 seconds)</p>
+<img src="../../_images/sphx_glr_plot_clustering_003.png" srcset="../../_images/sphx_glr_plot_clustering_003.png" alt="KMedians, Classic, Quantum" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 2 minutes  34.850 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-generated-auto-tutorials-plot-clustering-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/194affef9128392b478389e51a93f816/plot_clustering.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_clustering.py</span></code></a></p>
@@ -232,8 +231,8 @@ the distance to all other samples:</p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

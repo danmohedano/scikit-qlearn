@@ -5,12 +5,12 @@
 
 Computation times
 =================
-**03:33.021** total execution time for **generated_auto_tutorials** files:
+**03:38.072** total execution time for **generated_auto_tutorials** files:
 
 +--------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_generated_auto_tutorials_plot_clustering.py` (``plot_clustering.py``) | 02:24.748 | 0.0 MB |
+| :ref:`sphx_glr_generated_auto_tutorials_plot_clustering.py` (``plot_clustering.py``) | 02:34.850 | 0.0 MB |
 +--------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_generated_auto_tutorials_plot_kernels.py` (``plot_kernels.py``)       | 01:06.328 | 0.0 MB |
+| :ref:`sphx_glr_generated_auto_tutorials_plot_kernels.py` (``plot_kernels.py``)       | 01:01.330 | 0.0 MB |
 +--------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_generated_auto_tutorials_plot_encodings.py` (``plot_encodings.py``)   | 00:01.945 | 0.0 MB |
+| :ref:`sphx_glr_generated_auto_tutorials_plot_encodings.py` (``plot_encodings.py``)   | 00:01.893 | 0.0 MB |
 +--------------------------------------------------------------------------------------+-----------+--------+

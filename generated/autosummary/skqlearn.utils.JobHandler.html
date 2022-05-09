@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JobHandler &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -34,7 +33,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.2
+                1.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -44,11 +43,11 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Usage</span></p>
+              <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../auto_tutorials/index.html">Tutorials</a></li>
 </ul>
-<p><span class="caption-text">Further Information</span></p>
+<p class="caption"><span class="caption-text">Further Information</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../modules.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../skqlearn.clustering.html">Clustering</a></li>
@@ -93,7 +92,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="jobhandler">
+  <div class="section" id="jobhandler">
 <h1>JobHandler<a class="headerlink" href="#jobhandler" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="skqlearn.utils.JobHandler">
@@ -235,49 +234,9 @@ run time backend options.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">configure</code><span class="sig-paren">(</span><em class="sig-param">backend: qiskit.providers.backend.Backend</em>, <em class="sig-param">shots: int</em>, <em class="sig-param">run_options: dict = {}</em><span class="sig-paren">)</span></dt>
-<dd><p>Configuration of the job handler.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>backend</strong> (<em>Backend</em>) – Desired backend to use when
-running circuits (either simulator or real backends).</p></li>
-<li><p><strong>shots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Number of executions.</p></li>
-<li><p><strong>run_options</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Keyword dictionary used in the run method as
-run time backend options.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><strong>ValueError</strong></a> – If a non-positive amount of shots is provided.</p>
-</dd>
-</dl>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">run_job</code><span class="sig-paren">(</span><em class="sig-param">circuits: Union[qiskit.circuit.quantumcircuit.QuantumCircuit, list]</em><span class="sig-paren">)</span> &#x2192; qiskit.result.result.Result</dt>
-<dd><p>Runs the provided circuit with the configured backend.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>circuits</strong> (<em>QuantumCircuit</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Quantum Circuit(s) to run.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Result object.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Result</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><strong>ValueError</strong></a> – If no backend has been previously configured.</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-</section>
+</div>
 
 
            </div>

@@ -622,7 +622,7 @@ are represented in the sphere.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 280-295
+.. GENERATED FROM PYTHON SOURCE LINES 280-296
 
 QSample Encoding
 -----------------
@@ -631,7 +631,8 @@ In QSample encoding, a discrete probability distribution is mapped into the
 amplitude vector of a quantum state, defining the encoding feature map as:
 
 .. math::
-    \phi:p(x)\rightarrow \ket{p(x)}=\sum_{X} \sqrt{p(x_i)}\ket{x_i}
+    \phi:p(x)\rightarrow \left|p(x)\right>=\sum_{X} \sqrt{p(x_i)}
+    \left|x_i\right>
 
 Because the amplitudes are defined as :math:`\alpha_i = \sqrt{p(x_i)}`,
 the resulting quantum state is valid:
@@ -640,7 +641,7 @@ the resulting quantum state is valid:
 This allows for the measurement of the quantum state to be interpreted as
 a sampling of the discrete probability distribution.
 
-.. GENERATED FROM PYTHON SOURCE LINES 295-299
+.. GENERATED FROM PYTHON SOURCE LINES 296-300
 
 .. code-block:: default
 
@@ -666,7 +667,7 @@ a sampling of the discrete probability distribution.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.945 seconds)
+   **Total running time of the script:** ( 0 minutes  1.893 seconds)
 
 
 .. _sphx_glr_download_generated_auto_tutorials_plot_encodings.py:
