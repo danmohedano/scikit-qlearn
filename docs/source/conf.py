@@ -45,7 +45,6 @@ extensions = [
     'sphinx.ext.intersphinx',
 ]
 
-autodoc_default_flags = ['members', 'inherited-members']
 autoclass_content = 'both'
 doctest_global_setup = '''
 import numpy as np
