@@ -9,7 +9,8 @@ class QSampleEncoding(Encoding):
     amplitude vector of a quantum state, defining the encoding feature map as:
 
     .. math::
-       \phi:p(x)\rightarrow \ket{p(x)}=\sum_{X} \sqrt{p(x_i)}\ket{x_i}
+       \phi:p(x)\rightarrow \left|p(x)\right> =\sum_{X} \sqrt{p(x_i)}
+       \left|x_i\right>
 
     Because the amplitudes are defined as :math:`\alpha_i = \sqrt{p(x_i)}`,
     the resulting quantum state is valid:
