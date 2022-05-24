@@ -1,6 +1,5 @@
 from .base_encoding import Encoding
 import numpy as np
-import math
 
 
 class AmplitudeEncoding(Encoding):
@@ -12,7 +11,7 @@ class AmplitudeEncoding(Encoding):
 
     .. math::
        \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
-       \sum_{i=1}^{N}x_i\left|i\right>
+       \sum_{i=1}^{N}\frac{1}{|\boldsymbol{x}|}x_i\left|i-1\right>
 
     In order to represent a valid quantum state the amount of amplitudes, and
     therefore, the dimension of the vectors must be a power of 2,
@@ -68,8 +67,8 @@ class AmplitudeEncoding(Encoding):
 
                 .. note::
                    The input must be normalized in order to define a valid
-                   quantum state. Refer to `ExpandedAmplitudeEncoding` if the
-                   data is not normalized.
+                   quantum state. If it is not, the method will normalize the
+                   input.
         Returns:
             numpy.ndarray:
                 Quantum state described as an amplitude vector with the amount
@@ -77,8 +76,8 @@ class AmplitudeEncoding(Encoding):
                 dataset is provided, the states are concatenated.
 
         Raises:
-            ValueError: If an invalid input type is provided or it is not
-                normalized.
+            ValueError: If an invalid input type or an empty vector (all
+                components have value 0) is provided.
 
         Examples:
             >>> a = np.array([0.5, 0.5, 0.5, 0.5])
@@ -88,13 +87,6 @@ class AmplitudeEncoding(Encoding):
             >>> a = np.array([0.0, 1.0, 0.0])
             >>> AmplitudeEncoding().encoding(a)
             array([0., 1., 0., 0.])
-
-            >>> a = np.array([0.0, 1.0, 0.2, 0.0])
-            >>> AmplitudeEncoding().encoding(a)
-            Traceback (most recent call last):
-             ...
-            ValueError: Invalid input, must be normalized. Got |x| = 1.019803902718557 instead
-
         """
         if not isinstance(x, np.ndarray):
             raise ValueError(f'Invalid input type provided. Expected '
@@ -118,16 +110,19 @@ class AmplitudeEncoding(Encoding):
                 Quantum state described as an amplitude vector.
 
         Raises:
-            ValueError: If the input is not normalized.
+            ValueError: If the provided input has only 0s.
         """
-        if not math.isclose(np.linalg.norm(x), 1.0, abs_tol=1e-8):
-            raise ValueError(f'Invalid input, must be normalized. Got |x| = '
-                             f'{np.linalg.norm(x)} instead')
+        if not np.any(x):
+            raise ValueError('Invalid input provided. Components of the vector'
+                             'cannot be all equal to 0.')
 
         size = max(int(2 ** np.ceil(np.log2(x.shape[0]))), 2)
 
         # Pad 0s at the end of the state to make it whole qubit-sized
         base_state = np.pad(x, (0, size - x.shape[0]))
+
+        # Normalize to construct a valid quantum state
+        base_state /= np.linalg.norm(base_state)
 
         # Create the amount of copies defined by degree
         state = 1
@@ -159,5 +154,11 @@ class AmplitudeEncoding(Encoding):
 
         # Normalization of the concatenated vectors
         states /= np.sqrt(x.shape[0])
+
+        # Extend dimensions for correct quantum state definition (power of 2)
+        states_size = max(int(2 ** np.ceil(np.log2(states.shape[0]))), 2)
+        states = np.pad(states.astype(float),
+                        (0, states_size - states.shape[0]),
+                        constant_values=0.0)
 
         return states

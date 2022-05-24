@@ -17,6 +17,11 @@ class ExpandedAmplitudeEncoding(Encoding):
     The encoding and produced kernel are work identical to regular Amplitude
     Encoding's.
 
+    .. math::
+       \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
+       \frac{1}{|\boldsymbol{x}|^2+c^2}\left(c\left|0\right> +
+       \sum_{i=1}^{N}x_i\left|i\right>\right)
+
     Attributes:
         degree (int): Desired degree of the polynomial kernel defined by the
             encoding. In turn, it defines the amount of copies of each input

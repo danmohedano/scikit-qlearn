@@ -3,3 +3,7 @@ Version 1.2
 
 Changes:
 
+* Addition of parametrized constant to `ExpandedAmplitudeEncoding` instead of always making the expansion with a value of :math:`1.0`.
+* Remove the requirement of normalized inputs in `AmplitudeEncoding`, as some subroutines can work around that problem. The method will always normalize the input now.
+* Added check in `AmplitudeEncoding` for empty or null vectors (all components equal to 0).
+* Fixed dataset encodings for `AmplitudeEncoding` and `ExpandedAmplitudeEncoding`.

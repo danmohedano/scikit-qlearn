@@ -24,9 +24,17 @@ class TestAmplitudeEncoding:
                                  [np.array([0.5, 0.5, 0.5, 0.5]),
                                   1,
                                   np.array([0.5, 0.5, 0.5, 0.5])],
-                                 [np.array([1/np.sqrt(2), 1/np.sqrt(2)]),
+                                 [np.array([1.0, 1.0]),
+                                  1,
+                                  np.array([1 / np.sqrt(2), 1 / np.sqrt(2)])],
+                                 [np.array([1 / np.sqrt(2), 1 / np.sqrt(2)]),
                                   2,
                                   np.array([0.5, 0.5, 0.5, 0.5])],
+                                 [np.array([[1 / np.sqrt(2)]*2,
+                                            [1 / np.sqrt(2)]*2,
+                                            [1 / np.sqrt(2)]*2]),
+                                  1,
+                                  np.array([1 / np.sqrt(6)]*6 + [0, 0])]
                              ])
     def test_correct(self, value_in, degree, expected_out, encoding_method):
         encoding_method.degree = degree
@@ -36,7 +44,7 @@ class TestAmplitudeEncoding:
                              [
                                  -1,
                                  [1, 2, 3],
-                                 np.array([0.5, 0.5])
+                                 np.array([0.0, 0.0])
                              ])
     def test_incorrect(self, value_in, encoding_method):
         regular_test_incorrect(value_in, encoding_method)
