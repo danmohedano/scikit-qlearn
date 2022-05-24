@@ -20,10 +20,10 @@ implemented in the package.
 # While classical computers' most basic unit of information is the bit, quantum
 # machines' is the qubit. Classical bits can only hold/represent one of two
 # values, 0 or 1, as all information can be represented with combinations of
-# enough of these binary values. Qubits, on the other hand, can be though of as
-# a 2-state system such as a spin-half . The state of these systems can then be
-# described with quantum states. A system is said to have *n* qubits if it has
-# a Hilbert space of :math:`N=2^n` dimensions and, thus, has :math:`2^n`
+# enough of these binary values. Qubits, on the other hand, can be thought of
+# as a 2-state system such as a spin-half . The state of these systems can then
+# be described with quantum states. A system is said to have *n* qubits if it
+# has a Hilbert space of :math:`N=2^n` dimensions and, thus, has :math:`2^n`
 # mutually orthogonal quantum states, denoted as basis states
 # :cite:`steane1998quantum`. The main difference with classical mechanics is
 # that the system, by superposition, can be in a linear combination of these

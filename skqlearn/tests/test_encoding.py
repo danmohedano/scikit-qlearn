@@ -95,17 +95,27 @@ class TestExpandedAmplitudeEncoding:
     def encoding_method(self):
         return ExpandedAmplitudeEncoding()
 
-    @pytest.mark.parametrize('value_in, degree, expected_out',
+    @pytest.mark.parametrize('value_in, degree, c, expected_out',
                              [
-                                 [np.array([1.0, 1.0, 1.0]),
+                                 [np.array([1.0, 0.0, 1.0]),
                                   1,
-                                  np.array([0.5, 0.5, 0.5, 0.5])],
-                                 [np.array([1.0]),
+                                  2.0,
+                                  np.array([2 / np.sqrt(6), 1 / np.sqrt(6),
+                                            0, 1 / np.sqrt(6)])],
+                                 [np.array([1.0, 1.0]),
                                   2,
-                                  np.array([0.5, 0.5, 0.5, 0.5])],
+                                  1.0,
+                                  np.array([1 / 3]*3 + [0] + [1 / 3]*3 + [0] +
+                                           [1 / 3]*3 + [0]*5)],
+                                 [np.array([[1.0, 1.0], [1.0, 1.0], [1.0, 1.0]]),
+                                  1,
+                                  1.0,
+                                  np.array([1 / 3]*3 + [0] + [1 / 3]*3 + [0] +
+                                           [1 / 3]*3 + [0]*5)]
                              ])
-    def test_correct(self, value_in, degree, expected_out, encoding_method):
+    def test_correct(self, value_in, degree, c, expected_out, encoding_method):
         encoding_method.degree = degree
+        encoding_method.c = c
         regular_test_correct(value_in, expected_out, encoding_method)
 
     @pytest.mark.parametrize('value_in',

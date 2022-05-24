@@ -11,23 +11,25 @@ class ExpandedAmplitudeEncoding(Encoding):
     Amplitude Encoding, the data will lose one dimension of information. For
     example, if a 2D point is normalized, it will be mapped into the unit
     circle, a 1D shape. By adding an extra component to
-    :math:`\boldsymbol{x}\in\mathbb{R}^N` with a value of :math:`1`,
-    :math:`x_{N+1}=1`, and then normalizing, the information loss is mitigated.
+    :math:`\boldsymbol{x}\in\mathbb{R}^N` with a value of :math:`c`,
+    :math:`x_{0}=1`, and then normalizing, the information loss is mitigated.
 
-    The encoding and produced kernel are identical to regular Amplitude
+    The encoding and produced kernel are work identical to regular Amplitude
     Encoding's.
 
     Attributes:
         degree (int): Desired degree of the polynomial kernel defined by the
             encoding. In turn, it defines the amount of copies of each input
             vector that are encoded into the quantum state.
+        c (float): Constant to expand the input vectors with.
     """
-    def __init__(self, degree: int = 1):
+    def __init__(self, degree: int = 1, c: float = 1.0):
         """Construct a ExpandedAmplitudeEncoding object.
 
         Args:
             degree (int): Degree of the encoding (number of copies of the
                 states that will be created).
+            c (float): Constant to expand the input vectors with.
 
         Raises:
             ValueError: if the degree is smaller than 1.
@@ -35,13 +37,14 @@ class ExpandedAmplitudeEncoding(Encoding):
         if degree < 1:
             raise ValueError(f'Invalid degree provided. Got {degree} instead.')
         self.degree = degree
+        self.c = c
 
     def encoding(self, x: np.ndarray) -> np.ndarray:
         """Application of expanded amplitude encoding to the input.
 
         Expanded amplitude encoding allows for non-normalized vector to be
         encoded as quantum states. This is achieved by the inclusion of an
-        extra feature/component with value 1.
+        extra feature/component with value :math:`c`.
 
         Args:
             x (numpy.ndarray of shape (n_features) or (n_samples, n_features)):
@@ -58,7 +61,7 @@ class ExpandedAmplitudeEncoding(Encoding):
 
         Examples:
             >>> a = np.array([1.0, 1.0, 1.0])
-            >>> ExpandedAmplitudeEncoding().encoding(a)
+            >>> ExpandedAmplitudeEncoding(c=1.0).encoding(a)
             array([0.5, 0.5, 0.5, 0.5])
         """
         if not isinstance(x, np.ndarray):
@@ -83,11 +86,10 @@ class ExpandedAmplitudeEncoding(Encoding):
                 Quantum state described as an amplitude vector.
         """
         # Encode the vector with an extra feature of value 1.0
-        normalized_x = np.pad(x.astype(float), (0, 1), constant_values=1.0)
+        normalized_x = np.pad(x.astype(float), (1, 0), constant_values=self.c)
         normalized_x /= np.linalg.norm(normalized_x)
         state = AmplitudeEncoding(self.degree).encoding(normalized_x)
 
-        # Normalize the vector to make it a viable quantum state
         return state
 
     def _encoding_dataset(self, x: np.ndarray) -> np.ndarray:
@@ -103,7 +105,7 @@ class ExpandedAmplitudeEncoding(Encoding):
                 sample.
         """
         # Calculate the size of a single state, accounting for the degree
-        vector_size = max(int(2 ** np.ceil(np.log2(x.shape[1]))), 2)
+        vector_size = max(int(2 ** np.ceil(np.log2(x.shape[1] + 1))), 2)
         vector_size = vector_size ** self.degree
 
         states = np.zeros(vector_size * x.shape[0])
@@ -113,5 +115,11 @@ class ExpandedAmplitudeEncoding(Encoding):
 
         # Normalization of the concatenated vectors
         states /= np.sqrt(x.shape[0])
+
+        # Extend dimensions for correct quantum state definition (power of 2)
+        states_size = max(int(2 ** np.ceil(np.log2(states.shape[0]))), 2)
+        states = np.pad(states.astype(float),
+                        (0, states_size - states.shape[0]),
+                        constant_values=0.0)
 
         return states
