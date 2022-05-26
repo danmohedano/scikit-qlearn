@@ -81,8 +81,6 @@ class Encoding(ABC):
         y_encoded = np.vstack(y_samples_list)
 
         # Calculation of the gram matrix
-        # Because the inputs are expected to be real, the Gram matrix will be
-        # symmetric, therefore half of the matrix does not have to be computed
         gram = np.zeros([x.shape[0], y.shape[0]])
         for i in range(x.shape[0]):
             for j in range(y.shape[0]):

@@ -1,4 +1,5 @@
 from .base_encoding import Encoding
+from skqlearn.utils import inner_product_estimation
 import numpy as np
 
 
@@ -122,7 +123,7 @@ class AmplitudeEncoding(Encoding):
         base_state = np.pad(x, (0, size - x.shape[0]))
 
         # Normalize to construct a valid quantum state
-        base_state /= np.linalg.norm(base_state)
+        base_state = base_state.astype(float) / np.linalg.norm(base_state)
 
         # Create the amount of copies defined by degree
         state = 1
@@ -162,3 +163,92 @@ class AmplitudeEncoding(Encoding):
                         constant_values=0.0)
 
         return states
+
+    def classic_kernel(
+            self,
+            x: np.ndarray,
+            y: np.ndarray,
+    ) -> np.ndarray:
+        """Classical calculation of the kernel formed by the encoding and the
+        inner product.
+
+        Args:
+            x (numpy.ndarray of shape (n_samples_1, n_features)): First input.
+            y (numpy.ndarray of shape (n_samples_2, n_features)): Second input.
+
+        Returns:
+            numpy.ndarray of shape (n_samples_1, n_samples_2):
+                Resulting kernel matrix.
+        """
+        # Compute norms of input vectors
+        x_norms = [np.linalg.norm(x[i, :]) for i in range(x.shape[0])]
+        y_norms = [np.linalg.norm(y[i, :]) for i in range(y.shape[0])]
+
+        # Application of the encoding to the inputs
+        x_samples_list = [self.encoding(x[i, :]) for i in range(x.shape[0])]
+        y_samples_list = [self.encoding(y[i, :]) for i in range(y.shape[0])]
+
+        # Pad with zeros if dimensions differ
+        x_size = max([x.shape[0] for x in x_samples_list])
+        y_size = max([y.shape[0] for y in y_samples_list])
+        x_samples_list = [np.pad(x, (0, x_size - x.shape[0]))
+                          for x in x_samples_list]
+        y_samples_list = [np.pad(y, (0, y_size - y.shape[0]))
+                          for y in y_samples_list]
+
+        x_encoded = np.vstack(x_samples_list)
+        y_encoded = np.vstack(y_samples_list)
+
+        # Calculate gram matrix and correct for the normalization
+        gram = np.dot(x_encoded, y_encoded.T)
+
+        for i in range(x.shape[0]):
+            for j in range(y.shape[0]):
+                gram[i, j] *= (x_norms[i] * y_norms[j]) ** self.degree
+
+        return gram
+
+    def quantum_kernel(
+            self,
+            x: np.ndarray,
+            y: np.ndarray,
+    ) -> np.ndarray:
+        """Quantum estimation of the kernel formed by the encoding and the
+        inner product.
+
+        Args:
+            x (numpy.ndarray of shape (n_samples_1, n_features)): First input.
+            y (numpy.ndarray of shape (n_samples_2, n_features)): Second input.
+
+        Returns:
+            numpy.ndarray of shape (n_samples_1, n_samples_2):
+                Resulting kernel matrix.
+        """
+        # Compute norms of input vectors
+        x_norms = [np.linalg.norm(x[i, :]) for i in range(x.shape[0])]
+        y_norms = [np.linalg.norm(y[i, :]) for i in range(y.shape[0])]
+
+        # Application of the encoding to the inputs
+        x_samples_list = [self.encoding(x[i, :]) for i in range(x.shape[0])]
+        y_samples_list = [self.encoding(y[i, :]) for i in range(y.shape[0])]
+
+        # Pad with zeros if dimensions differ
+        x_size = max([x.shape[0] for x in x_samples_list])
+        y_size = max([y.shape[0] for y in y_samples_list])
+        x_samples_list = [np.pad(x, (0, x_size - x.shape[0]))
+                          for x in x_samples_list]
+        y_samples_list = [np.pad(y, (0, y_size - y.shape[0]))
+                          for y in y_samples_list]
+
+        x_encoded = np.vstack(x_samples_list)
+        y_encoded = np.vstack(y_samples_list)
+
+        # Calculation of the gram matrix
+        gram = np.zeros([x.shape[0], y.shape[0]])
+        for i in range(x.shape[0]):
+            for j in range(y.shape[0]):
+                factor = (x_norms[i] * y_norms[j]) ** self.degree
+                gram[i, j] = factor * inner_product_estimation(x_encoded[i, :],
+                                                               y_encoded[j, :])
+
+        return gram

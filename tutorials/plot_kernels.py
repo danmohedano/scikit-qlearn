@@ -82,46 +82,6 @@ print('Gram matrix with quantum computation:')
 print(BasisEncoding().quantum_kernel(x, x))
 
 ###############################################################################
-# Amplitude Encoding
-# ---------------------
-#
-# Amplitude Encoding's feature map was:
-#
-# .. math::
-#    \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
-#    \sum_{i=1}^{N}x_i\left|i\right>
-#
-# Therefore, the kernel defined by the inner product is the linear kernel:
-#
-# .. math::
-#    k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
-#    \psi_{\boldsymbol{x'}}\right> = \boldsymbol{x}^T\boldsymbol{x'}.
-#
-# Because Amplitude Encoding is limited to normalized data, it can only
-# be used with points in the unit circle (when working in 2D).
-
-angles = np.arange(0, 2 * np.pi - 0.1, step=np.pi / 6)
-x = np.array([[np.cos(a), np.sin(a)] for a in angles])
-y = np.array([*[0]*6, *[1]*6])
-X0, X1 = x[:, 0], x[:, 1]
-plt.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=60, edgecolors='k')
-plt.show()
-
-clf_amp_c = SVC(kernel=AmplitudeEncoding(degree=1).classic_kernel).fit(x, y)
-clf_amp_q = SVC(kernel=AmplitudeEncoding(degree=1).quantum_kernel).fit(x, y)
-
-fig, (ax1, ax2) = plt.subplots(1, 2)
-fig.suptitle('Amplitude Encoding')
-ax1.set_title('Classic')
-ax2.set_title('Quantum')
-ax1.scatter(X0, X1, c=clf_amp_c.predict(x), cmap=plt.cm.coolwarm, s=60,
-            edgecolors='k')
-ax2.scatter(X0, X1, c=clf_amp_q.predict(x), cmap=plt.cm.coolwarm, s=60,
-            edgecolors='k')
-plt.show()
-
-
-###############################################################################
 # Because the next encodings can be applied to generic points in 2D space,
 # a couple of utility functions will be defined to help with the visualization
 # of the results. Specifically, they will be used to visualize the decision
@@ -144,10 +104,14 @@ def plot_contours(ax, clf, xx, yy, **params):
 
 def plot_comparison(title, clf_c, clf_q, X0, X1):
     xx, yy = make_meshgrid(X0, X1, 0.1)
-    fig, (ax1, ax2) = plt.subplots(1, 2)
+    fig, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
     fig.suptitle(title)
-    ax1.set_title('Classic')
-    ax2.set_title('Quantum')
+    ax1.set_title('Classic Computation')
+    ax1.set(xlabel='X1', ylabel='X2')
+    ax1.set_aspect('equal', 'box')
+    ax2.set_title('Quantum Estimation')
+    ax2.set(xlabel='X1', ylabel='X2')
+    ax2.set_aspect('equal', 'box')
     plot_contours(ax1, clf_c, xx, yy, cmap=plt.cm.coolwarm, alpha=0.8)
     plot_contours(ax2, clf_q, xx, yy, cmap=plt.cm.coolwarm, alpha=0.8)
     ax1.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=60, edgecolors='k')
@@ -155,16 +119,53 @@ def plot_comparison(title, clf_c, clf_q, X0, X1):
     plt.show()
 
 ###############################################################################
+# Amplitude Encoding
+# ---------------------
+#
+# Amplitude Encoding's feature map was:
+#
+# .. math::
+#    \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
+#    \sum_{i=1}^{N}\frac{1}{|\boldsymbol{x}|}x_i\left|i-1\right>
+#
+# Therefore, the kernel defined by the inner product is the linear kernel:
+#
+# .. math::
+#    k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
+#    \psi_{\boldsymbol{x'}}\right> = \frac{1}{|\boldsymbol{x}|
+#    |\boldsymbol{x'}|}\boldsymbol{x}^T\boldsymbol{x'}.
+
+###############################################################################
 # In order to use a simple example which is not linearly separable, the
-# proposed data for the SVM to classify is the XOR problem.
+# proposed data for the SVM to classify is the XOR problem in bipolar values,
+# instead of binary values. This will help as Amplitude Encoding is unable to
+# encode empty vectors (where all components equal to 0).
 
-
-x = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+x = np.array([[-1, -1], [-1, 1], [1, -1], [1, 1]])
 y = np.array([0, 1, 1, 0])
 X0, X1 = x[:, 0], x[:, 1]
 
 plt.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=60, edgecolors='k')
+plt.xlabel('X1')
+plt.ylabel('X2')
+plt.title('XOR problem with bipolar values')
 plt.show()
+
+clf_amp_c = SVC(kernel=AmplitudeEncoding(degree=1).classic_kernel).\
+    fit(x, y)
+clf_amp_q = SVC(kernel=AmplitudeEncoding(degree=1).quantum_kernel).\
+    fit(x, y)
+
+plot_comparison('Comparison of results for Amplitude Encoding (Degree=1)',
+                clf_amp_c, clf_amp_q, X0, X1)
+
+clf_amp_c_2 = SVC(kernel=AmplitudeEncoding(degree=2).classic_kernel).\
+    fit(x, y)
+clf_amp_q_2 = SVC(kernel=AmplitudeEncoding(degree=2).quantum_kernel).\
+    fit(x, y)
+
+plot_comparison('Comparison of results for Amplitude Encoding (Degree=2)',
+                clf_amp_c_2, clf_amp_q_2, X0, X1)
 
 ###############################################################################
 # Expanded Amplitude Encoding
@@ -177,13 +178,25 @@ plt.show()
 # This means that with degree equal to *1*, the kernel defined was the linear
 # kernel.
 
+x = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+y = np.array([0, 1, 1, 0])
+X0, X1 = x[:, 0], x[:, 1]
+
 clf_expamp_c = SVC(kernel=ExpandedAmplitudeEncoding(degree=1).classic_kernel).\
     fit(x, y)
 clf_expamp_q = SVC(kernel=ExpandedAmplitudeEncoding(degree=1).quantum_kernel).\
     fit(x, y)
 
-plot_comparison('Expanded Amplitude Encoding (Degree=1)', clf_expamp_c,
+plot_comparison('Expanded Amplitude Encoding (Degree=1, c=1)', clf_expamp_c,
                 clf_expamp_q, X0, X1)
+
+clf_expamp_c_c10 = SVC(kernel=ExpandedAmplitudeEncoding(degree=1, c=10).classic_kernel).\
+    fit(x, y)
+clf_expamp_q_c10 = SVC(kernel=ExpandedAmplitudeEncoding(degree=1, c=10).quantum_kernel).\
+    fit(x, y)
+
+plot_comparison('Expanded Amplitude Encoding (Degree=1, c=10)',
+                clf_expamp_c_c10, clf_expamp_q_c10, X0, X1)
 
 ###############################################################################
 # As it can be seen, the kernel is not strictly the linear kernel in 2D. If it
@@ -223,12 +236,20 @@ plt.show()
 # input vectors are being expanded into a higher dimension. This is one of the
 # main features of SVMs and kernels, commonly refered to as the kernel trick.
 
-clf_expamp_c = SVC(kernel=ExpandedAmplitudeEncoding(degree=4).classic_kernel).\
+clf_expamp_c = SVC(kernel=ExpandedAmplitudeEncoding(degree=2).classic_kernel).\
     fit(x, y)
-clf_expamp_q = SVC(kernel=ExpandedAmplitudeEncoding(degree=4).quantum_kernel).\
+clf_expamp_q = SVC(kernel=ExpandedAmplitudeEncoding(degree=2).quantum_kernel).\
     fit(x, y)
 
-plot_comparison('Expanded Amplitude Encoding (Degree=4)', clf_expamp_c,
+plot_comparison('Expanded Amplitude Encoding (Degree=2, c=1)', clf_expamp_c,
+                clf_expamp_q, X0, X1)
+
+clf_expamp_c = SVC(kernel=ExpandedAmplitudeEncoding(degree=2, c=5).classic_kernel).\
+    fit(x, y)
+clf_expamp_q = SVC(kernel=ExpandedAmplitudeEncoding(degree=2, c=5).quantum_kernel).\
+    fit(x, y)
+
+plot_comparison('Expanded Amplitude Encoding (Degree=2, c=5)', clf_expamp_c,
                 clf_expamp_q, X0, X1)
 
 ###############################################################################
