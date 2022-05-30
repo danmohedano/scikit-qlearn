@@ -21,8 +21,9 @@ class AmplitudeEncoding(Encoding):
     Therefore, the kernel defined by the inner product is the linear kernel:
 
     .. math::
-       k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
-       \psi_{\boldsymbol{x'}}\right> = \boldsymbol{x}^T\boldsymbol{x'}
+        k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
+        \psi_{\boldsymbol{x'}}\right> = \frac{1}{|\boldsymbol{x}|
+        |\boldsymbol{x'}|}\boldsymbol{x}^T\boldsymbol{x'}
 
     By, instead, mapping the input to :math:`d` copies of an amplitude
     encoded quantum state, a polynomial kernel can be defined:
@@ -32,10 +33,11 @@ class AmplitudeEncoding(Encoding):
        ^{\bigotimes d}
 
     .. math::
-       k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
-       \psi_{\boldsymbol{x'}}\right> \bigotimes ... \bigotimes
-       \left<\psi_{\boldsymbol{x}}|\psi_{\boldsymbol{x'}}\right> =
-       (\boldsymbol{x}^T\boldsymbol{x'})^d
+        k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
+        \psi_{\boldsymbol{x'}}\right> \bigotimes ... \bigotimes
+        \left<\psi_{\boldsymbol{x}}|\psi_{\boldsymbol{x'}}\right> =
+        \left(\frac{1}{|\boldsymbol{x}||\boldsymbol{x'}|}\boldsymbol{x}^T
+        \boldsymbol{x'}\right)^d
 
     A dataset can be encoded by concatenating all the input vectors.
 

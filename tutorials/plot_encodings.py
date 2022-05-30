@@ -150,8 +150,8 @@ state.draw('bloch').show()
 # For this encoding to generate valid quantum states, the input vectors must
 # be normalized. If they are not, the method is responsible for normalizing
 # them. This should be taken into account when planning on using this encoding.
-# The forceful normalization is performed as some subroutines can work around
-# the issue.
+# The forceful normalization is performed because some subroutines can work
+# around the issue.
 
 data = np.array([1.0])
 state = Statevector(AmplitudeEncoding().encoding(data))
@@ -222,11 +222,11 @@ plt.show()
 ###############################################################################
 # By adding an extra component to
 # :math:`\boldsymbol{x}\in\mathbb{R}^N` with a value of :math:`c`,
-# :math:`x_{0}=1`, and then normalizing, the information loss is mitigated.
+# :math:`x_{0}=c`, and then normalizing, the information loss is mitigated.
 #
 # .. math::
 #        \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
-#        \frac{1}{|\boldsymbol{x}|^2+c^2}\left(c\left|0\right> +
+#        \frac{1}{\sqrt{|\boldsymbol{x}|^2+c^2}}\left(c\left|0\right> +
 #        \sum_{i=1}^{N}x_i\left|i\right>\right)
 
 c = 1
@@ -247,6 +247,8 @@ plt.scatter(points[:, 0], points[:, 1], marker='o')
 plt.scatter(normalized_points[:, 0], normalized_points[:, 1], marker='x')
 plt.xlim([0, 4])
 plt.ylim([0, 4])
+plt.xlabel('X1')
+plt.ylabel('X2')
 plt.show()
 
 ###############################################################################

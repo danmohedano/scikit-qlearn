@@ -134,7 +134,7 @@ class Encoding(ABC):
         y_encoded, y_norms = self._sample_preparation(y)
 
         # Calculation of the gram matrix
-        gram = np.zeros(x.shape[0], y.shape[0])
+        gram = np.zeros((x.shape[0], y.shape[0]))
 
         for i in range(gram.shape[0]):
             for j in range(gram.shape[1]):

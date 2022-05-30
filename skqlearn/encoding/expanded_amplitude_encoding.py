@@ -13,15 +13,20 @@ class ExpandedAmplitudeEncoding(Encoding):
     example, if a 2D point is normalized, it will be mapped into the unit
     circle, a 1D shape. By adding an extra component to
     :math:`\boldsymbol{x}\in\mathbb{R}^N` with a value of :math:`c`,
-    :math:`x_{0}=1`, and then normalizing, the information loss is mitigated.
+    :math:`x_{0}=c`, and then normalizing, the information loss is mitigated.
 
-    The encoding and produced kernel are work identical to regular Amplitude
+    The encoding and produced kernel work identical to regular Amplitude
     Encoding's.
 
     .. math::
        \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
-       \frac{1}{|\boldsymbol{x}|^2+c^2}\left(c\left|0\right> +
+       \frac{1}{\sqrt{|\boldsymbol{x}|^2+c^2}}\left(c\left|0\right> +
        \sum_{i=1}^{N}x_i\left|i\right>\right)
+
+    .. math::
+        k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
+        \psi_{\boldsymbol{x'}}\right> = \frac{1}{\sqrt{|\boldsymbol{x}|^2+c^2}
+        \sqrt{|\boldsymbol{x'}|^2+c^2}}\boldsymbol{x}^T\boldsymbol{x'}
 
     Attributes:
         degree (int): Desired degree of the polynomial kernel defined by the
