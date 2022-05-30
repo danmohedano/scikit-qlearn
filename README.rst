@@ -16,8 +16,8 @@ Documentation
 =============
 
 The documentation is available at `danmohedano.github.io/scikit-qlearn/ <https://danmohedano.github.io/scikit-qlearn/>`_.
-It includes detaild information of the classes and methods offered by the package, tutorials to guide the user and gathers
-the changes made on every version.
+It includes detailed information of the classes and methods offered by the package, tutorials to guide the user and
+the changes made on every version of the package.
 
 Installation
 =============

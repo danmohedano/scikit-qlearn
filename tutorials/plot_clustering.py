@@ -33,10 +33,31 @@ from sklearn.datasets import make_blobs
 
 
 def plot_cluster(axis, x, labels, centers):
+    legend = []
     for y in np.unique(labels):
         members = labels == y
-        axis.scatter(x[members, 0], x[members, 1])
+        axis.scatter(x[members, 0], x[members, 1], label='_nolegend_')
         axis.scatter(centers[y, 0], centers[y, 1], s=[100], marker='X')
+        legend.append(f'Centroid {y}')
+
+    axis.set(xlabel='X1', ylabel='X2')
+    axis.set_aspect('equal', 'datalim')
+    max_val, min_val = np.max(x), np.min(x)
+    # axis.set(xlim=[min_val - 0.1, max_val + 0.1],
+    #         ylim=[min_val - 0.1, max_val + 0.1])
+    axis.legend(legend)
+
+
+def plot_comparison(x, clf_classic, clf_quantum, title):
+    fig, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
+    fig.suptitle(title)
+    ax1.set_title('Classic Distance Calculation')
+    ax2.set_title('Quantum Distance Estimation')
+
+    plot_cluster(ax1, x, clf_classic.labels, clf_classic.cluster_centers)
+    plot_cluster(ax2, x, clf_quantum.labels, clf_quantum.cluster_centers)
+
+    plt.show()
 
 
 ###############################################################################
@@ -51,9 +72,10 @@ JobHandler().configure(backend=AerSimulator(), shots=50000)
 np.random.seed(0)
 centers = np.array([[0, 0], [0, 1]])
 n_clusters = centers.shape[0]
-x, labels = make_blobs(n_samples=10, centers=centers, cluster_std=0.25)
+x, labels = make_blobs(n_samples=20, centers=centers, cluster_std=0.1)
 
-plot_cluster(plt, x, labels, centers)
+plot_cluster(plt.gca(), x, labels, centers)
+plt.title('Generated Data')
 plt.show()
 
 ###############################################################################
@@ -88,17 +110,8 @@ k_means_quantum = KMeans(n_clusters=len(centers),
                          distance_calculation_method='quantum')
 k_means_quantum.fit(x)
 
-fig, (ax1, ax2) = plt.subplots(1, 2)
-fig.suptitle('KMeans')
-ax1.set_title('Classic')
-ax2.set_title('Quantum')
 
-plot_cluster(ax1, x, k_means_classic.labels,
-             k_means_classic.cluster_centers)
-plot_cluster(ax2, x, k_means_quantum.labels,
-             k_means_quantum.cluster_centers)
-
-plt.show()
+plot_comparison(x, k_means_classic, k_means_quantum, 'KMeans Clustering')
 
 ###############################################################################
 # The trained estimators can then be used to assign new data to the current
@@ -133,14 +146,4 @@ k_medians_quantum = KMedians(n_clusters=len(centers),
                              distance_calculation_method='quantum')
 k_medians_quantum.fit(x)
 
-fig, (ax1, ax2) = plt.subplots(1, 2)
-fig.suptitle('KMedians')
-ax1.set_title('Classic')
-ax2.set_title('Quantum')
-
-plot_cluster(ax1, x, k_medians_classic.labels,
-             k_medians_classic.cluster_centers)
-plot_cluster(ax2, x, k_medians_quantum.labels,
-             k_medians_quantum.cluster_centers)
-
-plt.show()
+plot_comparison(x, k_medians_classic, k_medians_quantum, 'KMedians Clustering')

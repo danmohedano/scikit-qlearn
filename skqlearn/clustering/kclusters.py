@@ -134,17 +134,16 @@ class GenericClustering(ABC):
             self,
             x: np.ndarray,
             x_norms: np.ndarray,
-            cluster_assignments: dict,
+            labels: np.ndarray,
     ) -> np.ndarray:
         """Update function for the centroids.
 
         Args:
             x (numpy.ndarray of shape (n_samples, n_features)): Input samples.
             x_norms (numpy.ndarray of shape (n_samples)): L2-norm of every
-                instance. Only needed if quantum estimation is used.
-            cluster_assignments (dict): Index assignments for each cluster of
-                each instance index. The dictionary is of the form
-                {cluster_index: [instance_indices]}
+                sample. Only needed if quantum estimation is used.
+            labels (numpy.ndarray of shape (n_samples)): Assignments of each
+                sample to each cluster.
 
         Returns:
             numpy.ndarray of shape (n_clusters, n_features):
@@ -234,11 +233,8 @@ class GenericClustering(ABC):
         centroids = self._init_centroids(x)
         x_labels = np.ones(x.shape[0], dtype=int) * -1
 
-        x_norms = [np.linalg.norm(x[i, :]) for i in range(x.shape[0])]
-        x_norms = np.array(x_norms)
-        centroid_norms = [np.linalg.norm(centroids[i, :])
-                          for i in range(centroids.shape[0])]
-        centroid_norms = np.array(centroid_norms)
+        x_norms = np.linalg.norm(x, axis=1)
+        centroid_norms = np.linalg.norm(centroids, axis=1)
 
         assignment_flag = False
 
@@ -252,34 +248,26 @@ class GenericClustering(ABC):
                                            centroids, centroid_norms)
 
             # Check if any of the instances has changed cluster
-            for i in range(x.shape[0]):
-                if new_labels[i] != x_labels[i]:
-                    label_change_flag = True
+            if (new_labels != x_labels).any():
+                label_change_flag = True
 
-                cluster_data[new_labels[i]].append(i)
-                x_labels[i] = new_labels[i]
+            x_labels = new_labels
 
             if label_change_flag:
                 # Check that all centroids have at least 1 assigned sample.
                 # If not, restart process (problem caused by doing quantum
                 # estimations instead of real calculations)
                 assignment_flag = False
-                for assignments in cluster_data.values():
-                    if len(assignments) == 0:
-                        assignment_flag = True
-                        break
-
-                if assignment_flag:
+                if len(np.unique(x_labels)) != self.n_clusters:
+                    assignment_flag = True
                     break
 
                 # Recalculation of centroids according to implemented
                 # abstract method
-                centroids = self._centroid_update(x, x_norms, cluster_data)
+                centroids = self._centroid_update(x, x_norms, x_labels)
 
                 # Recalculation of centroid norms after their update
-                centroid_norms = [np.linalg.norm(centroids[i, :])
-                                  for i in range(centroids.shape[0])]
-                centroid_norms = np.array(centroid_norms)
+                centroid_norms = np.linalg.norm(centroids, axis=1)
             else:
                 break
 
@@ -330,8 +318,7 @@ class GenericClustering(ABC):
             numpy.ndarray of shape (n_samples,):
                 Index of the cluster each sample belongs to.
         """
-        x_norms = [np.linalg.norm(x[i, :]) for i in range(x.shape[0])]
-        x_norms = np.array(x_norms)
+        x_norms = np.linalg.norm(x, axis=1)
 
         x_labels = self._data_labels(x,
                                      x_norms,

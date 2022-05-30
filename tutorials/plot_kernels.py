@@ -1,4 +1,7 @@
 """
+
+.. _kerneltutorial:
+
 Kernels
 ===========================
 
@@ -110,16 +113,16 @@ def plot_comparison(title, clf_c, clf_q, X0, X1):
     xx, yy = make_meshgrid(X0, X1, 0.1)
     fig, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
     fig.suptitle(title)
+    plot_contours(ax1, clf_c, xx, yy, cmap=plt.cm.coolwarm, alpha=0.8)
+    plot_contours(ax2, clf_q, xx, yy, cmap=plt.cm.coolwarm, alpha=0.8)
+    ax1.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=60, edgecolors='k')
+    ax2.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=60, edgecolors='k')
     ax1.set_title('Classic Computation')
     ax1.set(xlabel='X1', ylabel='X2')
     ax1.set_aspect('equal', 'box')
     ax2.set_title('Quantum Estimation')
     ax2.set(xlabel='X1', ylabel='X2')
     ax2.set_aspect('equal', 'box')
-    plot_contours(ax1, clf_c, xx, yy, cmap=plt.cm.coolwarm, alpha=0.8)
-    plot_contours(ax2, clf_q, xx, yy, cmap=plt.cm.coolwarm, alpha=0.8)
-    ax1.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=60, edgecolors='k')
-    ax2.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=60, edgecolors='k')
     plt.show()
 
 ###############################################################################

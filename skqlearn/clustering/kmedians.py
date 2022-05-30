@@ -25,11 +25,12 @@ class KMedians(GenericClustering):
         n_features_in (int): Number of features seen during fit.
         n_iter (int): Number of iterations run.
     """
+
     def _centroid_update(
             self,
             x: np.ndarray,
             x_norms: np.ndarray,
-            cluster_assignments: dict,
+            labels: np.ndarray,
     ) -> np.ndarray:
         """Update function for the centroids.
 
@@ -41,9 +42,8 @@ class KMedians(GenericClustering):
             x (numpy.ndarray of shape (n_samples, n_features)): Input samples.
             x_norms (numpy.ndarray of shape (n_samples)): L2-norm of every
                 instance. Only needed if quantum estimation is used.
-            cluster_assignments (dict): Index assignments for each cluster of
-                each instance index. The dictionary is of the form
-                {cluster_index: [instance_indices]}
+            labels (numpy.ndarray of shape (n_samples)): Assignments of each
+                sample to each cluster.
 
         Returns:
             numpy.ndarray of shape (n_clusters, n_features):
@@ -57,30 +57,38 @@ class KMedians(GenericClustering):
         # Calculate distances between instances only in the first execution.
         distances = getattr(self, '_sample_distances', None)
         if distances is None:
-            distances = np.zeros([x.shape[0], x.shape[0]])
-            for i in range(x.shape[0]):
-                for j in range(x.shape[0]):
-                    if i == j:
-                        continue
-                    distances[i, j] = distance_fn(x[i, :], x_norms[i],
-                                                  x[j, :], x_norms[j])
-
-            setattr(self, '_sample_distances', distances)
+            distances = np.ones([x.shape[0], x.shape[0]]) * -1
+            np.fill_diagonal(distances, 0)
 
         # Update centroids through the median
         centroids = np.zeros((self.n_clusters, x.shape[1]))
         for cluster_idx in range(self.n_clusters):
+            # Calculate distance between all samples in the cluster only if
+            # it has not already been done
+            instance_idxs = labels == cluster_idx
+            for i in range(instance_idxs.shape[0]):
+                if not instance_idxs[i]:
+                    continue
+                for j in range(i + 1, instance_idxs.shape[0]):
+                    if instance_idxs[j] and distances[i, j] < 0:
+                        # If the position is marked as not evaluated with -1
+                        distances[i, j] = distance_fn(x[i, :], x_norms[i],
+                                                      x[j, :], x_norms[j])
+                        distances[j, i] = distances[i, j]
+
             # Aggregate distances from each instance to every other distance
             # and obtain the median instance (only considering those contained
             # in the current centroid)
-            instance_idxs = cluster_assignments[cluster_idx]
             dist_aggregate = np.sum(distances[instance_idxs, :]
                                     [:, instance_idxs],
                                     axis=0)
-            median_idx = np.argmin(dist_aggregate)
-            data_median_idx = cluster_assignments[cluster_idx][median_idx]
 
-            # Obtain new centroid
-            centroids[cluster_idx] = x[data_median_idx]
+            # Obtain new centroid as the samples that minimizes the distances
+            # to all other samples assigned to the centroid
+            median_idx = np.argmin(dist_aggregate)
+            centroids[cluster_idx] = x[instance_idxs, :][median_idx, :]
+
+        # Store the calculations in case they are needed in the future
+        self._sample_distances = distances
 
         return centroids
