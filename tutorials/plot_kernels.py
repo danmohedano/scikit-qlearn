@@ -77,7 +77,7 @@ JobHandler().configure(backend=AerSimulator(), shots=10000)
 #     \delta_{ij}
 #
 # With :math:`\delta` being the Kronecker delta, defined as
-# :math:`\delta_{ij}=\[i=j\]`.
+# :math:`\delta_{ij}=[i=j]`.
 #
 # When computing the Gram matrix of a set of vectors, the expected
 # result would be the identity matrix.
@@ -123,6 +123,7 @@ def plot_comparison(title, clf_c, clf_q, X0, X1):
     ax2.set_title('Quantum Estimation')
     ax2.set(xlabel='X1', ylabel='X2')
     ax2.set_aspect('equal', 'box')
+    plt.subplots_adjust(left=0.10, bottom=0.01, right=0.95, top=0.99, wspace=0.1)
     plt.show()
 
 ###############################################################################
@@ -176,6 +177,7 @@ plot_comparison('Comparison of results for Amplitude Encoding (Degree=1)',
 #
 # If the vectors are instead mapped to :math:`d` copies of the amplitude
 # vectors:
+#
 # .. math::
 #    \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>
 #    ^{\bigotimes d}

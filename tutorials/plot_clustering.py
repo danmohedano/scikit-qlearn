@@ -1,4 +1,7 @@
 """
+
+.. _clusteringtutorial:
+
 Clustering
 ===========================
 
@@ -41,10 +44,7 @@ def plot_cluster(axis, x, labels, centers):
         legend.append(f'Centroid {y}')
 
     axis.set(xlabel='X1', ylabel='X2')
-    axis.set_aspect('equal', 'datalim')
-    max_val, min_val = np.max(x), np.min(x)
-    # axis.set(xlim=[min_val - 0.1, max_val + 0.1],
-    #         ylim=[min_val - 0.1, max_val + 0.1])
+    axis.set_aspect('auto', 'box')
     axis.legend(legend)
 
 
@@ -53,6 +53,7 @@ def plot_comparison(x, clf_classic, clf_quantum, title):
     fig.suptitle(title)
     ax1.set_title('Classic Distance Calculation')
     ax2.set_title('Quantum Distance Estimation')
+    plt.subplots_adjust(left=0.1, bottom=0.1, right=0.95, top=0.85, wspace=0.1)
 
     plot_cluster(ax1, x, clf_classic.labels, clf_classic.cluster_centers)
     plot_cluster(ax2, x, clf_quantum.labels, clf_quantum.cluster_centers)
@@ -69,13 +70,12 @@ JobHandler().configure(backend=AerSimulator(), shots=50000)
 ###############################################################################
 # First, random data is generated centered around two points.
 
-np.random.seed(0)
+np.random.seed(1)
 centers = np.array([[0, 0], [0, 1]])
-n_clusters = centers.shape[0]
 x, labels = make_blobs(n_samples=20, centers=centers, cluster_std=0.1)
 
 plot_cluster(plt.gca(), x, labels, centers)
-plt.title('Generated Data')
+plt.title('Generated data for two blobs')
 plt.show()
 
 ###############################################################################
@@ -110,8 +110,8 @@ k_means_quantum = KMeans(n_clusters=len(centers),
                          distance_calculation_method='quantum')
 k_means_quantum.fit(x)
 
-
-plot_comparison(x, k_means_classic, k_means_quantum, 'KMeans Clustering')
+plot_comparison(x, k_means_classic, k_means_quantum,
+                'KMeans Clustering on two blobs')
 
 ###############################################################################
 # The trained estimators can then be used to assign new data to the current
@@ -146,4 +146,50 @@ k_medians_quantum = KMedians(n_clusters=len(centers),
                              distance_calculation_method='quantum')
 k_medians_quantum.fit(x)
 
-plot_comparison(x, k_medians_classic, k_medians_quantum, 'KMedians Clustering')
+plot_comparison(x, k_medians_classic, k_medians_quantum,
+                'KMedians Clustering on two blobs')
+
+###############################################################################
+# It is also interesting to see the decisions made by the algorithms with
+# less straight forward data.
+
+centers_2 = np.array([[0, 0]])
+x_2, labels_2 = make_blobs(n_samples=20, centers=centers_2, cluster_std=0.05)
+
+plot_cluster(plt.gca(), x_2, labels_2, centers_2)
+plt.title('Generated Data for one blob')
+plt.show()
+
+###############################################################################
+
+k_means_classic_2 = KMeans(n_clusters=2,
+                           max_iterations=40,
+                           random_state=0,
+                           distance_calculation_method='classic')
+k_means_classic_2.fit(x_2)
+
+k_means_quantum_2 = KMeans(n_clusters=2,
+                           max_iterations=40,
+                           random_state=0,
+                           distance_calculation_method='quantum')
+k_means_quantum_2.fit(x_2)
+
+plot_comparison(x_2, k_means_classic_2, k_means_quantum_2,
+                'KMeans Clustering on one blob')
+
+###############################################################################
+
+k_medians_classic_2 = KMedians(n_clusters=2,
+                               max_iterations=40,
+                               random_state=0,
+                               distance_calculation_method='classic')
+k_medians_classic_2.fit(x_2)
+
+k_medians_quantum_2 = KMedians(n_clusters=2,
+                               max_iterations=40,
+                               random_state=0,
+                               distance_calculation_method='quantum')
+k_medians_quantum_2.fit(x_2)
+
+plot_comparison(x_2, k_medians_classic_2, k_medians_quantum_2,
+                'KMedians Clustering on one blob')

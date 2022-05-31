@@ -92,3 +92,20 @@ class KMedians(GenericClustering):
         self._sample_distances = distances
 
         return centroids
+
+    def fit(
+            self,
+            x: np.ndarray,
+    ) -> GenericClustering:
+        """Compute clustering of provided data.
+
+        Args:
+            x (numpy.ndarray of shape (n_samples, n_features)): Training data
+                to cluster.
+
+        Returns:
+            self (GenericClustering):
+                Fitted estimator.
+        """
+        self._sample_distances = None
+        super().fit(x)

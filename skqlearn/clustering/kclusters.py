@@ -219,12 +219,18 @@ class GenericClustering(ABC):
     def fit(
             self,
             x: np.ndarray,
+            y: np.ndarray = None,
+            sample_weights: np.ndarray = None,
     ) -> GenericClustering:
         """Compute clustering of provided data.
 
         Args:
             x (numpy.ndarray of shape (n_samples, n_features)): Training data
                 to cluster.
+            y (Ignored): Not used, present here for API consistency with
+                sklearn's implementation.
+            sample_weights (Ignored): Not used, present here for API
+                consistency with sklearn's implementation.
 
         Returns:
             self (GenericClustering):
@@ -286,6 +292,8 @@ class GenericClustering(ABC):
     def fit_predict(
             self,
             x: np.ndarray,
+            y: np.ndarray = None,
+            sample_weights: np.ndarray = None,
     ) -> np.ndarray:
         """Compute clustering of provided data and predict cluster
         index for each sample.
@@ -297,6 +305,10 @@ class GenericClustering(ABC):
         Args:
             x (numpy.ndarray of shape (n_samples, n_features)): Training data
                 to cluster and predict.
+            y (Ignored): Not used, present here for API consistency with
+                sklearn's implementation.
+            sample_weights (Ignored): Not used, present here for API
+                consistency with sklearn's implementation.
 
         Returns:
             numpy.ndarray of shape (n_samples,):
@@ -307,12 +319,15 @@ class GenericClustering(ABC):
     def predict(
             self,
             x: np.ndarray,
+            sample_weights: np.ndarray = None,
     ) -> np.ndarray:
         """Assigns a label to each input sample based on the closest centroid.
 
         Args:
             x (numpy.ndarray of shape (n_samples, n_features)): Data to
                 predict.
+            sample_weights (Ignored): Not used, present here for API
+                consistency with sklearn's implementation.
 
         Returns:
             numpy.ndarray of shape (n_samples,):
@@ -326,3 +341,63 @@ class GenericClustering(ABC):
                                      self._centroid_norms)
 
         return x_labels
+
+    def transform(
+            self,
+            x: np.ndarray,
+    ) -> np.ndarray:
+        """Transform X to a cluster-distance space.
+
+        In the new space, each dimension is the distance to the cluster
+        centers.
+
+        Args:
+            x (numpy.ndarray of shape (n_samples, n_features)): Input data to
+                transform.
+
+        Returns:
+            numpy.ndarray of shape (n_samples, n_clusters):
+                Transformed input data.
+        """
+        if self.distance_calculation_method == 'classic':
+            distance_fn = self._distance
+        else:
+            distance_fn = distance_estimation
+
+        x_norms = np.linalg.norm(x, axis=1)
+        new_x = np.zeros((x.shape[0], self.n_clusters))
+
+        for i in range(x.shape[0]):
+            for j in range(self.n_clusters):
+                new_x[i, j] = distance_fn(x[i, :], x_norms[i],
+                                          self.cluster_centers[j, :],
+                                          self._centroid_norms[j])
+
+        return new_x
+
+    def fit_transform(
+            self,
+            x: np.ndarray,
+            y: np.ndarray = None,
+            sample_weights: np.ndarray = None,
+    ) -> np.ndarray:
+        """Compute clustering of provided data and transform data to
+        cluster-distance space.
+
+        .. note::
+
+           It is equivalent to calling `fit(x)` followed by `transform(x)`.
+
+        Args:
+            x (numpy.ndarray of shape (n_samples, n_features)): Training data
+                to cluster and transform.
+            y (Ignored): Not used, present here for API consistency with
+                sklearn's implementation.
+            sample_weights (Ignored): Not used, present here for API
+                consistency with sklearn's implementation.
+
+        Returns:
+            numpy.ndarray of shape (n_samples, n_clusters):
+                Transformed data.
+        """
+        return self.fit(x).transform(x)
