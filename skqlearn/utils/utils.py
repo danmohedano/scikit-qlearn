@@ -2,9 +2,18 @@ import numpy as np
 from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
 from qiskit.providers import Backend
 from qiskit.result import Result
+from qiskit.quantum_info import Statevector
 import qiskit
 from typing import Union
 from skqlearn.gates import multiqubit_cswap
+import tkinter as tk
+from tkinter import ttk
+import matplotlib
+import matplotlib.pyplot as plt
+
+matplotlib.use('TkAgg')
+
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 class Singleton(type):
@@ -58,6 +67,7 @@ class JobHandler(metaclass=Singleton):
         >>> JobHandler().configure(backend, 10000)
 
     """
+
     def __init__(self):
         self.backend = None
         self.run_options = {}
@@ -440,3 +450,81 @@ def inner_product_estimation(
         return 2.0 * result.get_counts(comp)['0'] / shots - 1.0
     except KeyError:
         return -1.0
+
+
+class InteractiveBlochSphere:
+    r"""Interactive Bloch Sphere class
+
+    Created to help visualize the transformations of quantum states in the
+    Bloch sphere representation. Allows the user to change the values of
+    :math:`\theta` and :math:`\phi` for:
+
+    .. math::
+       \left|\psi\right> = \cos\frac{\theta}{2}\left|0\right> + e^{i\phi}
+       \sin \frac{\theta}{2}\left|1\right>
+
+    """
+    def run(self):
+        """Run the interactive Bloch Sphere in a Tkinter window"""
+        # Root window
+        self.root = tk.Tk()
+        self.root.protocol("WM_DELETE_WINDOW", self._quit)
+        self.root.geometry('650x560')
+        self.root.resizable(True, True)
+        self.root.title('Bloch Sphere')
+
+        # Variables for the angles
+        self.theta = tk.DoubleVar()
+        self.phi = tk.DoubleVar()
+
+        # Bloch Sphere figure canvas
+        base_state = Statevector(np.array([1, 0]))
+        base_figure = base_state.draw('bloch')
+        self.figure_canvas = FigureCanvasTkAgg(base_figure, self.root)
+        self.figure_canvas.get_tk_widget().grid(column=2, row=1)
+
+        # Configuration of Theta slider
+        theta_label = ttk.Label(self.root, text=u'\u03B8', font=("Arial", 25),
+                                anchor='center')
+        theta_label.grid(column=0, row=0, sticky='we')
+        slider_theta = ttk.Scale(self.root, from_=0.0, to=np.pi,
+                                orient='vertical',
+                                command=self._plot_update,
+                                variable=self.theta)
+        slider_theta.grid(column=0, row=1, sticky='ns')
+        self.theta_value = ttk.Label(self.root, text='0.00rad', font=("Arial", 15),
+                                     anchor='center')
+        self.theta_value.grid(column=0, row=2, sticky='we')
+
+        # Configuration of Phi slider
+        phi_label = ttk.Label(self.root, text=u'\u03D5', font=("Arial", 25),
+                              anchor='center')
+        phi_label.grid(column=1, row=0, sticky='we')
+        slider_phi = ttk.Scale(self.root, from_=0.0, to=2 * np.pi,
+                              orient='vertical',
+                              command=self._plot_update,
+                              variable=self.phi)
+        slider_phi.grid(column=1, row=1, sticky='ns')
+        self.phi_value = ttk.Label(self.root, text='0.00rad', font=("Arial", 15),
+                                   anchor='center')
+        self.phi_value.grid(column=1, row=2, sticky='we')
+
+        self.root.mainloop()
+
+        return
+
+    def _plot_update(self, event):
+        self.theta_value['text'] = f'{self.theta.get():.2f}rad'
+        self.phi_value['text'] = f'{self.phi.get():.2f}rad'
+        amp_0 = np.cos(self.theta.get() / 2)
+        amp_1 = np.sin(self.theta.get() / 2) * np.exp(1j * self.phi.get())
+        state = Statevector(np.array([amp_0, amp_1]))
+        figure = state.draw('bloch')
+        plt.close(self.figure_canvas.figure)
+        self.figure_canvas.get_tk_widget().destroy()
+        self.figure_canvas = FigureCanvasTkAgg(figure, self.root)
+        self.figure_canvas.get_tk_widget().grid(column=2, row=1)
+
+    def _quit(self):
+        self.root.quit()
+        self.root.destroy()

@@ -12,6 +12,8 @@ Changes:
 * `Clustering` Module:
     * Reworked clustering algorithms to improve performance.
     * Updated class methods to conform to sklearn's estimator API.
+* `Utils` Module:
+    * Added interactive Bloch Sphere application built with Tkinter.
 * Tutorials:
     * Updated :ref:`encodingstutorial` and :ref:`kerneltutorial` tutorials to reflect changes in the module.
     * Updated :ref:`clusteringtutorial` tutorial to reflect changes in the module.
