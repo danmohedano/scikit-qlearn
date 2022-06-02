@@ -7,6 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Install tk dependency
+      run: |
+        apt-get install tk
     - name: Build HTML
       uses: ammaraskar/sphinx-action@0.4
     - name: Upload artifacts
