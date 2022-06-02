@@ -1,9 +1,5 @@
-try:
-    import tkinter as tk
-    from tkinter import ttk
-except ImportError:
-    pass
-
+import tkinter as tk
+from tkinter import ttk
 import matplotlib
 import matplotlib.pyplot as plt
 from qiskit.quantum_info import Statevector
