@@ -16,7 +16,7 @@
 import sys
 import pathlib
 sys.path.insert(0, pathlib.Path(__file__).parents[2].resolve().as_posix())
-from skqlearn import __version__
+import skqlearn
 
 
 # -- Project information -----------------------------------------------------
@@ -26,7 +26,7 @@ copyright = '2022, Daniel Mohedano'
 author = 'Daniel Mohedano'
 
 # The full version, including alpha/beta/rc tags
-version = __version__
+version = skqlearn.__version__
 
 
 # -- General configuration ---------------------------------------------------
