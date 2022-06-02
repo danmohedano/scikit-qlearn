@@ -8,7 +8,7 @@ jobs:
     steps:
     - name: Install tk dependency
       run: |
-        sudo apt-get install tk
+        sudo apt-get install tk tk-dev python-tk python3-tk
     - uses: actions/checkout@v2
     - name: Build HTML
       uses: ammaraskar/sphinx-action@0.4
