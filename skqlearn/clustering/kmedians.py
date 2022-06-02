@@ -96,16 +96,22 @@ class KMedians(GenericClustering):
     def fit(
             self,
             x: np.ndarray,
+            y: np.ndarray = None,
+            sample_weights: np.ndarray = None,
     ) -> GenericClustering:
         """Compute clustering of provided data.
 
         Args:
             x (numpy.ndarray of shape (n_samples, n_features)): Training data
                 to cluster.
+            y (Ignored): Not used, present here for API consistency with
+                sklearn's implementation.
+            sample_weights (Ignored): Not used, present here for API
+                consistency with sklearn's implementation.
 
         Returns:
             self (GenericClustering):
                 Fitted estimator.
         """
         self._sample_distances = None
-        super().fit(x)
+        return super().fit(x, y, sample_weights)

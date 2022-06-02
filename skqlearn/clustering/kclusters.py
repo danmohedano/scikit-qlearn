@@ -314,7 +314,7 @@ class GenericClustering(ABC):
             numpy.ndarray of shape (n_samples,):
                 Index of the cluster each sample belongs to.
         """
-        return self.fit(x).predict(x)
+        return self.fit(x, y, sample_weights).predict(x, sample_weights)
 
     def predict(
             self,
@@ -400,4 +400,4 @@ class GenericClustering(ABC):
             numpy.ndarray of shape (n_samples, n_clusters):
                 Transformed data.
         """
-        return self.fit(x).transform(x)
+        return self.fit(x, y, sample_weights).transform(x)
