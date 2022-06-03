@@ -9,6 +9,7 @@ Changes:
     * Added check in `AmplitudeEncoding` for empty or null vectors (all components equal to 0).
     * Fixed dataset encodings for `AmplitudeEncoding` and `ExpandedAmplitudeEncoding`.
     * Reworked kernel calculations to improve performance.
+    * Included dataset encoding to `AngleEncoding`.
 * `Clustering` Module:
     * Reworked clustering algorithms to improve performance.
     * Updated class methods to conform to sklearn's estimator API.

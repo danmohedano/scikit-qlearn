@@ -28,7 +28,7 @@ algorithms implemented in the package.
 # that plots the data assignments as well as the center of each cluster.
 
 from skqlearn.utils import JobHandler
-from skqlearn.clustering import *
+from skqlearn.ml.clustering import *
 import matplotlib.pyplot as plt
 import numpy as np
 from qiskit.providers.aer import AerSimulator

@@ -5,7 +5,7 @@ API Reference
    :caption: Modules
    :maxdepth: 2
 
-   skqlearn.clustering
+   skqlearn.ml
    skqlearn.encoding
    skqlearn.gates
    skqlearn.utils

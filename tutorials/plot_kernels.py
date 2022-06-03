@@ -216,7 +216,7 @@ plot_comparison('Comparison of results for Amplitude Encoding (Degree=2)',
 #
 # .. math::
 #        \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
-#        \frac{1}{|\boldsymbol{x}|^2+c^2}\left(c\left|0\right> +
+#        \frac{1}{\sqrt{|\boldsymbol{x}|^2+c^2}}\left(c\left|0\right> +
 #        \sum_{i=1}^{N}x_i\left|i\right>\right)
 #
 # This defines a more general polynomial kernel when mapping to :math:`d`
@@ -226,8 +226,8 @@ plot_comparison('Comparison of results for Amplitude Encoding (Degree=2)',
 # .. math::
 #    k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
 #    \psi_{\boldsymbol{x'}}\right> = \left(\frac{1}{\sqrt{|\boldsymbol{x}|^2+
-#    c^2}\sqrt{|\boldsymbol{x'}|^2+c^2}}\boldsymbol{x}^T\boldsymbol{x'}\right)
-#    ^d
+#    c^2}\sqrt{|\boldsymbol{x'}|^2+c^2}}(\boldsymbol{x}^T\boldsymbol{x'}+c^2)
+#    \right)^d
 #
 
 expamp = ExpandedAmplitudeEncoding(degree=2, c=1)

@@ -92,7 +92,7 @@ class Encoding(ABC):
 
         Returns:
             numpy.ndarray of shape (n_samples_1, n_samples_2):
-                Resulting kernel matrix.
+                Resulting Gram matrix.
         """
         # Encoding of the input samples
         x_encoded, x_norms = self._sample_preparation(x)
@@ -126,7 +126,7 @@ class Encoding(ABC):
 
         Returns:
             numpy.ndarray of shape (n_samples_1, n_samples_2):
-                Resulting kernel matrix.
+                Resulting Gram matrix.
         """
         # Encoding of the input samples that results in matrices of shape
         # (n_samples, n_features_encoded)
