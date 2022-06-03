@@ -28,6 +28,15 @@ class ExpandedAmplitudeEncoding(Encoding):
         \psi_{\boldsymbol{x'}}\right> = \frac{1}{\sqrt{|\boldsymbol{x}|^2+c^2}
         \sqrt{|\boldsymbol{x'}|^2+c^2}}\boldsymbol{x}^T\boldsymbol{x'}
 
+    The kernel is then corrected by a factor of
+    :math:`\sqrt{|\boldsymbol{x}|^2+c^2}\sqrt{|\boldsymbol{x'}|^2+c^2}` in
+    order to define a generic polynomial kernel.
+
+    .. note::
+       The normalization of the expanded vectors and application of the
+       correction produce a very small rounding error in the values obtained
+       for the kernel.
+
     Attributes:
         degree (int): Desired degree of the polynomial kernel defined by the
             encoding. In turn, it defines the amount of copies of each input

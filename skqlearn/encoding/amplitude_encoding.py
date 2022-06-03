@@ -18,7 +18,9 @@ class AmplitudeEncoding(Encoding):
     therefore, the dimension of the vectors must be a power of 2,
     :math:`N=2^n`. If they are not, they will be padded with zeros at the end.
 
-    Therefore, the kernel defined by the inner product is the linear kernel:
+    Therefore, the kernel defined by the inner product is the linear kernel
+    after applying a correction of
+    :math:`|\boldsymbol{x}||\boldsymbol{x'}|`:
 
     .. math::
         k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
@@ -26,7 +28,7 @@ class AmplitudeEncoding(Encoding):
         |\boldsymbol{x'}|}\boldsymbol{x}^T\boldsymbol{x'}
 
     By, instead, mapping the input to :math:`d` copies of an amplitude
-    encoded quantum state, a polynomial kernel can be defined:
+    encoded quantum state, a polynomial kernel can be defined after correction:
 
     .. math::
        \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>
