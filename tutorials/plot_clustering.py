@@ -43,7 +43,7 @@ def plot_cluster(axis, x, labels, centers):
         axis.scatter(centers[y, 0], centers[y, 1], s=[100], marker='X')
         legend.append(f'Centroid {y}')
 
-    axis.set(xlabel='X1', ylabel='X2')
+    axis.set(xlabel=r'$X_1$', ylabel=r'$X_2$')
     axis.set_aspect('auto', 'box')
     axis.legend(legend)
 
