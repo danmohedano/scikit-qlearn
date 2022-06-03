@@ -10,7 +10,7 @@ class SqueezingKernel:
     .. math::
        \left|z\right> = \frac{1}{\sqrt{\cosh(r)}}
        \sum_{n=0}^{\infty}\frac{\sqrt{(2n)!}}{2^n n!}
-       (-e^{i\varphi}\tanh(r))\left|2n\right>
+       (-e^{i\varphi}\tanh(r))^n\left|2n\right>
 
     The notation :math:`\left|z\right> = \left|(r, \varphi)\right>` is also
     used, where :math:`z=re^{i\varphi}`.
@@ -36,12 +36,15 @@ class SqueezingKernel:
     This can be evaluated classically by taking the absolute square of the
     inner product.
 
+    Attributes:
+        c (float): Strength of the squeezing.
+
     """
     def __init__(self, c: float):
         """
 
         Args:
-            c (float): Strenght of the squeezing.
+            c (float): Strength of the squeezing.
         """
         self.c = c
 

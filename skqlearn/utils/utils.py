@@ -7,7 +7,6 @@ from typing import Union
 from skqlearn.gates import multiqubit_cswap
 
 
-
 class Singleton(type):
     """Singleton class implementation.
     """
@@ -319,6 +318,10 @@ def distance_estimation(
        |\boldsymbol{b}|^2 - 2\boldsymbol{a}^T\cdot\boldsymbol{b}) \\
        &= \frac{1}{2Z}|\boldsymbol{a}-\boldsymbol{b}|^2
 
+    This subroutine has a theoretical time complexity of :math:`O(\log N)`,
+    caused by the preparation of states. The fidelity estimation is supposed
+    to have a negligible complexity.
+
     Args:
         a (numpy.ndarray): Input a.
         a_norm (float): L2-norm of input a.
@@ -398,6 +401,9 @@ def inner_product_estimation(
        \left<\boldsymbol{b}|\boldsymbol{a}\right> +
        \left<\boldsymbol{b}|\boldsymbol{b}\right>) \\
        &= \frac{1}{4} (2 + 2\left<\boldsymbol{a}|\boldsymbol{b}\right>)
+
+    The time complexity of the subroutine is dominated by the preparation of
+    states, which is :math:`O(\log N)`.
 
     Args:
         state_a (numpy.ndarray): State a described by its amplitudes.

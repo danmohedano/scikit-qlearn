@@ -312,7 +312,7 @@ plot_comparison('Comparison of results for Angle Encoding',
 # .. math::
 #        \left|z\right> = \frac{1}{\sqrt{\cosh(r)}}
 #        \sum_{n=0}^{\infty}\frac{\sqrt{(2n)!}}{2^n n!}
-#        (-e^{i\varphi}\tanh(r))\left|2n\right>
+#        (-e^{i\varphi}\tanh(r))^n\left|2n\right>
 #
 # Interpreting it as a feature map for real vectors, it defines the following
 # kernel:

@@ -20,7 +20,11 @@ algorithms implemented in the package.
 # the Euclidean distance or L2-norm.
 #
 # The distances in the algorithms can be computed classically or estimated
-# with a quantum subroutine.
+# with a quantum subroutine. The quantum estimation has a time complexity of
+# :math:`O(\log N)` compared to :math:`O(N)` for its classical counterpart,
+# which produces an exponential speed-up. For more information in the
+# mathematical reasoning behind the estimation subroutine, refer to
+# :meth:`skqlearn.utils.distance_estimation`.
 
 
 ###############################################################################
@@ -68,7 +72,8 @@ def plot_comparison(x, clf_classic, clf_quantum, title):
 JobHandler().configure(backend=AerSimulator(), shots=50000)
 
 ###############################################################################
-# First, random data is generated centered around two points.
+# First, random data is generated centered around two points. For a first test,
+# the data generated is clearly separated into two clusters.
 
 np.random.seed(1)
 centers = np.array([[0, 0], [0, 1]])
@@ -151,7 +156,8 @@ plot_comparison(x, k_medians_classic, k_medians_quantum,
 
 ###############################################################################
 # It is also interesting to see the decisions made by the algorithms with
-# less straight forward data.
+# less straight forward data. For testing purposes, only one
+# cluster of data is generated in order to show how the algorithms behave.
 
 centers_2 = np.array([[0, 0]])
 x_2, labels_2 = make_blobs(n_samples=20, centers=centers_2, cluster_std=0.05)

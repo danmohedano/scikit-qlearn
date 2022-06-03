@@ -217,6 +217,8 @@ plt.scatter(points[:, 0], points[:, 1], marker='o')
 plt.scatter(normalized_points[:, 0], normalized_points[:, 1], marker='x')
 plt.xlim([0, 4])
 plt.ylim([0, 4])
+plt.xlabel(r'$X_1$')
+plt.ylabel(r'$X_2$')
 plt.show()
 
 ###############################################################################
@@ -247,8 +249,8 @@ plt.scatter(points[:, 0], points[:, 1], marker='o')
 plt.scatter(normalized_points[:, 0], normalized_points[:, 1], marker='x')
 plt.xlim([0, 4])
 plt.ylim([0, 4])
-plt.xlabel('X1')
-plt.ylabel('X2')
+plt.xlabel(r'$X_1$')
+plt.ylabel(r'$X_2$')
 plt.show()
 
 ###############################################################################
