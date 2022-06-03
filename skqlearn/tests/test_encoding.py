@@ -44,7 +44,7 @@ class TestAmplitudeEncoding:
                              [
                                  -1,
                                  [1, 2, 3],
-                                 np.array([0.0, 0.0])
+                                 np.array([0.0, 0.0]),
                              ])
     def test_incorrect(self, value_in, encoding_method):
         regular_test_incorrect(value_in, encoding_method)
@@ -119,7 +119,9 @@ class TestExpandedAmplitudeEncoding:
                                   1.0,
                                   np.array([1 / 3]*3 + [0] + [1 / 3]*3 + [0] +
                                            [1 / 3]*3 + [0]*5)],
-                                 [np.array([[1.0, 1.0], [1.0, 1.0], [1.0, 1.0]]),
+                                 [np.array([[1.0, 1.0],
+                                            [1.0, 1.0],
+                                            [1.0, 1.0]]),
                                   1,
                                   1.0,
                                   np.array([1 / 3]*3 + [0] + [1 / 3]*3 + [0] +

@@ -141,7 +141,7 @@ state.draw('bloch').show()
 #
 # .. math::
 #    \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
-#    \sum_{i=1}^{N}x_i\left|i-1\right>
+#    \sum_{i=1}^{N}\frac{1}{|\boldsymbol{x}|}x_i\left|i-1\right>
 #
 # In order to represent a valid quantum state, the amount of amplitudes
 # must be a power of 2, :math:`N=2^n`. If they are not,
@@ -153,7 +153,7 @@ state.draw('bloch').show()
 # The forceful normalization is performed because some subroutines can work
 # around the issue.
 
-data = np.array([1.0])
+data = np.array([1 / np.sqrt(2), 1 / np.sqrt(2)])
 state = Statevector(AmplitudeEncoding().encoding(data))
 print(state.draw('text'))
 
@@ -169,7 +169,7 @@ state.draw('bloch').show()
 #    \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>
 #    ^{\bigotimes d}
 #
-data = np.array([1])
+data = np.array([1 / np.sqrt(2), 1 / np.sqrt(2)])
 state = Statevector(AmplitudeEncoding(degree=2).encoding(data))
 print(state.draw('text'))
 

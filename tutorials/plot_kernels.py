@@ -138,7 +138,7 @@ def plot_comparison(title, clf_c, clf_q, X0, X1):
     ax2.set_title('Quantum Estimation')
     ax2.set(xlabel=r'$X_1$', ylabel=r'$X_2$')
     ax2.set_aspect('equal', 'box')
-    plt.subplots_adjust(left=0.10, bottom=0.01, right=0.95, top=0.99, wspace=0.1)
+    plt.subplots_adjust(left=0.13, bottom=0.01, right=0.95, top=0.99, wspace=0.12)
     plt.show()
 
 ###############################################################################
@@ -153,8 +153,8 @@ y = np.array([-1, 1, 1, -1])
 X1, X2 = x[:, 0], x[:, 1]
 
 plt.scatter(X1, X2, c=y, cmap=plt.cm.coolwarm, s=60, edgecolors='k')
-plt.xlabel('X1')
-plt.ylabel('X2')
+plt.xlabel(r'$X_1$')
+plt.ylabel(r'$X_2$')
 plt.title('XOR problem with bipolar values')
 plt.show()
 

@@ -41,14 +41,17 @@ from sklearn.datasets import make_blobs
 
 def plot_cluster(axis, x, labels, centers):
     legend = []
+
+    axis.set(xlabel=r'$X_1$', ylabel=r'$X_2$')
+    axis.set_aspect('auto', 'box')
+
     for y in np.unique(labels):
         members = labels == y
         axis.scatter(x[members, 0], x[members, 1], label='_nolegend_')
         axis.scatter(centers[y, 0], centers[y, 1], s=[100], marker='X')
         legend.append(f'Centroid {y}')
 
-    axis.set(xlabel=r'$X_1$', ylabel=r'$X_2$')
-    axis.set_aspect('auto', 'box')
+
     axis.legend(legend)
 
 
@@ -57,7 +60,7 @@ def plot_comparison(x, clf_classic, clf_quantum, title):
     fig.suptitle(title)
     ax1.set_title('Classic Distance Calculation')
     ax2.set_title('Quantum Distance Estimation')
-    plt.subplots_adjust(left=0.1, bottom=0.1, right=0.95, top=0.85, wspace=0.1)
+    plt.subplots_adjust(left=0.15, bottom=0.1, right=0.95, top=0.85, wspace=0.12)
 
     plot_cluster(ax1, x, clf_classic.labels, clf_classic.cluster_centers)
     plot_cluster(ax2, x, clf_quantum.labels, clf_quantum.cluster_centers)
@@ -89,7 +92,7 @@ plt.show()
 #
 # The implementation of the KMeans algorithm is based on an iterative
 # refinement technique. The cluster centers are initially chosen at random
-# between the trainging data. After that, the algorithm assigns each data
+# between the training data. After that, the algorithm assigns each data
 # sample to the closest centroid (cluster center) and recalculates the centroid
 # as the mean of all sample data assigned to it. This process is repeated until
 # there is no change of assignments between two iterations or the iteration
