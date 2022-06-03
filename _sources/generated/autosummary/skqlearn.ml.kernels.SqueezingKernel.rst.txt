@@ -1,0 +1,22 @@
+SqueezingKernel
+===============
+
+.. currentmodule:: skqlearn.ml.kernels
+
+.. autoclass:: SqueezingKernel
+   :show-inheritance:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SqueezingKernel.__init__
+      ~SqueezingKernel.kernel
+   
+
+   
+   .. automethod:: __init__
+   .. automethod:: kernel
+   

@@ -21,8 +21,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Data Encoding" href="../skqlearn.encoding.html" />
-    <link rel="prev" title="KMeans" href="skqlearn.clustering.KMeans.html" /> 
+    <link rel="next" title="SqueezingKernel" href="skqlearn.ml.kernels.SqueezingKernel.html" />
+    <link rel="prev" title="KMeans" href="skqlearn.ml.clustering.KMeans.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -33,7 +33,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.1
+                1.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -50,10 +50,11 @@
 <p class="caption"><span class="caption-text">Further Information</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../modules.html">API Reference</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="../skqlearn.clustering.html">Clustering</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="skqlearn.clustering.GenericClustering.html">GenericClustering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skqlearn.clustering.KMeans.html">KMeans</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../skqlearn.ml.html">Machine Learning</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="skqlearn.ml.clustering.GenericClustering.html">GenericClustering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skqlearn.ml.clustering.KMeans.html">KMeans</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">KMedians</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skqlearn.ml.kernels.SqueezingKernel.html">SqueezingKernel</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../skqlearn.encoding.html">Data Encoding</a></li>
@@ -80,10 +81,10 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../modules.html">API Reference</a> &raquo;</li>
-          <li><a href="../skqlearn.clustering.html">Clustering</a> &raquo;</li>
+          <li><a href="../skqlearn.ml.html">Machine Learning</a> &raquo;</li>
       <li>KMedians</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/generated/autosummary/skqlearn.clustering.KMedians.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/generated/autosummary/skqlearn.ml.clustering.KMedians.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -94,9 +95,9 @@
   <div class="section" id="kmedians">
 <h1>KMedians<a class="headerlink" href="#kmedians" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="skqlearn.clustering.KMedians">
-<em class="property">class </em><code class="sig-prename descclassname">skqlearn.clustering.</code><code class="sig-name descname">KMedians</code><span class="sig-paren">(</span><em class="sig-param">n_clusters: int, max_iterations: int, random_state: Union[int, numpy.random.mtrand.RandomState, None], distance_calculation_method: str</em><span class="sig-paren">)</span><a class="headerlink" href="#skqlearn.clustering.KMedians" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">skqlearn.clustering.kclusters.GenericClustering</span></code></p>
+<dt id="skqlearn.ml.clustering.KMedians">
+<em class="property">class </em><code class="sig-prename descclassname">skqlearn.ml.clustering.</code><code class="sig-name descname">KMedians</code><span class="sig-paren">(</span><em class="sig-param">n_clusters: int, max_iterations: int, random_state: Union[int, numpy.random.mtrand.RandomState, None], distance_calculation_method: str</em><span class="sig-paren">)</span><a class="headerlink" href="#skqlearn.ml.clustering.KMedians" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">skqlearn.ml.clustering.kclusters.GenericClustering</span></code></p>
 <p>K-Means clustering algorithm based on the generic clustering algorithm
 structure.</p>
 <p>The centroids are updated after each epoch by computing the median of all
@@ -106,8 +107,8 @@ input samples assigned to each centroid.</p>
 \[arg\,min_{\boldsymbol{x}_j}\sum_{i=1}^m||\boldsymbol{x}_i -
 \boldsymbol{x}_j||_{2}\]</div>
 <dl class="attribute">
-<dt id="skqlearn.clustering.KMedians.cluster_centers">
-<code class="sig-name descname">cluster_centers</code><a class="headerlink" href="#skqlearn.clustering.KMedians.cluster_centers" title="Permalink to this definition">¶</a></dt>
+<dt id="skqlearn.ml.clustering.KMedians.cluster_centers">
+<code class="sig-name descname">cluster_centers</code><a class="headerlink" href="#skqlearn.ml.clustering.KMedians.cluster_centers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Coordinates for the cluster centroids.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -117,8 +118,8 @@ input samples assigned to each centroid.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="skqlearn.clustering.KMedians.labels">
-<code class="sig-name descname">labels</code><a class="headerlink" href="#skqlearn.clustering.KMedians.labels" title="Permalink to this definition">¶</a></dt>
+<dt id="skqlearn.ml.clustering.KMedians.labels">
+<code class="sig-name descname">labels</code><a class="headerlink" href="#skqlearn.ml.clustering.KMedians.labels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Labels of each input
 sample.</p>
 <dl class="field-list simple">
@@ -129,8 +130,8 @@ sample.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="skqlearn.clustering.KMedians.n_features_in">
-<code class="sig-name descname">n_features_in</code><a class="headerlink" href="#skqlearn.clustering.KMedians.n_features_in" title="Permalink to this definition">¶</a></dt>
+<dt id="skqlearn.ml.clustering.KMedians.n_features_in">
+<code class="sig-name descname">n_features_in</code><a class="headerlink" href="#skqlearn.ml.clustering.KMedians.n_features_in" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of features seen during fit.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -140,8 +141,8 @@ sample.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="skqlearn.clustering.KMedians.n_iter">
-<code class="sig-name descname">n_iter</code><a class="headerlink" href="#skqlearn.clustering.KMedians.n_iter" title="Permalink to this definition">¶</a></dt>
+<dt id="skqlearn.ml.clustering.KMedians.n_iter">
+<code class="sig-name descname">n_iter</code><a class="headerlink" href="#skqlearn.ml.clustering.KMedians.n_iter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of iterations run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -177,23 +178,29 @@ calculation method:</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skqlearn.clustering.KMedians.__init__" title="skqlearn.clustering.KMedians.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(n_clusters, max_iterations, …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skqlearn.ml.clustering.KMedians.__init__" title="skqlearn.ml.clustering.KMedians.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(n_clusters, max_iterations, …)</p></td>
 <td><p>Construct a GenericClustering object.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skqlearn.clustering.KMedians.fit" title="skqlearn.clustering.KMedians.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>(x)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skqlearn.ml.clustering.KMedians.fit" title="skqlearn.ml.clustering.KMedians.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>(x[, y, sample_weights])</p></td>
 <td><p>Compute clustering of provided data.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#skqlearn.clustering.KMedians.fit_predict" title="skqlearn.clustering.KMedians.fit_predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit_predict</span></code></a>(x)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skqlearn.ml.clustering.KMedians.fit_predict" title="skqlearn.ml.clustering.KMedians.fit_predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit_predict</span></code></a>(x[, y, sample_weights])</p></td>
 <td><p>Compute clustering of provided data and predict cluster index for each sample.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#skqlearn.clustering.KMedians.predict" title="skqlearn.clustering.KMedians.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(x)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#skqlearn.ml.clustering.KMedians.fit_transform" title="skqlearn.ml.clustering.KMedians.fit_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit_transform</span></code></a>(x[, y, sample_weights])</p></td>
+<td><p>Compute clustering of provided data and transform data to cluster-distance space.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skqlearn.ml.clustering.KMedians.predict" title="skqlearn.ml.clustering.KMedians.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(x[, sample_weights])</p></td>
 <td><p>Assigns a label to each input sample based on the closest centroid.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skqlearn.ml.clustering.KMedians.transform" title="skqlearn.ml.clustering.KMedians.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a>(x)</p></td>
+<td><p>Transform X to a cluster-distance space.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="method">
-<dt id="skqlearn.clustering.KMedians.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">n_clusters: int, max_iterations: int, random_state: Union[int, numpy.random.mtrand.RandomState, None], distance_calculation_method: str</em><span class="sig-paren">)</span><a class="headerlink" href="#skqlearn.clustering.KMedians.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="skqlearn.ml.clustering.KMedians.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">n_clusters: int, max_iterations: int, random_state: Union[int, numpy.random.mtrand.RandomState, None], distance_calculation_method: str</em><span class="sig-paren">)</span><a class="headerlink" href="#skqlearn.ml.clustering.KMedians.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct a GenericClustering object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -217,26 +224,32 @@ calculation method:</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="skqlearn.clustering.KMedians.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; skqlearn.clustering.kclusters.GenericClustering<a class="headerlink" href="#skqlearn.clustering.KMedians.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="skqlearn.ml.clustering.KMedians.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em>, <em class="sig-param">y: numpy.ndarray = None</em>, <em class="sig-param">sample_weights: numpy.ndarray = None</em><span class="sig-paren">)</span> &#x2192; skqlearn.ml.clustering.kclusters.GenericClustering<a class="headerlink" href="#skqlearn.ml.clustering.KMedians.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute clustering of provided data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data
-to cluster.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data
+to cluster.</p></li>
+<li><p><strong>y</strong> (<em>Ignored</em>) – Not used, present here for API consistency with
+sklearn’s implementation.</p></li>
+<li><p><strong>sample_weights</strong> (<em>Ignored</em>) – Not used, present here for API
+consistency with sklearn’s implementation.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Fitted estimator.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>self (<a class="reference internal" href="skqlearn.clustering.GenericClustering.html#skqlearn.clustering.GenericClustering" title="skqlearn.clustering.GenericClustering">GenericClustering</a>)</p>
+<dd class="field-odd"><p>self (<a class="reference internal" href="skqlearn.ml.clustering.GenericClustering.html#skqlearn.ml.clustering.GenericClustering" title="skqlearn.ml.clustering.GenericClustering">GenericClustering</a>)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
-<dt id="skqlearn.clustering.KMedians.fit_predict">
-<code class="sig-name descname">fit_predict</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#skqlearn.clustering.KMedians.fit_predict" title="Permalink to this definition">¶</a></dt>
+<dt id="skqlearn.ml.clustering.KMedians.fit_predict">
+<code class="sig-name descname">fit_predict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#skqlearn.ml.clustering.KMedians.fit_predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute clustering of provided data and predict cluster
 index for each sample.</p>
 <div class="admonition note">
@@ -245,8 +258,14 @@ index for each sample.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data
-to cluster and predict.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data
+to cluster and predict.</p></li>
+<li><p><strong>y</strong> (<em>Ignored</em>) – Not used, present here for API consistency with
+sklearn’s implementation.</p></li>
+<li><p><strong>sample_weights</strong> (<em>Ignored</em>) – Not used, present here for API
+consistency with sklearn’s implementation.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Index of the cluster each sample belongs to.</p>
@@ -258,19 +277,72 @@ to cluster and predict.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="skqlearn.clustering.KMedians.predict">
-<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#skqlearn.clustering.KMedians.predict" title="Permalink to this definition">¶</a></dt>
+<dt id="skqlearn.ml.clustering.KMedians.fit_transform">
+<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#skqlearn.ml.clustering.KMedians.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute clustering of provided data and transform data to
+cluster-distance space.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is equivalent to calling <cite>fit(x)</cite> followed by <cite>transform(x)</cite>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data
+to cluster and transform.</p></li>
+<li><p><strong>y</strong> (<em>Ignored</em>) – Not used, present here for API consistency with
+sklearn’s implementation.</p></li>
+<li><p><strong>sample_weights</strong> (<em>Ignored</em>) – Not used, present here for API
+consistency with sklearn’s implementation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Transformed data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray of shape (n_samples, n_clusters)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="skqlearn.ml.clustering.KMedians.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#skqlearn.ml.clustering.KMedians.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assigns a label to each input sample based on the closest centroid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Data to
-predict.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Data to
+predict.</p></li>
+<li><p><strong>sample_weights</strong> (<em>Ignored</em>) – Not used, present here for API
+consistency with sklearn’s implementation.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Index of the cluster each sample belongs to.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>numpy.ndarray of shape (n_samples,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="skqlearn.ml.clustering.KMedians.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#skqlearn.ml.clustering.KMedians.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform X to a cluster-distance space.</p>
+<p>In the new space, each dimension is the distance to the cluster
+centers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Input data to
+transform.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Transformed input data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray of shape (n_samples, n_clusters)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -283,8 +355,8 @@ predict.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="skqlearn.clustering.KMeans.html" class="btn btn-neutral float-left" title="KMeans" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../skqlearn.encoding.html" class="btn btn-neutral float-right" title="Data Encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="skqlearn.ml.clustering.KMeans.html" class="btn btn-neutral float-left" title="KMeans" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="skqlearn.ml.kernels.SqueezingKernel.html" class="btn btn-neutral float-right" title="SqueezingKernel" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -1,9 +1,13 @@
 """
+
+.. _kerneltutorial:
+
 Kernels
 ===========================
 
 This tutorial aims to explain and visualize the kernels obtained from the data
-encoding methods implemented in the package.
+encoding methods implemented in the package as well as the quantum inspired
+kernels.
 """
 ###############################################################################
 # Introduction
@@ -33,10 +37,15 @@ encoding methods implemented in the package.
 #    k(x,x')=\left<\phi(x)|\phi(x')\right>.
 #
 # Because of this, the encoding methods can be used to define kernels with the
-# inner product and use this with machine learning algorithms such as
-# Support-Vector Machines (SVMs).
+# inner product and use these with machine learning algorithms such as
+# Support-Vector Machines (SVMs). On top of that, the inner product can also be
+# estimated with quantum subroutines with a time complexity of
+# :math:`O(\log N)`, providing an exponential speed-up over
+# the classical calculation. For the mathematical reasoning behind the
+# quantum inner product estimation, refer to the documentation for
+# :meth:`skqlearn.utils.inner_product_estimation`.
 #
-# Two methods have been defined in this package, `classic_kernel` and
+# Two methods have been defined for the encoding classes, `classic_kernel` and
 # `quantum_kernel`, in order to use the kernels defined by the encoding methods
 # with implementations of SVMs such as
 # `sklearn's <https://scikit-learn.org/stable/modules/svm.html#svm>`_.
@@ -48,6 +57,7 @@ encoding methods implemented in the package.
 
 from skqlearn.utils import JobHandler
 from skqlearn.encoding import *
+from skqlearn.ml.kernels import SqueezingKernel
 import matplotlib.pyplot as plt
 import numpy as np
 from qiskit.providers.aer import AerSimulator
@@ -70,56 +80,17 @@ JobHandler().configure(backend=AerSimulator(), shots=10000)
 #     k(i, j) = \left<\phi(i)|\phi(j)\right> = \left<i|j\right> =
 #     \delta_{ij}
 #
-# With :math:`\delta` being the Kronecker delta.
+# With :math:`\delta` being the Kronecker delta, defined as
+# :math:`\delta_{ij}=[i=j]`.
 #
-# Therefore, when computing the Gram matrix of a set of vectors, the expected
+# When computing the Gram matrix of a set of vectors, the expected
 # result would be the identity matrix.
 
 x = np.array([[1], [2], [3], [4]])
 print('Gram matrix with classical computation:')
 print(BasisEncoding().classic_kernel(x, x))
-print('Gram matrix with quantum computation:')
+print('Gram matrix with quantum estimation:')
 print(BasisEncoding().quantum_kernel(x, x))
-
-###############################################################################
-# Amplitude Encoding
-# ---------------------
-#
-# Amplitude Encoding's feature map was:
-#
-# .. math::
-#    \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
-#    \sum_{i=1}^{N}x_i\left|i\right>
-#
-# Therefore, the kernel defined by the inner product is the linear kernel:
-#
-# .. math::
-#    k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
-#    \psi_{\boldsymbol{x'}}\right> = \boldsymbol{x}^T\boldsymbol{x'}.
-#
-# Because Amplitude Encoding is limited to normalized data, it can only
-# be used with points in the unit circle (when working in 2D).
-
-angles = np.arange(0, 2 * np.pi - 0.1, step=np.pi / 6)
-x = np.array([[np.cos(a), np.sin(a)] for a in angles])
-y = np.array([*[0]*6, *[1]*6])
-X0, X1 = x[:, 0], x[:, 1]
-plt.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=60, edgecolors='k')
-plt.show()
-
-clf_amp_c = SVC(kernel=AmplitudeEncoding(degree=1).classic_kernel).fit(x, y)
-clf_amp_q = SVC(kernel=AmplitudeEncoding(degree=1).quantum_kernel).fit(x, y)
-
-fig, (ax1, ax2) = plt.subplots(1, 2)
-fig.suptitle('Amplitude Encoding')
-ax1.set_title('Classic')
-ax2.set_title('Quantum')
-ax1.scatter(X0, X1, c=clf_amp_c.predict(x), cmap=plt.cm.coolwarm, s=60,
-            edgecolors='k')
-ax2.scatter(X0, X1, c=clf_amp_q.predict(x), cmap=plt.cm.coolwarm, s=60,
-            edgecolors='k')
-plt.show()
-
 
 ###############################################################################
 # Because the next encodings can be applied to generic points in 2D space,
@@ -127,11 +98,12 @@ plt.show()
 # of the results. Specifically, they will be used to visualize the decision
 # boundaries of the SVM.
 
-def make_meshgrid(x, y, h=.02, border=.25):
+
+def make_meshgrid(x, y, h=.2, border=.1):
     x_min, x_max = x.min() - border, x.max() + border
     y_min, y_max = y.min() - border, y.max() + border
-    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
-                         np.arange(y_min, y_max, h))
+    xx, yy = np.meshgrid(np.arange(x_min, x_max + h / 2, h),
+                         np.arange(y_min, y_max + h / 2, h))
     return xx, yy
 
 
@@ -142,29 +114,112 @@ def plot_contours(ax, clf, xx, yy, **params):
     return out
 
 
+def plot_individual(title, clf, X0, X1):
+    xx, yy = make_meshgrid(X0, X1)
+    plt.title(title)
+    plot_contours(plt, clf, xx, yy, cmap=plt.cm.coolwarm, alpha=0.8)
+    plt.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=60, edgecolors='k')
+    plt.xlabel(r'$X_1$')
+    plt.ylabel(r'$X_2$')
+    plt.show()
+
+
 def plot_comparison(title, clf_c, clf_q, X0, X1):
-    xx, yy = make_meshgrid(X0, X1, 0.1)
-    fig, (ax1, ax2) = plt.subplots(1, 2)
+    xx, yy = make_meshgrid(X0, X1)
+    fig, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
     fig.suptitle(title)
-    ax1.set_title('Classic')
-    ax2.set_title('Quantum')
     plot_contours(ax1, clf_c, xx, yy, cmap=plt.cm.coolwarm, alpha=0.8)
     plot_contours(ax2, clf_q, xx, yy, cmap=plt.cm.coolwarm, alpha=0.8)
     ax1.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=60, edgecolors='k')
     ax2.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=60, edgecolors='k')
+    ax1.set_title('Classic Computation')
+    ax1.set(xlabel=r'$X_1$', ylabel=r'$X_2$')
+    ax1.set_aspect('equal', 'box')
+    ax2.set_title('Quantum Estimation')
+    ax2.set(xlabel=r'$X_1$', ylabel=r'$X_2$')
+    ax2.set_aspect('equal', 'box')
+    plt.subplots_adjust(left=0.13, bottom=0.01, right=0.95, top=0.99, wspace=0.12)
     plt.show()
 
 ###############################################################################
 # In order to use a simple example which is not linearly separable, the
-# proposed data for the SVM to classify is the XOR problem.
+# proposed data for the SVM to classify is the XOR problem described with
+# bipolar inputs. This is chosen over its binary representation because
+# Amplitude Encoding is unable to encode empty vectors (where all components
+# equal to 0).
 
+x = np.array([[-1, -1], [-1, 1], [1, -1], [1, 1]])
+y = np.array([-1, 1, 1, -1])
+X1, X2 = x[:, 0], x[:, 1]
 
-x = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
-y = np.array([0, 1, 1, 0])
-X0, X1 = x[:, 0], x[:, 1]
-
-plt.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=60, edgecolors='k')
+plt.scatter(X1, X2, c=y, cmap=plt.cm.coolwarm, s=60, edgecolors='k')
+plt.xlabel(r'$X_1$')
+plt.ylabel(r'$X_2$')
+plt.title('XOR problem with bipolar values')
 plt.show()
+
+###############################################################################
+# Amplitude Encoding
+# ---------------------
+#
+# Amplitude Encoding's feature map was:
+#
+# .. math::
+#    \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
+#    \sum_{i=1}^{N}\frac{1}{|\boldsymbol{x}|}x_i\left|i-1\right>
+#
+# Therefore, the kernel defined by the inner product is:
+#
+# .. math::
+#    k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
+#    \psi_{\boldsymbol{x'}}\right> = \frac{1}{|\boldsymbol{x}|
+#    |\boldsymbol{x'}|}\boldsymbol{x}^T\boldsymbol{x'}
+#
+# By applying a correction of :math:`|\boldsymbol{x}||\boldsymbol{x'}|` this
+# can be used to estimate the linear kernel.
+
+clf_amp_c = SVC(kernel=AmplitudeEncoding(degree=1).classic_kernel)
+clf_amp_c.fit(x, y)
+clf_amp_q = SVC(kernel=AmplitudeEncoding(degree=1).quantum_kernel)
+clf_amp_q.fit(x, y)
+
+plot_comparison('Comparison of results for Amplitude Encoding (Degree=1)',
+                clf_amp_c, clf_amp_q, X1, X2)
+
+###############################################################################
+# Because the problem is not linearly separable, the linear kernel is not
+# capable of solving the problem correctly.
+#
+# If the vectors are instead mapped to :math:`d` copies of the amplitude
+# vectors:
+#
+# .. math::
+#    \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>
+#    ^{\bigotimes d}
+#
+# Then the kernel defined is:
+#
+# .. math::
+#    k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
+#    \psi_{\boldsymbol{x'}}\right> \bigotimes ... \bigotimes
+#    \left<\psi_{\boldsymbol{x}}|\psi_{\boldsymbol{x'}}\right> =
+#    \left(\frac{1}{|\boldsymbol{x}||\boldsymbol{x'}|}\boldsymbol{x}^T
+#    \boldsymbol{x'}\right)^d
+#
+# By applying a correction of :math:`(|\boldsymbol{x}||\boldsymbol{x'}|)^d`
+# this can be used to estimate a polynomial kernel.
+#
+# With a higher degree, the problem at hand becomes linearly separable, as the
+# input vectors are being expanded into a higher dimension. This is one of the
+# main features of SVMs and kernels, commonly refered to as the kernel trick.
+
+clf_amp_c_2 = SVC(kernel=AmplitudeEncoding(degree=2).classic_kernel)
+clf_amp_c_2.fit(x, y)
+clf_amp_q_2 = SVC(kernel=AmplitudeEncoding(degree=2).quantum_kernel)
+clf_amp_q_2.fit(x, y)
+
+plot_comparison('Comparison of results for Amplitude Encoding (Degree=2)',
+                clf_amp_c_2, clf_amp_q_2, X1, X2)
 
 ###############################################################################
 # Expanded Amplitude Encoding
@@ -172,64 +227,50 @@ plt.show()
 #
 # Expanded Amplitude Encoding's feature map was identical to regular Amplitude
 # Encoding's. The only difference being that the input vectors were expanded
-# with an extra component with value *1*.
-#
-# This means that with degree equal to *1*, the kernel defined was the linear
-# kernel.
-
-clf_expamp_c = SVC(kernel=ExpandedAmplitudeEncoding(degree=1).classic_kernel).\
-    fit(x, y)
-clf_expamp_q = SVC(kernel=ExpandedAmplitudeEncoding(degree=1).quantum_kernel).\
-    fit(x, y)
-
-plot_comparison('Expanded Amplitude Encoding (Degree=1)', clf_expamp_c,
-                clf_expamp_q, X0, X1)
-
-###############################################################################
-# As it can be seen, the kernel is not strictly the linear kernel in 2D. If it
-# was, the decision boundary would be a straight line. The reason behind this
-# is that the kernel is linear in 3D (the real dimension of the expanded
-# vectors), and therefore the decision boundary is a plane. What is being shown
-# in the 2D plot is just the proyection of the plane into a 2D line. This can
-# be seen more clearly when observing how the data is mapped in 3D space.
-
-from mpl_toolkits import mplot3d
-
-x_3d = np.array([ExpandedAmplitudeEncoding().encoding(x[i, :])
-                 for i in range(x.shape[0])])
-X0_3d, X1_3d, X2_3d = x_3d[:, 0], x_3d[:, 1], x_3d[:, 2]
-
-fig = plt.figure()
-ax = plt.axes(projection='3d')
-ax.scatter3D(X0_3d, X1_3d, X2_3d, c=y, cmap=plt.cm.coolwarm, s=60,
-              edgecolors='k')
-plt.show()
-
-###############################################################################
-# When changing the degree of the encoding (copies of the quantum state),
-# the kernel defined changes to a polynomial kernel of the form:
+# with an extra component with value *c*.
 #
 # .. math::
-#    \phi : \boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>
-#    ^{\bigotimes d}
+#        \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
+#        \frac{1}{\sqrt{|\boldsymbol{x}|^2+c^2}}\left(c\left|0\right> +
+#        \sum_{i=1}^{N}x_i\left|i\right>\right)
+#
+# This defines a more general polynomial kernel when mapping to :math:`d`
+# copies of the amplitude vector and applying a correction of
+# :math:`\sqrt{|\boldsymbol{x}|^2+c^2}\sqrt{|\boldsymbol{x'}|^2+c^2}`:
 #
 # .. math::
 #    k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
-#    \psi_{\boldsymbol{x'}}\right> \bigotimes ... \bigotimes
-#    \left<\psi_{\boldsymbol{x}}|\psi_{\boldsymbol{x'}}\right> =
-#    (\boldsymbol{x}^T\boldsymbol{x'})^d.
+#    \psi_{\boldsymbol{x'}}\right> = \left(\frac{1}{\sqrt{|\boldsymbol{x}|^2+
+#    c^2}\sqrt{|\boldsymbol{x'}|^2+c^2}}(\boldsymbol{x}^T\boldsymbol{x'}+c^2)
+#    \right)^d
 #
-# With a higher degree, the problem at hand becomes linearly separable, as the
-# input vectors are being expanded into a higher dimension. This is one of the
-# main features of SVMs and kernels, commonly refered to as the kernel trick.
 
-clf_expamp_c = SVC(kernel=ExpandedAmplitudeEncoding(degree=4).classic_kernel).\
-    fit(x, y)
-clf_expamp_q = SVC(kernel=ExpandedAmplitudeEncoding(degree=4).quantum_kernel).\
-    fit(x, y)
+expamp = ExpandedAmplitudeEncoding(degree=2, c=1)
+clf_expamp_c = SVC(kernel=expamp.classic_kernel)
+clf_expamp_c.fit(x, y)
+clf_expamp_q = SVC(kernel=expamp.quantum_kernel)
+clf_expamp_q.fit(x, y)
 
-plot_comparison('Expanded Amplitude Encoding (Degree=4)', clf_expamp_c,
-                clf_expamp_q, X0, X1)
+plot_comparison('Comparison of results for Expanded Amplitude Encoding '
+                '(Degree=2, c=1)',
+                clf_expamp_c, clf_expamp_q, X1, X2)
+
+###############################################################################
+# It should be noted that increasing the value of :math:`c` can have noticeable
+# impacts on the precision of the results. The bigger the value of :math:`c`,
+# the smaller the values of the rest of the components in the vector once
+# normalized. This in turn increases the imprecision of the quantum estimation
+# subroutine.
+
+expamp_50 = ExpandedAmplitudeEncoding(degree=2, c=50)
+clf_expamp_c_c50 = SVC(kernel=expamp_50.classic_kernel)
+clf_expamp_c_c50.fit(x, y)
+clf_expamp_q_c50 = SVC(kernel=expamp_50.quantum_kernel)
+clf_expamp_q_c50.fit(x, y)
+
+plot_comparison('Comparison of results for Expanded Amplitude Encoding '
+                '(Degree=2, c=50)',
+                clf_expamp_c_c50, clf_expamp_q_c50, X1, X2)
 
 ###############################################################################
 # Angle Encoding
@@ -246,9 +287,47 @@ plot_comparison('Expanded Amplitude Encoding (Degree=4)', clf_expamp_c,
 # .. math::
 #    k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
 #    \psi_{\boldsymbol{x'}}\right> = \prod_{i=1}^{N}\sin{x_i}\sin{x'_i} +
-#    \cos{x_i}\cos{x'_i}=\prod_{i=1}^{N}\cos{(x_i-x'_i)}.
+#    \cos{x_i}\cos{x'_i}=\prod_{i=1}^{N}\cos{(x_i-x'_i)}
 
 clf_ang_c = SVC(kernel=AngleEncoding().classic_kernel).fit(x, y)
 clf_ang_q = SVC(kernel=AngleEncoding().quantum_kernel).fit(x, y)
 
-plot_comparison('Angle Encoding', clf_ang_c, clf_ang_q, X0, X1)
+plot_comparison('Comparison of results for Angle Encoding',
+                clf_ang_c, clf_ang_q, X1, X2)
+
+###############################################################################
+# Quantum-inspired classical kernels
+# -----------------------------------
+#
+# The package also contains the submodule `skqlearn.ml.kernels`, responsible
+# for the implementation of classical kernels which have been inspired by
+# quantum properties.
+#
+# Squeezing Kernel
+# ------------------
+#
+# This kernel is based on the definition of a *squeezed vacuum state* of the
+# electromagnetic field, defined as:
+#
+# .. math::
+#        \left|z\right> = \frac{1}{\sqrt{\cosh(r)}}
+#        \sum_{n=0}^{\infty}\frac{\sqrt{(2n)!}}{2^n n!}
+#        (-e^{i\varphi}\tanh(r))^n\left|2n\right>
+#
+# Interpreting it as a feature map for real vectors, it defines the following
+# kernel:
+#
+# .. math::
+#        k(\boldsymbol{x}, \boldsymbol{x}')=\prod_{i=1}^{N} \left<(c,x_i)|
+#        (c, x_i')\right>=\prod_{i=1}^N\sqrt{\frac{\text{sech }c\text{ sech }c}
+#        {1-e^{i(x_i'-x_i)}\tanh c \tanh c}}
+#
+# This kernel can be evaluated classically by taking the absolute square of the
+# inner product.
+#
+# For more information on the mathematical reasoning, refer to
+# :class:`skqlearn.ml.kernels.SqueezingKernel`.
+
+clf_squ = SVC(kernel=SqueezingKernel(c=1.0).kernel).fit(x, y)
+
+plot_individual('Results for Squeezing Kernel with (c=1.0)', clf_squ, X1, X2)

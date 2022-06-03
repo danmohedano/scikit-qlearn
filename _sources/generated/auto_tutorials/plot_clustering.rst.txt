@@ -18,13 +18,15 @@
 .. _sphx_glr_generated_auto_tutorials_plot_clustering.py:
 
 
+.. _clusteringtutorial:
+
 Clustering
 ===========================
 
 This tutorial aims to explain and visualize the use of the clustering
 algorithms implemented in the package.
 
-.. GENERATED FROM PYTHON SOURCE LINES 9-21
+.. GENERATED FROM PYTHON SOURCE LINES 12-28
 
 Introduction
 -------------
@@ -37,20 +39,24 @@ means that the similarity measure being used to group the samples is
 the Euclidean distance or L2-norm.
 
 The distances in the algorithms can be computed classically or estimated
-with a quantum subroutine.
+with a quantum subroutine. The quantum estimation has a time complexity of
+:math:`O(\log N)` compared to :math:`O(N)` for its classical counterpart,
+which produces an exponential speed-up. For more information in the
+mathematical reasoning behind the estimation subroutine, refer to
+:meth:`skqlearn.utils.distance_estimation`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 24-26
+.. GENERATED FROM PYTHON SOURCE LINES 31-33
 
 In order to represent the cluster assignments, a utility function is defined
 that plots the data assignments as well as the center of each cluster.
 
-.. GENERATED FROM PYTHON SOURCE LINES 26-42
+.. GENERATED FROM PYTHON SOURCE LINES 33-71
 
 .. code-block:: default
 
 
     from skqlearn.utils import JobHandler
-    from skqlearn.clustering import *
+    from skqlearn.ml.clustering import *
     import matplotlib.pyplot as plt
     import numpy as np
     from qiskit.providers.aer import AerSimulator
@@ -58,10 +64,32 @@ that plots the data assignments as well as the center of each cluster.
 
 
     def plot_cluster(axis, x, labels, centers):
+        legend = []
+
+        axis.set(xlabel=r'$X_1$', ylabel=r'$X_2$')
+        axis.set_aspect('auto', 'box')
+
         for y in np.unique(labels):
             members = labels == y
-            axis.scatter(x[members, 0], x[members, 1])
+            axis.scatter(x[members, 0], x[members, 1], label='_nolegend_')
             axis.scatter(centers[y, 0], centers[y, 1], s=[100], marker='X')
+            legend.append(f'Centroid {y}')
+
+
+        axis.legend(legend)
+
+
+    def plot_comparison(x, clf_classic, clf_quantum, title):
+        fig, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
+        fig.suptitle(title)
+        ax1.set_title('Classic Distance Calculation')
+        ax2.set_title('Quantum Distance Estimation')
+        plt.subplots_adjust(left=0.15, bottom=0.1, right=0.95, top=0.85, wspace=0.12)
+
+        plot_cluster(ax1, x, clf_classic.labels, clf_classic.cluster_centers)
+        plot_cluster(ax2, x, clf_quantum.labels, clf_quantum.cluster_centers)
+
+        plt.show()
 
 
 
@@ -71,12 +99,12 @@ that plots the data assignments as well as the center of each cluster.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-45
+.. GENERATED FROM PYTHON SOURCE LINES 72-74
 
 Because the tutorial will also test the quantum distance estimation
 algorithm, the quantum backend must be configured.
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-48
+.. GENERATED FROM PYTHON SOURCE LINES 74-77
 
 .. code-block:: default
 
@@ -90,28 +118,29 @@ algorithm, the quantum backend must be configured.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-50
+.. GENERATED FROM PYTHON SOURCE LINES 78-80
 
-First, random data is generated centered around two points.
+First, random data is generated centered around two points. For a first test,
+the data generated is clearly separated into two clusters.
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-59
+.. GENERATED FROM PYTHON SOURCE LINES 80-89
 
 .. code-block:: default
 
 
-    np.random.seed(0)
+    np.random.seed(1)
     centers = np.array([[0, 0], [0, 1]])
-    n_clusters = centers.shape[0]
-    x, labels = make_blobs(n_samples=10, centers=centers, cluster_std=0.25)
+    x, labels = make_blobs(n_samples=20, centers=centers, cluster_std=0.1)
 
-    plot_cluster(plt, x, labels, centers)
+    plot_cluster(plt.gca(), x, labels, centers)
+    plt.title('Generated data for two blobs')
     plt.show()
 
 
 
 
 .. image-sg:: /generated/auto_tutorials/images/sphx_glr_plot_clustering_001.png
-   :alt: plot clustering
+   :alt: Generated data for two blobs
    :srcset: /generated/auto_tutorials/images/sphx_glr_plot_clustering_001.png
    :class: sphx-glr-single-img
 
@@ -119,20 +148,20 @@ First, random data is generated centered around two points.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-70
+.. GENERATED FROM PYTHON SOURCE LINES 90-100
 
 KMeans
 --------
 
 The implementation of the KMeans algorithm is based on an iterative
 refinement technique. The cluster centers are initially chosen at random
-between the trainging data. After that, the algorithm assigns each data
+between the training data. After that, the algorithm assigns each data
 sample to the closest centroid (cluster center) and recalculates the centroid
 as the mean of all sample data assigned to it. This process is repeated until
 there is no change of assignments between two iterations or the iteration
 limit is reached.
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-78
+.. GENERATED FROM PYTHON SOURCE LINES 102-108
 
 The first step will be to train the algorithm with the data samples. During
 the training, the values for the centroids are stored in the object, as well
@@ -141,7 +170,7 @@ see how the algorithm has decided to cluster the data samples. The distance
 calculation method can be provided in the constructor of the class, in order
 to choose between the classic and quantum calculations.
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-103
+.. GENERATED FROM PYTHON SOURCE LINES 108-124
 
 .. code-block:: default
 
@@ -158,23 +187,14 @@ to choose between the classic and quantum calculations.
                              distance_calculation_method='quantum')
     k_means_quantum.fit(x)
 
-    fig, (ax1, ax2) = plt.subplots(1, 2)
-    fig.suptitle('KMeans')
-    ax1.set_title('Classic')
-    ax2.set_title('Quantum')
-
-    plot_cluster(ax1, x, k_means_classic.labels,
-                 k_means_classic.cluster_centers)
-    plot_cluster(ax2, x, k_means_quantum.labels,
-                 k_means_quantum.cluster_centers)
-
-    plt.show()
+    plot_comparison(x, k_means_classic, k_means_quantum,
+                    'KMeans Clustering on two blobs')
 
 
 
 
 .. image-sg:: /generated/auto_tutorials/images/sphx_glr_plot_clustering_002.png
-   :alt: KMeans, Classic, Quantum
+   :alt: KMeans Clustering on two blobs, Classic Distance Calculation, Quantum Distance Estimation
    :srcset: /generated/auto_tutorials/images/sphx_glr_plot_clustering_002.png
    :class: sphx-glr-single-img
 
@@ -182,12 +202,12 @@ to choose between the classic and quantum calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-106
+.. GENERATED FROM PYTHON SOURCE LINES 125-127
 
 The trained estimators can then be used to assign new data to the current
 clusters by using the `predict` method.
 
-.. GENERATED FROM PYTHON SOURCE LINES 106-110
+.. GENERATED FROM PYTHON SOURCE LINES 127-131
 
 .. code-block:: default
 
@@ -205,12 +225,12 @@ clusters by using the `predict` method.
 
  .. code-block:: none
 
-    [0 1]
+    [1 0]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 111-123
+.. GENERATED FROM PYTHON SOURCE LINES 132-144
 
 KMedians
 --------
@@ -225,7 +245,7 @@ the distance to all other samples:
    arg\,min_{\boldsymbol{x}_j}\sum_{i=1}^m||\boldsymbol{x}_i -
    \boldsymbol{x}_j||_{2}
 
-.. GENERATED FROM PYTHON SOURCE LINES 123-147
+.. GENERATED FROM PYTHON SOURCE LINES 144-160
 
 .. code-block:: default
 
@@ -242,23 +262,108 @@ the distance to all other samples:
                                  distance_calculation_method='quantum')
     k_medians_quantum.fit(x)
 
-    fig, (ax1, ax2) = plt.subplots(1, 2)
-    fig.suptitle('KMedians')
-    ax1.set_title('Classic')
-    ax2.set_title('Quantum')
+    plot_comparison(x, k_medians_classic, k_medians_quantum,
+                    'KMedians Clustering on two blobs')
 
-    plot_cluster(ax1, x, k_medians_classic.labels,
-                 k_medians_classic.cluster_centers)
-    plot_cluster(ax2, x, k_medians_quantum.labels,
-                 k_medians_quantum.cluster_centers)
-
-    plt.show()
 
 
 
 .. image-sg:: /generated/auto_tutorials/images/sphx_glr_plot_clustering_003.png
-   :alt: KMedians, Classic, Quantum
+   :alt: KMedians Clustering on two blobs, Classic Distance Calculation, Quantum Distance Estimation
    :srcset: /generated/auto_tutorials/images/sphx_glr_plot_clustering_003.png
+   :class: sphx-glr-single-img
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 161-164
+
+It is also interesting to see the decisions made by the algorithms with
+less straight forward data. For testing purposes, only one
+cluster of data is generated in order to show how the algorithms behave.
+
+.. GENERATED FROM PYTHON SOURCE LINES 164-172
+
+.. code-block:: default
+
+
+    centers_2 = np.array([[0, 0]])
+    x_2, labels_2 = make_blobs(n_samples=20, centers=centers_2, cluster_std=0.05)
+
+    plot_cluster(plt.gca(), x_2, labels_2, centers_2)
+    plt.title('Generated Data for one blob')
+    plt.show()
+
+
+
+
+.. image-sg:: /generated/auto_tutorials/images/sphx_glr_plot_clustering_004.png
+   :alt: Generated Data for one blob
+   :srcset: /generated/auto_tutorials/images/sphx_glr_plot_clustering_004.png
+   :class: sphx-glr-single-img
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 173-189
+
+.. code-block:: default
+
+
+    k_means_classic_2 = KMeans(n_clusters=2,
+                               max_iterations=40,
+                               random_state=0,
+                               distance_calculation_method='classic')
+    k_means_classic_2.fit(x_2)
+
+    k_means_quantum_2 = KMeans(n_clusters=2,
+                               max_iterations=40,
+                               random_state=0,
+                               distance_calculation_method='quantum')
+    k_means_quantum_2.fit(x_2)
+
+    plot_comparison(x_2, k_means_classic_2, k_means_quantum_2,
+                    'KMeans Clustering on one blob')
+
+
+
+
+.. image-sg:: /generated/auto_tutorials/images/sphx_glr_plot_clustering_005.png
+   :alt: KMeans Clustering on one blob, Classic Distance Calculation, Quantum Distance Estimation
+   :srcset: /generated/auto_tutorials/images/sphx_glr_plot_clustering_005.png
+   :class: sphx-glr-single-img
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 190-205
+
+.. code-block:: default
+
+
+    k_medians_classic_2 = KMedians(n_clusters=2,
+                                   max_iterations=40,
+                                   random_state=0,
+                                   distance_calculation_method='classic')
+    k_medians_classic_2.fit(x_2)
+
+    k_medians_quantum_2 = KMedians(n_clusters=2,
+                                   max_iterations=40,
+                                   random_state=0,
+                                   distance_calculation_method='quantum')
+    k_medians_quantum_2.fit(x_2)
+
+    plot_comparison(x_2, k_medians_classic_2, k_medians_quantum_2,
+                    'KMedians Clustering on one blob')
+
+
+
+.. image-sg:: /generated/auto_tutorials/images/sphx_glr_plot_clustering_006.png
+   :alt: KMedians Clustering on one blob, Classic Distance Calculation, Quantum Distance Estimation
+   :srcset: /generated/auto_tutorials/images/sphx_glr_plot_clustering_006.png
    :class: sphx-glr-single-img
 
 
@@ -268,7 +373,7 @@ the distance to all other samples:
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 2 minutes  34.850 seconds)
+   **Total running time of the script:** ( 9 minutes  37.106 seconds)
 
 
 .. _sphx_glr_download_generated_auto_tutorials_plot_clustering.py:

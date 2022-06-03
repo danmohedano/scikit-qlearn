@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clustering &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>Machine Learning &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery-binder.css" type="text/css" />
@@ -21,7 +21,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="GenericClustering" href="autosummary/skqlearn.clustering.GenericClustering.html" />
+    <link rel="next" title="GenericClustering" href="autosummary/skqlearn.ml.clustering.GenericClustering.html" />
     <link rel="prev" title="API Reference" href="modules.html" /> 
 </head>
 
@@ -33,7 +33,7 @@
             <a href="../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.1
+                1.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -50,10 +50,11 @@
 <p class="caption"><span class="caption-text">Further Information</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">API Reference</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Clustering</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="autosummary/skqlearn.clustering.GenericClustering.html">GenericClustering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="autosummary/skqlearn.clustering.KMeans.html">KMeans</a></li>
-<li class="toctree-l3"><a class="reference internal" href="autosummary/skqlearn.clustering.KMedians.html">KMedians</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Machine Learning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="autosummary/skqlearn.ml.clustering.GenericClustering.html">GenericClustering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="autosummary/skqlearn.ml.clustering.KMeans.html">KMeans</a></li>
+<li class="toctree-l3"><a class="reference internal" href="autosummary/skqlearn.ml.clustering.KMedians.html">KMedians</a></li>
+<li class="toctree-l3"><a class="reference internal" href="autosummary/skqlearn.ml.kernels.SqueezingKernel.html">SqueezingKernel</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="skqlearn.encoding.html">Data Encoding</a></li>
@@ -80,9 +81,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="modules.html">API Reference</a> &raquo;</li>
-      <li>Clustering</li>
+      <li>Machine Learning</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/generated/skqlearn.clustering.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/generated/skqlearn.ml.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -90,26 +91,49 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="clustering">
-<h1>Clustering<a class="headerlink" href="#clustering" title="Permalink to this headline">¶</a></h1>
-<p>This module contains implementations of basic distance-based clustering algorithms with the objective of illustrating and comparing classical distance calculation with quantum distance estimation.</p>
+  <div class="section" id="machine-learning">
+<h1>Machine Learning<a class="headerlink" href="#machine-learning" title="Permalink to this headline">¶</a></h1>
+<p>This module contains submodules related to quantum machine learning.</p>
+<div class="section" id="quantum-enhanced-clustering-algorithms">
+<h2>Quantum-enhanced Clustering Algorithms<a class="headerlink" href="#quantum-enhanced-clustering-algorithms" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>clustering</cite> submodule contains implementations of basic distance-based
+clustering algorithms with the objective of illustrating and comparing
+classical distance calculation with quantum distance estimation.</p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="autosummary/skqlearn.clustering.GenericClustering.html#skqlearn.clustering.GenericClustering" title="skqlearn.clustering.GenericClustering"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skqlearn.clustering.GenericClustering</span></code></a>(…)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="autosummary/skqlearn.ml.clustering.GenericClustering.html#skqlearn.ml.clustering.GenericClustering" title="skqlearn.ml.clustering.GenericClustering"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skqlearn.ml.clustering.GenericClustering</span></code></a>(…)</p></td>
 <td><p>Generic clustering algorithm used as base for K-Means and K-Medians.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="autosummary/skqlearn.clustering.KMeans.html#skqlearn.clustering.KMeans" title="skqlearn.clustering.KMeans"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skqlearn.clustering.KMeans</span></code></a>(n_clusters, …)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="autosummary/skqlearn.ml.clustering.KMeans.html#skqlearn.ml.clustering.KMeans" title="skqlearn.ml.clustering.KMeans"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skqlearn.ml.clustering.KMeans</span></code></a>(n_clusters, …)</p></td>
 <td><p>K-Means clustering algorithm based on the generic clustering algorithm structure.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="autosummary/skqlearn.clustering.KMedians.html#skqlearn.clustering.KMedians" title="skqlearn.clustering.KMedians"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skqlearn.clustering.KMedians</span></code></a>(n_clusters, …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="autosummary/skqlearn.ml.clustering.KMedians.html#skqlearn.ml.clustering.KMedians" title="skqlearn.ml.clustering.KMedians"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skqlearn.ml.clustering.KMedians</span></code></a>(n_clusters, …)</p></td>
 <td><p>K-Means clustering algorithm based on the generic clustering algorithm structure.</p></td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="quantum-inspired-kernels">
+<h2>Quantum-inspired Kernels<a class="headerlink" href="#quantum-inspired-kernels" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>kernel</cite> submodule contains kernel functions inspired by quantum properties.
+Unlike the kernels defined by the quantum encoding methods, these are only
+computed classically.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="autosummary/skqlearn.ml.kernels.SqueezingKernel.html#skqlearn.ml.kernels.SqueezingKernel" title="skqlearn.ml.kernels.SqueezingKernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">skqlearn.ml.kernels.SqueezingKernel</span></code></a>(c)</p></td>
+<td><p>Kernel inspired by squeezed vacuum states <span id="id1">[<a class="reference internal" href="../references.html#id4" title="Maria Schuld and Nathan Killoran. Quantum machine learning in feature hilbert spaces. Phys. Rev. Lett., 122:040504, Feb 2019. doi:10.1103/PhysRevLett.122.040504.">SK19</a>]</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 
@@ -117,7 +141,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="modules.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="autosummary/skqlearn.clustering.GenericClustering.html" class="btn btn-neutral float-right" title="GenericClustering" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="autosummary/skqlearn.ml.clustering.GenericClustering.html" class="btn btn-neutral float-right" title="GenericClustering" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SqueezingKernel &mdash; scikit-qlearn  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery-rendered-html.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data Encoding" href="../skqlearn.encoding.html" />
+    <link rel="prev" title="KMedians" href="skqlearn.ml.clustering.KMedians.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> scikit-qlearn
+          </a>
+              <div class="version">
+                1.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../auto_tutorials/index.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Further Information</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../skqlearn.ml.html">Machine Learning</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="skqlearn.ml.clustering.GenericClustering.html">GenericClustering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skqlearn.ml.clustering.KMeans.html">KMeans</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skqlearn.ml.clustering.KMedians.html">KMedians</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">SqueezingKernel</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../skqlearn.encoding.html">Data Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../skqlearn.gates.html">Gates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../skqlearn.utils.html">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">scikit-qlearn</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../modules.html">API Reference</a> &raquo;</li>
+          <li><a href="../skqlearn.ml.html">Machine Learning</a> &raquo;</li>
+      <li>SqueezingKernel</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/generated/autosummary/skqlearn.ml.kernels.SqueezingKernel.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="squeezingkernel">
+<h1>SqueezingKernel<a class="headerlink" href="#squeezingkernel" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="skqlearn.ml.kernels.SqueezingKernel">
+<em class="property">class </em><code class="sig-prename descclassname">skqlearn.ml.kernels.</code><code class="sig-name descname">SqueezingKernel</code><span class="sig-paren">(</span><em class="sig-param">c: float</em><span class="sig-paren">)</span><a class="headerlink" href="#skqlearn.ml.kernels.SqueezingKernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Kernel inspired by squeezed vacuum states <span id="id1">[<a class="reference internal" href="../../references.html#id4" title="Maria Schuld and Nathan Killoran. Quantum machine learning in feature hilbert spaces. Phys. Rev. Lett., 122:040504, Feb 2019. doi:10.1103/PhysRevLett.122.040504.">SK19</a>]</span></p>
+<p>It is based on the definition of a <em>squeezed vacuum state</em> of the
+electromagnetic field as:</p>
+<div class="math notranslate nohighlight">
+\[\left|z\right&gt; = \frac{1}{\sqrt{\cosh(r)}}
+\sum_{n=0}^{\infty}\frac{\sqrt{(2n)!}}{2^n n!}
+(-e^{i\varphi}\tanh(r))^n\left|2n\right&gt;\]</div>
+<p>The notation <span class="math notranslate nohighlight">\(\left|z\right&gt; = \left|(r, \varphi)\right&gt;\)</span> is also
+used, where <span class="math notranslate nohighlight">\(z=re^{i\varphi}\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(x\rightarrow\left|\phi(x)\right&gt;=\left|(c,x)\right&gt;\)</span> can be
+interpreted as a feature map for <span class="math notranslate nohighlight">\(x\in\mathbb{R}\)</span>. The hyperparameter
+<span class="math notranslate nohighlight">\(c\)</span> determines the strength of the squeezing. This can be extended
+to vectors of the form
+<span class="math notranslate nohighlight">\(\boldsymbol{x}=(x_1, ..., x_N)^T\in\mathbb{R}^N\)</span>,
+defining the feature map as:</p>
+<div class="math notranslate nohighlight">
+\[\phi: \boldsymbol{x} \rightarrow \left|(c,\boldsymbol{x})\right&gt;=
+\left|(c,x_1)\right&gt; \bigotimes ... \bigotimes\left|(c,x_N)\right&gt;\]</div>
+<p>It therefore defines the following kernel:</p>
+<div class="math notranslate nohighlight">
+\[k(\boldsymbol{x}, \boldsymbol{x}')=\prod_{i=1}^{N} \left&lt;(c,x_i)|
+(c, x_i')\right&gt;=\prod_{i=1}^N\sqrt{\frac{\text{sech }c\text{ sech }c}
+{1-e^{i(x_i'-x_i)}\tanh c \tanh c}}\]</div>
+<p>This can be evaluated classically by taking the absolute square of the
+inner product.</p>
+<dl class="attribute">
+<dt id="skqlearn.ml.kernels.SqueezingKernel.c">
+<code class="sig-name descname">c</code><a class="headerlink" href="#skqlearn.ml.kernels.SqueezingKernel.c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Strength of the squeezing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Strength of the squeezing.</p>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#skqlearn.ml.kernels.SqueezingKernel.__init__" title="skqlearn.ml.kernels.SqueezingKernel.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(c)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param c</dt>
+<dd class="field-odd"><p>Strength of the squeezing.</p>
+</dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#skqlearn.ml.kernels.SqueezingKernel.kernel" title="skqlearn.ml.kernels.SqueezingKernel.kernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kernel</span></code></a>(x, y)</p></td>
+<td><p>Calculation of the Gram matrix between the two sets of vectors.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="skqlearn.ml.kernels.SqueezingKernel.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">c: float</em><span class="sig-paren">)</span><a class="headerlink" href="#skqlearn.ml.kernels.SqueezingKernel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Strength of the squeezing.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="skqlearn.ml.kernels.SqueezingKernel.kernel">
+<code class="sig-name descname">kernel</code><span class="sig-paren">(</span><em class="sig-param">x: numpy.ndarray</em>, <em class="sig-param">y: numpy.ndarray</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#skqlearn.ml.kernels.SqueezingKernel.kernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculation of the Gram matrix between the two sets of vectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples_1</em><em>, </em><em>n_features</em><em>)</em>) – First input.</p></li>
+<li><p><strong>y</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>n_samples_2</em><em>, </em><em>n_features</em><em>)</em>) – Second input.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Resulting Gram matrix.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray of shape (n_samples_1, n_samples_2)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><strong>ValueError</strong></a> – if dimensions mismatch.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="skqlearn.ml.clustering.KMedians.html" class="btn btn-neutral float-left" title="KMedians" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../skqlearn.encoding.html" class="btn btn-neutral float-right" title="Data Encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Daniel Mohedano.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

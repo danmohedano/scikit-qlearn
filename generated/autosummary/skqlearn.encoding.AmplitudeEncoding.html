@@ -33,7 +33,7 @@
             <a href="../../index.html" class="icon icon-home"> scikit-qlearn
           </a>
               <div class="version">
-                1.1
+                1.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -50,7 +50,7 @@
 <p class="caption"><span class="caption-text">Further Information</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../modules.html">API Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../skqlearn.clustering.html">Clustering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../skqlearn.ml.html">Machine Learning</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../skqlearn.encoding.html">Data Encoding</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="skqlearn.encoding.Encoding.html">Encoding</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">AmplitudeEncoding</a></li>
@@ -106,16 +106,19 @@
 quantum state, defining the encoding feature map as:</p>
 <div class="math notranslate nohighlight">
 \[\phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right&gt;=
-\sum_{i=1}^{N}x_i\left|i\right&gt;\]</div>
+\sum_{i=1}^{N}\frac{1}{|\boldsymbol{x}|}x_i\left|i-1\right&gt;\]</div>
 <p>In order to represent a valid quantum state the amount of amplitudes, and
 therefore, the dimension of the vectors must be a power of 2,
 <span class="math notranslate nohighlight">\(N=2^n\)</span>. If they are not, they will be padded with zeros at the end.</p>
-<p>Therefore, the kernel defined by the inner product is the linear kernel:</p>
+<p>Therefore, the kernel defined by the inner product is the linear kernel
+after applying a correction of
+<span class="math notranslate nohighlight">\(|\boldsymbol{x}||\boldsymbol{x'}|\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[k(\boldsymbol{x}, \boldsymbol{x'}) = \left&lt;\psi_{\boldsymbol{x}}|
-\psi_{\boldsymbol{x'}}\right&gt; = \boldsymbol{x}^T\boldsymbol{x'}\]</div>
+\psi_{\boldsymbol{x'}}\right&gt; = \frac{1}{|\boldsymbol{x}|
+|\boldsymbol{x'}|}\boldsymbol{x}^T\boldsymbol{x'}\]</div>
 <p>By, instead, mapping the input to <span class="math notranslate nohighlight">\(d\)</span> copies of an amplitude
-encoded quantum state, a polynomial kernel can be defined:</p>
+encoded quantum state, a polynomial kernel can be defined after correction:</p>
 <div class="math notranslate nohighlight">
 \[\phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right&gt;
 ^{\bigotimes d}\]</div>
@@ -123,7 +126,8 @@ encoded quantum state, a polynomial kernel can be defined:</p>
 \[k(\boldsymbol{x}, \boldsymbol{x'}) = \left&lt;\psi_{\boldsymbol{x}}|
 \psi_{\boldsymbol{x'}}\right&gt; \bigotimes ... \bigotimes
 \left&lt;\psi_{\boldsymbol{x}}|\psi_{\boldsymbol{x'}}\right&gt; =
-(\boldsymbol{x}^T\boldsymbol{x'})^d\]</div>
+\left(\frac{1}{|\boldsymbol{x}||\boldsymbol{x'}|}\boldsymbol{x}^T
+\boldsymbol{x'}\right)^d\]</div>
 <p>A dataset can be encoded by concatenating all the input vectors.</p>
 <dl class="attribute">
 <dt id="skqlearn.encoding.AmplitudeEncoding.degree">
@@ -197,7 +201,7 @@ inner product.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Resulting kernel matrix.</p>
+<dd class="field-even"><p>Resulting Gram matrix.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>numpy.ndarray of shape (n_samples_1, n_samples_2)</p>
@@ -216,8 +220,8 @@ dataset of shape (n_samples, n_features).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The input must be normalized in order to define a valid
-quantum state. Refer to <cite>ExpandedAmplitudeEncoding</cite> if the
-data is not normalized.</p>
+quantum state. If it is not, the method will normalize the
+input.</p>
 </div>
 </p>
 </dd>
@@ -230,8 +234,8 @@ dataset is provided, the states are concatenated.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)">numpy.ndarray</a></p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><strong>ValueError</strong></a> – If an invalid input type is provided or it is not
-    normalized.</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.10)"><strong>ValueError</strong></a> – If an invalid input type or an empty vector (all
+    components have value 0) is provided.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -243,13 +247,6 @@ dataset is provided, the states are concatenated.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">AmplitudeEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="go">array([0., 1., 0., 0.])</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">AmplitudeEncoding</span><span class="p">()</span><span class="o">.</span><span class="n">encoding</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="gt">Traceback (most recent call last):</span>
- <span class="c">...</span>
-<span class="gr">ValueError</span>: <span class="n">Invalid input, must be normalized. Got |x| = 1.019803902718557 instead</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -267,7 +264,7 @@ inner product.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Resulting kernel matrix.</p>
+<dd class="field-even"><p>Resulting Gram matrix.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>numpy.ndarray of shape (n_samples_1, n_samples_2)</p>

@@ -1,7 +1,7 @@
 KMedians
 ========
 
-.. currentmodule:: skqlearn.clustering
+.. currentmodule:: skqlearn.ml.clustering
 
 .. autoclass:: KMedians
    :show-inheritance:
@@ -15,12 +15,16 @@ KMedians
       ~KMedians.__init__
       ~KMedians.fit
       ~KMedians.fit_predict
+      ~KMedians.fit_transform
       ~KMedians.predict
+      ~KMedians.transform
    
 
    
    .. automethod:: __init__
    .. automethod:: fit
    .. automethod:: fit_predict
+   .. automethod:: fit_transform
    .. automethod:: predict
+   .. automethod:: transform
    

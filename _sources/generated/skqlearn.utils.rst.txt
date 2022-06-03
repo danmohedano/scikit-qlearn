@@ -22,3 +22,10 @@ a singleton class has been implemented. This must be configured before trying to
    skqlearn.utils.fidelity_estimation
    skqlearn.utils.distance_estimation
    skqlearn.utils.inner_product_estimation
+
+**Others**
+
+.. autosummary::
+   :toctree: autosummary
+
+   skqlearn.utils.InteractiveBlochSphere

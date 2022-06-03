@@ -1,0 +1,22 @@
+InteractiveBlochSphere
+======================
+
+.. currentmodule:: skqlearn.utils
+
+.. autoclass:: InteractiveBlochSphere
+   :show-inheritance:
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~InteractiveBlochSphere.__init__
+      ~InteractiveBlochSphere.run
+   
+
+   
+   .. automethod:: __init__
+   .. automethod:: run
+   

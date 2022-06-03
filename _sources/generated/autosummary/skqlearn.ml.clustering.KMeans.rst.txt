@@ -1,7 +1,7 @@
 KMeans
 ======
 
-.. currentmodule:: skqlearn.clustering
+.. currentmodule:: skqlearn.ml.clustering
 
 .. autoclass:: KMeans
    :show-inheritance:
@@ -15,12 +15,16 @@ KMeans
       ~KMeans.__init__
       ~KMeans.fit
       ~KMeans.fit_predict
+      ~KMeans.fit_transform
       ~KMeans.predict
+      ~KMeans.transform
    
 
    
    .. automethod:: __init__
    .. automethod:: fit
    .. automethod:: fit_predict
+   .. automethod:: fit_transform
    .. automethod:: predict
+   .. automethod:: transform
    

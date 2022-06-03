@@ -1,7 +1,7 @@
 GenericClustering
 =================
 
-.. currentmodule:: skqlearn.clustering
+.. currentmodule:: skqlearn.ml.clustering
 
 .. autoclass:: GenericClustering
    :show-inheritance:
@@ -15,12 +15,16 @@ GenericClustering
       ~GenericClustering.__init__
       ~GenericClustering.fit
       ~GenericClustering.fit_predict
+      ~GenericClustering.fit_transform
       ~GenericClustering.predict
+      ~GenericClustering.transform
    
 
    
    .. automethod:: __init__
    .. automethod:: fit
    .. automethod:: fit_predict
+   .. automethod:: fit_transform
    .. automethod:: predict
+   .. automethod:: transform
    

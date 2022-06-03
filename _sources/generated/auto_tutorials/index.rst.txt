@@ -13,27 +13,6 @@ Step by step tutorials on how to use the main functionalities of the package.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This tutorial aims to explain and visualize the use of the clustering algorithms implemented in...">
-
-.. only:: html
-
- .. figure:: /generated/auto_tutorials/images/thumb/sphx_glr_plot_clustering_thumb.png
-     :alt: Clustering
-
-     :ref:`sphx_glr_generated_auto_tutorials_plot_clustering.py`
-
-.. raw:: html
-
-    </div>
-
-
-.. toctree::
-   :hidden:
-
-   /generated/auto_tutorials/plot_clustering
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="This tutorial aims to explain and visualize the different data encoding methods implemented in ...">
 
 .. only:: html
@@ -52,6 +31,27 @@ Step by step tutorials on how to use the main functionalities of the package.
    :hidden:
 
    /generated/auto_tutorials/plot_encodings
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This tutorial aims to explain and visualize the use of the clustering algorithms implemented in...">
+
+.. only:: html
+
+ .. figure:: /generated/auto_tutorials/images/thumb/sphx_glr_plot_clustering_thumb.png
+     :alt: Clustering
+
+     :ref:`sphx_glr_generated_auto_tutorials_plot_clustering.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /generated/auto_tutorials/plot_clustering
 
 .. raw:: html
 
