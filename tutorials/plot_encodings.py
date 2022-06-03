@@ -20,10 +20,10 @@ implemented in the package.
 # While classical computers' most basic unit of information is the bit, quantum
 # machines' is the qubit. Classical bits can only hold/represent one of two
 # values, 0 or 1, as all information can be represented with combinations of
-# enough of these binary values. Qubits, on the other hand, can be though of as
-# a 2-state system such as a spin-half . The state of these systems can then be
-# described with quantum states. A system is said to have *n* qubits if it has
-# a Hilbert space of :math:`N=2^n` dimensions and, thus, has :math:`2^n`
+# enough of these binary values. Qubits, on the other hand, can be thought of
+# as a 2-state system such as a spin-half . The state of these systems can then
+# be described with quantum states. A system is said to have *n* qubits if it
+# has a Hilbert space of :math:`N=2^n` dimensions and, thus, has :math:`2^n`
 # mutually orthogonal quantum states, denoted as basis states
 # :cite:`steane1998quantum`. The main difference with classical mechanics is
 # that the system, by superposition, can be in a linear combination of these
@@ -141,16 +141,19 @@ state.draw('bloch').show()
 #
 # .. math::
 #    \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
-#    \sum_{i=1}^{N}x_i\left|i\right>
+#    \sum_{i=1}^{N}\frac{1}{|\boldsymbol{x}|}x_i\left|i-1\right>
 #
 # In order to represent a valid quantum state, the amount of amplitudes
 # must be a power of 2, :math:`N=2^n`. If they are not,
 # they can be padded with zeros at the end.
 #
 # For this encoding to generate valid quantum states, the input vectors must
-# be normalized.
+# be normalized. If they are not, the method is responsible for normalizing
+# them. This should be taken into account when planning on using this encoding.
+# The forceful normalization is performed because some subroutines can work
+# around the issue.
 
-data = np.array([1.0])
+data = np.array([1 / np.sqrt(2), 1 / np.sqrt(2)])
 state = Statevector(AmplitudeEncoding().encoding(data))
 print(state.draw('text'))
 
@@ -166,7 +169,7 @@ state.draw('bloch').show()
 #    \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>
 #    ^{\bigotimes d}
 #
-data = np.array([1])
+data = np.array([1 / np.sqrt(2), 1 / np.sqrt(2)])
 state = Statevector(AmplitudeEncoding(degree=2).encoding(data))
 print(state.draw('text'))
 
@@ -214,16 +217,24 @@ plt.scatter(points[:, 0], points[:, 1], marker='o')
 plt.scatter(normalized_points[:, 0], normalized_points[:, 1], marker='x')
 plt.xlim([0, 4])
 plt.ylim([0, 4])
+plt.xlabel(r'$X_1$')
+plt.ylabel(r'$X_2$')
 plt.show()
 
 ###############################################################################
 # By adding an extra component to
-# :math:`\boldsymbol{x}\in\mathbb{R}^N` with a value of :math:`1`,
-# :math:`x_{N+1}=1`, and then normalizing, the information loss is mitigated.
+# :math:`\boldsymbol{x}\in\mathbb{R}^N` with a value of :math:`c`,
+# :math:`x_{0}=c`, and then normalizing, the information loss is mitigated.
+#
+# .. math::
+#        \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
+#        \frac{1}{\sqrt{|\boldsymbol{x}|^2+c^2}}\left(c\left|0\right> +
+#        \sum_{i=1}^{N}x_i\left|i\right>\right)
 
-points = np.array([[1, 1, 1],
-                   [2, 2, 1],
-                   [0.5, 3, 1]])
+c = 1
+points = np.array([[1, 1, c],
+                   [2, 2, c],
+                   [0.5, 3, c]])
 normalized_points = points / np.linalg.norm(points, axis=1)[:, None]
 lines = np.array([[[p[0], n[0]], [p[1], n[1]]]
          for p, n in zip(points, normalized_points)])
@@ -238,13 +249,17 @@ plt.scatter(points[:, 0], points[:, 1], marker='o')
 plt.scatter(normalized_points[:, 0], normalized_points[:, 1], marker='x')
 plt.xlim([0, 4])
 plt.ylim([0, 4])
+plt.xlabel(r'$X_1$')
+plt.ylabel(r'$X_2$')
 plt.show()
 
 ###############################################################################
-# The encoding itself works exactly the same as Amplitude Encoding.
+# As shown in the figure, now the mapping is injective because of the
+# mitigation of information loss. The encoding itself works exactly the same
+# as Amplitude Encoding.
 
 data = np.array([1.0, 1.0, 1.0])
-state = Statevector(ExpandedAmplitudeEncoding().encoding(data))
+state = Statevector(ExpandedAmplitudeEncoding(c=1.0).encoding(data))
 print(state.draw('text'))
 
 ###############################################################################

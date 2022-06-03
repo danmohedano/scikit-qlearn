@@ -58,6 +58,7 @@ class JobHandler(metaclass=Singleton):
         >>> JobHandler().configure(backend, 10000)
 
     """
+
     def __init__(self):
         self.backend = None
         self.run_options = {}
@@ -317,6 +318,10 @@ def distance_estimation(
        |\boldsymbol{b}|^2 - 2\boldsymbol{a}^T\cdot\boldsymbol{b}) \\
        &= \frac{1}{2Z}|\boldsymbol{a}-\boldsymbol{b}|^2
 
+    This subroutine has a theoretical time complexity of :math:`O(\log N)`,
+    caused by the preparation of states. The fidelity estimation is supposed
+    to have a negligible complexity.
+
     Args:
         a (numpy.ndarray): Input a.
         a_norm (float): L2-norm of input a.
@@ -397,6 +402,9 @@ def inner_product_estimation(
        \left<\boldsymbol{b}|\boldsymbol{b}\right>) \\
        &= \frac{1}{4} (2 + 2\left<\boldsymbol{a}|\boldsymbol{b}\right>)
 
+    The time complexity of the subroutine is dominated by the preparation of
+    states, which is :math:`O(\log N)`.
+
     Args:
         state_a (numpy.ndarray): State a described by its amplitudes.
         state_b (numpy.ndarray): State b described by its amplitudes.
@@ -440,3 +448,5 @@ def inner_product_estimation(
         return 2.0 * result.get_counts(comp)['0'] / shots - 1.0
     except KeyError:
         return -1.0
+
+

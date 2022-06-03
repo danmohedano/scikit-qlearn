@@ -136,3 +136,4 @@ dmypy.json
 
 # Personal testing file
 testing.py
+notebook-test.ipynb

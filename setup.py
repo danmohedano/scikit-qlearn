@@ -61,7 +61,8 @@ if __name__ == '__main__':
         python_requires='>=3.7, <4',
         install_requires=['qiskit',
                           'numpy',
-                          'pytest'],  # Optional
+                          'pytest',
+                          'matplotlib'],  # Optional
         project_urls={
             'Documentation': 'https://danmohedano.github.io/scikit-qlearn/',
             'Source': URL,

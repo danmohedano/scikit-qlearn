@@ -10,14 +10,14 @@ From data encoding to clustering algorithms based on quantum subroutines. For fu
 The package makes use of the open-source `Qiskit SDK <https://qiskit.org/>`_ for the execution of the quantum subroutines, which gives access
 to simulators and real quantum computers.
 
-The package was orginally developed as a proof of concept as part of my end-of-degree thesis for my Computer Engineering degree at UAM.
+The package was orginally developed as a proof of concept as part of my Bachelor Thesis for my Computer Engineering degree at UAM.
 
 Documentation
 =============
 
 The documentation is available at `danmohedano.github.io/scikit-qlearn/ <https://danmohedano.github.io/scikit-qlearn/>`_.
-It includes detaild information of the classes and methods offered by the package, tutorials to guide the user and gathers
-the changes made on every version.
+It includes detailed information of the classes and methods offered by the package, tutorials to guide the user and
+the changes made on every version of the package.
 
 Installation
 =============

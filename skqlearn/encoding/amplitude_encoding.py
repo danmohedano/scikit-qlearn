@@ -1,6 +1,6 @@
 from .base_encoding import Encoding
 import numpy as np
-import math
+from typing import Tuple
 
 
 class AmplitudeEncoding(Encoding):
@@ -12,30 +12,34 @@ class AmplitudeEncoding(Encoding):
 
     .. math::
        \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>=
-       \sum_{i=1}^{N}x_i\left|i\right>
+       \sum_{i=1}^{N}\frac{1}{|\boldsymbol{x}|}x_i\left|i-1\right>
 
     In order to represent a valid quantum state the amount of amplitudes, and
     therefore, the dimension of the vectors must be a power of 2,
     :math:`N=2^n`. If they are not, they will be padded with zeros at the end.
 
-    Therefore, the kernel defined by the inner product is the linear kernel:
+    Therefore, the kernel defined by the inner product is the linear kernel
+    after applying a correction of
+    :math:`|\boldsymbol{x}||\boldsymbol{x'}|`:
 
     .. math::
-       k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
-       \psi_{\boldsymbol{x'}}\right> = \boldsymbol{x}^T\boldsymbol{x'}
+        k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
+        \psi_{\boldsymbol{x'}}\right> = \frac{1}{|\boldsymbol{x}|
+        |\boldsymbol{x'}|}\boldsymbol{x}^T\boldsymbol{x'}
 
     By, instead, mapping the input to :math:`d` copies of an amplitude
-    encoded quantum state, a polynomial kernel can be defined:
+    encoded quantum state, a polynomial kernel can be defined after correction:
 
     .. math::
        \phi:\boldsymbol{x}\rightarrow\left|\psi_\boldsymbol{x}\right>
        ^{\bigotimes d}
 
     .. math::
-       k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
-       \psi_{\boldsymbol{x'}}\right> \bigotimes ... \bigotimes
-       \left<\psi_{\boldsymbol{x}}|\psi_{\boldsymbol{x'}}\right> =
-       (\boldsymbol{x}^T\boldsymbol{x'})^d
+        k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
+        \psi_{\boldsymbol{x'}}\right> \bigotimes ... \bigotimes
+        \left<\psi_{\boldsymbol{x}}|\psi_{\boldsymbol{x'}}\right> =
+        \left(\frac{1}{|\boldsymbol{x}||\boldsymbol{x'}|}\boldsymbol{x}^T
+        \boldsymbol{x'}\right)^d
 
     A dataset can be encoded by concatenating all the input vectors.
 
@@ -68,8 +72,8 @@ class AmplitudeEncoding(Encoding):
 
                 .. note::
                    The input must be normalized in order to define a valid
-                   quantum state. Refer to `ExpandedAmplitudeEncoding` if the
-                   data is not normalized.
+                   quantum state. If it is not, the method will normalize the
+                   input.
         Returns:
             numpy.ndarray:
                 Quantum state described as an amplitude vector with the amount
@@ -77,8 +81,8 @@ class AmplitudeEncoding(Encoding):
                 dataset is provided, the states are concatenated.
 
         Raises:
-            ValueError: If an invalid input type is provided or it is not
-                normalized.
+            ValueError: If an invalid input type or an empty vector (all
+                components have value 0) is provided.
 
         Examples:
             >>> a = np.array([0.5, 0.5, 0.5, 0.5])
@@ -88,13 +92,6 @@ class AmplitudeEncoding(Encoding):
             >>> a = np.array([0.0, 1.0, 0.0])
             >>> AmplitudeEncoding().encoding(a)
             array([0., 1., 0., 0.])
-
-            >>> a = np.array([0.0, 1.0, 0.2, 0.0])
-            >>> AmplitudeEncoding().encoding(a)
-            Traceback (most recent call last):
-             ...
-            ValueError: Invalid input, must be normalized. Got |x| = 1.019803902718557 instead
-
         """
         if not isinstance(x, np.ndarray):
             raise ValueError(f'Invalid input type provided. Expected '
@@ -118,16 +115,19 @@ class AmplitudeEncoding(Encoding):
                 Quantum state described as an amplitude vector.
 
         Raises:
-            ValueError: If the input is not normalized.
+            ValueError: If the provided input has only 0s.
         """
-        if not math.isclose(np.linalg.norm(x), 1.0, abs_tol=1e-8):
-            raise ValueError(f'Invalid input, must be normalized. Got |x| = '
-                             f'{np.linalg.norm(x)} instead')
+        if not np.any(x):
+            raise ValueError('Invalid input provided. Components of the vector'
+                             'cannot be all equal to 0.')
 
         size = max(int(2 ** np.ceil(np.log2(x.shape[0]))), 2)
 
         # Pad 0s at the end of the state to make it whole qubit-sized
         base_state = np.pad(x, (0, size - x.shape[0]))
+
+        # Normalize to construct a valid quantum state
+        base_state = base_state.astype(float) / np.linalg.norm(base_state)
 
         # Create the amount of copies defined by degree
         state = 1
@@ -160,4 +160,79 @@ class AmplitudeEncoding(Encoding):
         # Normalization of the concatenated vectors
         states /= np.sqrt(x.shape[0])
 
+        # Extend dimensions for correct quantum state definition (power of 2)
+        states_size = max(int(2 ** np.ceil(np.log2(states.shape[0]))), 2)
+        states = np.pad(states.astype(float),
+                        (0, states_size - states.shape[0]),
+                        constant_values=0.0)
+
         return states
+
+    def _sample_preparation(
+            self,
+            x: np.ndarray
+    ) -> Tuple[np.ndarray, np.ndarray]:
+        """Sample preparation for the computation of kernels.
+
+        Args:
+            x (numpy.ndarray of shape (n_samples, n_features)): Input samples.
+
+        Returns:
+            numpy.ndarray of shape (n_samples, n_encoded_features):
+                Encoded samples.
+            numpy.ndarray of shape (n_samples,):
+                Calculated norms for the samples previous to encoding. Might
+                be necessary for the correction of the inner product.
+        """
+        # Obtain the norms of the input samples
+        x_norms = np.linalg.norm(x, axis=1)
+
+        # Compute amount of features after encoding. The amount of features
+        # will be of the form 2^n to define a valid quantum state.
+        n_encoded_features = max(int(2 ** np.ceil(np.log2(x.shape[1]))), 2)
+
+        # Pad samples with zeros
+        x_encoded = np.zeros((x.shape[0], n_encoded_features))
+        x_encoded[:, :x.shape[1]] = x
+
+        # Normalize samples
+        x_encoded /= x_norms[:, None]  # For broadcasting in correct axis
+
+        if self.degree > 1:
+            # The kronecker product is applied row-wise to every sample
+            def kron_gen(i):
+                sample = x_encoded[i, :]
+                for _ in range(self.degree - 1):
+                    sample = np.kron(sample, x_encoded[i, :])
+
+                return sample
+
+            x_encoded = np.array([kron_gen(i) for i in range(x.shape[0])])
+
+        return x_encoded, x_norms
+
+    @property
+    def _is_correction_needed(self) -> bool:
+        """Indicates if the kernel calculation needs a correction or not.
+
+        Returns:
+            True
+        """
+        return True
+
+    def _correction_factor(
+            self,
+            x_norm: float,
+            y_norm: float
+    ) -> float:
+        """Correction factor for a kernel between x and y.
+
+        Args:
+            x_norm (float): Norm of first input.
+            y_norm (float): Norm of second input.
+
+        Returns:
+            float:
+                Correction factor for the specific kernel.
+        """
+        return (x_norm * y_norm) ** self.degree

@@ -32,7 +32,7 @@ def test_distance_estimation_incorrect():
 
 @pytest.mark.parametrize('state_a, state_b',
                          [[np.random.rand(2),
-                           np.random.rand(2)] for _ in range(50)])
+                           np.random.rand(2)] for _ in range(10)])
 def test_distance_estimation_correct(state_a, state_b):
     JobHandler().configure(AerSimulator(), 10000)
     result = distance_estimation(state_a, np.linalg.norm(state_a),
@@ -42,7 +42,7 @@ def test_distance_estimation_correct(state_a, state_b):
 
 @pytest.mark.parametrize('state_a, state_b',
                          [[np.random.rand(2),
-                           np.random.rand(2)] for _ in range(50)])
+                           np.random.rand(2)] for _ in range(10)])
 def test_fidelity_estimation(state_a, state_b):
     state_a /= np.linalg.norm(state_a)
     state_b /= np.linalg.norm(state_b)
@@ -53,7 +53,7 @@ def test_fidelity_estimation(state_a, state_b):
 
 @pytest.mark.parametrize('state_a, state_b',
                          [[np.random.rand(2),
-                           np.random.rand(2)] for _ in range(50)])
+                           np.random.rand(2)] for _ in range(10)])
 def test_inner_product_estimation(state_a, state_b):
     state_a /= np.linalg.norm(state_a)
     state_b /= np.linalg.norm(state_b)

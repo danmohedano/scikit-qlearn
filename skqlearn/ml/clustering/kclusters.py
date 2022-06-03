@@ -134,17 +134,16 @@ class GenericClustering(ABC):
             self,
             x: np.ndarray,
             x_norms: np.ndarray,
-            cluster_assignments: dict,
+            labels: np.ndarray,
     ) -> np.ndarray:
         """Update function for the centroids.
 
         Args:
             x (numpy.ndarray of shape (n_samples, n_features)): Input samples.
             x_norms (numpy.ndarray of shape (n_samples)): L2-norm of every
-                instance. Only needed if quantum estimation is used.
-            cluster_assignments (dict): Index assignments for each cluster of
-                each instance index. The dictionary is of the form
-                {cluster_index: [instance_indices]}
+                sample. Only needed if quantum estimation is used.
+            labels (numpy.ndarray of shape (n_samples)): Assignments of each
+                sample to each cluster.
 
         Returns:
             numpy.ndarray of shape (n_clusters, n_features):
@@ -220,12 +219,18 @@ class GenericClustering(ABC):
     def fit(
             self,
             x: np.ndarray,
+            y: np.ndarray = None,
+            sample_weights: np.ndarray = None,
     ) -> GenericClustering:
         """Compute clustering of provided data.
 
         Args:
             x (numpy.ndarray of shape (n_samples, n_features)): Training data
                 to cluster.
+            y (Ignored): Not used, present here for API consistency with
+                sklearn's implementation.
+            sample_weights (Ignored): Not used, present here for API
+                consistency with sklearn's implementation.
 
         Returns:
             self (GenericClustering):
@@ -234,11 +239,8 @@ class GenericClustering(ABC):
         centroids = self._init_centroids(x)
         x_labels = np.ones(x.shape[0], dtype=int) * -1
 
-        x_norms = [np.linalg.norm(x[i, :]) for i in range(x.shape[0])]
-        x_norms = np.array(x_norms)
-        centroid_norms = [np.linalg.norm(centroids[i, :])
-                          for i in range(centroids.shape[0])]
-        centroid_norms = np.array(centroid_norms)
+        x_norms = np.linalg.norm(x, axis=1)
+        centroid_norms = np.linalg.norm(centroids, axis=1)
 
         assignment_flag = False
 
@@ -252,34 +254,26 @@ class GenericClustering(ABC):
                                            centroids, centroid_norms)
 
             # Check if any of the instances has changed cluster
-            for i in range(x.shape[0]):
-                if new_labels[i] != x_labels[i]:
-                    label_change_flag = True
+            if (new_labels != x_labels).any():
+                label_change_flag = True
 
-                cluster_data[new_labels[i]].append(i)
-                x_labels[i] = new_labels[i]
+            x_labels = new_labels
 
             if label_change_flag:
                 # Check that all centroids have at least 1 assigned sample.
                 # If not, restart process (problem caused by doing quantum
                 # estimations instead of real calculations)
                 assignment_flag = False
-                for assignments in cluster_data.values():
-                    if len(assignments) == 0:
-                        assignment_flag = True
-                        break
-
-                if assignment_flag:
+                if len(np.unique(x_labels)) != self.n_clusters:
+                    assignment_flag = True
                     break
 
                 # Recalculation of centroids according to implemented
                 # abstract method
-                centroids = self._centroid_update(x, x_norms, cluster_data)
+                centroids = self._centroid_update(x, x_norms, x_labels)
 
                 # Recalculation of centroid norms after their update
-                centroid_norms = [np.linalg.norm(centroids[i, :])
-                                  for i in range(centroids.shape[0])]
-                centroid_norms = np.array(centroid_norms)
+                centroid_norms = np.linalg.norm(centroids, axis=1)
             else:
                 break
 
@@ -298,6 +292,8 @@ class GenericClustering(ABC):
     def fit_predict(
             self,
             x: np.ndarray,
+            y: np.ndarray = None,
+            sample_weights: np.ndarray = None,
     ) -> np.ndarray:
         """Compute clustering of provided data and predict cluster
         index for each sample.
@@ -309,29 +305,35 @@ class GenericClustering(ABC):
         Args:
             x (numpy.ndarray of shape (n_samples, n_features)): Training data
                 to cluster and predict.
+            y (Ignored): Not used, present here for API consistency with
+                sklearn's implementation.
+            sample_weights (Ignored): Not used, present here for API
+                consistency with sklearn's implementation.
 
         Returns:
             numpy.ndarray of shape (n_samples,):
                 Index of the cluster each sample belongs to.
         """
-        return self.fit(x).predict(x)
+        return self.fit(x, y, sample_weights).predict(x, sample_weights)
 
     def predict(
             self,
             x: np.ndarray,
+            sample_weights: np.ndarray = None,
     ) -> np.ndarray:
         """Assigns a label to each input sample based on the closest centroid.
 
         Args:
             x (numpy.ndarray of shape (n_samples, n_features)): Data to
                 predict.
+            sample_weights (Ignored): Not used, present here for API
+                consistency with sklearn's implementation.
 
         Returns:
             numpy.ndarray of shape (n_samples,):
                 Index of the cluster each sample belongs to.
         """
-        x_norms = [np.linalg.norm(x[i, :]) for i in range(x.shape[0])]
-        x_norms = np.array(x_norms)
+        x_norms = np.linalg.norm(x, axis=1)
 
         x_labels = self._data_labels(x,
                                      x_norms,
@@ -339,3 +341,63 @@ class GenericClustering(ABC):
                                      self._centroid_norms)
 
         return x_labels
+
+    def transform(
+            self,
+            x: np.ndarray,
+    ) -> np.ndarray:
+        """Transform X to a cluster-distance space.
+
+        In the new space, each dimension is the distance to the cluster
+        centers.
+
+        Args:
+            x (numpy.ndarray of shape (n_samples, n_features)): Input data to
+                transform.
+
+        Returns:
+            numpy.ndarray of shape (n_samples, n_clusters):
+                Transformed input data.
+        """
+        if self.distance_calculation_method == 'classic':
+            distance_fn = self._distance
+        else:
+            distance_fn = distance_estimation
+
+        x_norms = np.linalg.norm(x, axis=1)
+        new_x = np.zeros((x.shape[0], self.n_clusters))
+
+        for i in range(x.shape[0]):
+            for j in range(self.n_clusters):
+                new_x[i, j] = distance_fn(x[i, :], x_norms[i],
+                                          self.cluster_centers[j, :],
+                                          self._centroid_norms[j])
+
+        return new_x
+
+    def fit_transform(
+            self,
+            x: np.ndarray,
+            y: np.ndarray = None,
+            sample_weights: np.ndarray = None,
+    ) -> np.ndarray:
+        """Compute clustering of provided data and transform data to
+        cluster-distance space.
+
+        .. note::
+
+           It is equivalent to calling `fit(x)` followed by `transform(x)`.
+
+        Args:
+            x (numpy.ndarray of shape (n_samples, n_features)): Training data
+                to cluster and transform.
+            y (Ignored): Not used, present here for API consistency with
+                sklearn's implementation.
+            sample_weights (Ignored): Not used, present here for API
+                consistency with sklearn's implementation.
+
+        Returns:
+            numpy.ndarray of shape (n_samples, n_clusters):
+                Transformed data.
+        """
+        return self.fit(x, y, sample_weights).transform(x)
