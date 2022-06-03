@@ -49,6 +49,32 @@ class Encoding(ABC):
 
         return x_encoded, x_norms
 
+    def _kernel_input_prep(
+            self,
+            x: np.ndarray,
+            y: np.ndarray,
+    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+        """Preparation of kernel inputs.
+
+        Args:
+            x (numpy.ndarray of shape (n_samples_1, n_features)): First input.
+            y (numpy.ndarray of shape (n_samples_2, n_features)): Second input.
+
+        Returns:
+            numpy.ndarray of shape (n_samples_1, n_encoded_features):
+                Encoded first input.
+            numpy.ndarray of shape (n_samples_1,):
+                Calculated norms for the first input.
+            numpy.ndarray of shape (n_samples_2, n_encoded_features):
+                Encoded second input.
+            numpy.ndarray of shape (n_samples_2,):
+                Calculated norms for the second input.
+        """
+        x_encoded, x_norms = self._sample_preparation(x)
+        y_encoded, y_norms = self._sample_preparation(y)
+
+        return x_encoded, x_norms, y_encoded, y_norms
+
     def _correction_factor(
             self,
             x_norm: float,
@@ -92,11 +118,10 @@ class Encoding(ABC):
 
         Returns:
             numpy.ndarray of shape (n_samples_1, n_samples_2):
-                Resulting kernel matrix.
+                Resulting Gram matrix.
         """
         # Encoding of the input samples
-        x_encoded, x_norms = self._sample_preparation(x)
-        y_encoded, y_norms = self._sample_preparation(y)
+        x_encoded, x_norms, y_encoded, y_norms = self._kernel_input_prep(x, y)
 
         # Calculation of the Gram matrix
         gram = np.dot(x_encoded, y_encoded.T)
@@ -126,7 +151,7 @@ class Encoding(ABC):
 
         Returns:
             numpy.ndarray of shape (n_samples_1, n_samples_2):
-                Resulting kernel matrix.
+                Resulting Gram matrix.
         """
         # Encoding of the input samples that results in matrices of shape
         # (n_samples, n_features_encoded)

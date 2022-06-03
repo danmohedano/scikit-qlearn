@@ -26,7 +26,25 @@ class ExpandedAmplitudeEncoding(Encoding):
     .. math::
         k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
         \psi_{\boldsymbol{x'}}\right> = \frac{1}{\sqrt{|\boldsymbol{x}|^2+c^2}
-        \sqrt{|\boldsymbol{x'}|^2+c^2}}\boldsymbol{x}^T\boldsymbol{x'}
+        \sqrt{|\boldsymbol{x'}|^2+c^2}}(\boldsymbol{x}^T\boldsymbol{x'} + c^2)
+
+    As in Amplitude Encoding, the vectors can be mapped into copies of the
+    state, defining the kernel:
+
+    .. math::
+        k(\boldsymbol{x}, \boldsymbol{x'}) = \left<\psi_{\boldsymbol{x}}|
+        \psi_{\boldsymbol{x'}}\right> = \left(\frac{1}{\sqrt{|\boldsymbol{x}|^2
+        +c^2}\sqrt{|\boldsymbol{x'}|^2+c^2}}(\boldsymbol{x}^T\boldsymbol{x'}
+        +c^2)\right)^d
+
+    The kernel is then corrected by a factor of
+    :math:`\sqrt{|\boldsymbol{x}|^2+c^2}\sqrt{|\boldsymbol{x'}|^2+c^2}` in
+    order to define a generic polynomial kernel.
+
+    .. note::
+       The normalization of the expanded vectors and application of the
+       correction produce a very small rounding error in the values obtained
+       for the kernel.
 
     Attributes:
         degree (int): Desired degree of the polynomial kernel defined by the

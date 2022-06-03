@@ -54,6 +54,8 @@ class AngleEncoding(Encoding):
                              f'np.ndarray, got {type(x)} instead.')
         elif len(x.shape) == 1:
             return self._encoding_single(x)
+        elif len(x.shape) == 2:
+            return self._encoding_dataset(x)
         else:
             raise ValueError(f'Invalid input shape provided. Expected 1D or 2D'
                              f', got {x.shape} instead.')
@@ -76,3 +78,28 @@ class AngleEncoding(Encoding):
             state = np.kron(state, qubit)
 
         return state
+
+    def _encoding_dataset(self, x: np.ndarray) -> np.ndarray:
+        """Application of angle encoding to a dataset by concatenation.
+
+        Args:
+            x (numpy.ndarray of shape (n_samples, n_features)): Input dataset.
+
+        Returns:
+            numpy.ndarray:
+                Quantum state described as an amplitude vector
+                constructed by concatenating the quantum states for each
+                sample.
+        """
+        # Calculate the size of a single state
+        vector_size = 2 ** x.shape[1]
+
+        states = np.zeros(vector_size * x.shape[0])
+        for i in range(x.shape[0]):
+            states[i * vector_size: (i + 1) * vector_size] = \
+                self._encoding_single(x[i, :])
+
+        # Normalization of the concatenated vectors
+        states /= np.sqrt(x.shape[0])
+
+        return states

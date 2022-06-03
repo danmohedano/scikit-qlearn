@@ -20,7 +20,11 @@ algorithms implemented in the package.
 # the Euclidean distance or L2-norm.
 #
 # The distances in the algorithms can be computed classically or estimated
-# with a quantum subroutine.
+# with a quantum subroutine. The quantum estimation has a time complexity of
+# :math:`O(\log N)` compared to :math:`O(N)` for its classical counterpart,
+# which produces an exponential speed-up. For more information in the
+# mathematical reasoning behind the estimation subroutine, refer to
+# :meth:`skqlearn.utils.distance_estimation`.
 
 
 ###############################################################################
@@ -28,7 +32,7 @@ algorithms implemented in the package.
 # that plots the data assignments as well as the center of each cluster.
 
 from skqlearn.utils import JobHandler
-from skqlearn.clustering import *
+from skqlearn.ml.clustering import *
 import matplotlib.pyplot as plt
 import numpy as np
 from qiskit.providers.aer import AerSimulator
@@ -37,14 +41,17 @@ from sklearn.datasets import make_blobs
 
 def plot_cluster(axis, x, labels, centers):
     legend = []
+
+    axis.set(xlabel=r'$X_1$', ylabel=r'$X_2$')
+    axis.set_aspect('auto', 'box')
+
     for y in np.unique(labels):
         members = labels == y
         axis.scatter(x[members, 0], x[members, 1], label='_nolegend_')
         axis.scatter(centers[y, 0], centers[y, 1], s=[100], marker='X')
         legend.append(f'Centroid {y}')
 
-    axis.set(xlabel='X1', ylabel='X2')
-    axis.set_aspect('auto', 'box')
+
     axis.legend(legend)
 
 
@@ -53,7 +60,7 @@ def plot_comparison(x, clf_classic, clf_quantum, title):
     fig.suptitle(title)
     ax1.set_title('Classic Distance Calculation')
     ax2.set_title('Quantum Distance Estimation')
-    plt.subplots_adjust(left=0.1, bottom=0.1, right=0.95, top=0.85, wspace=0.1)
+    plt.subplots_adjust(left=0.15, bottom=0.1, right=0.95, top=0.85, wspace=0.12)
 
     plot_cluster(ax1, x, clf_classic.labels, clf_classic.cluster_centers)
     plot_cluster(ax2, x, clf_quantum.labels, clf_quantum.cluster_centers)
@@ -68,7 +75,8 @@ def plot_comparison(x, clf_classic, clf_quantum, title):
 JobHandler().configure(backend=AerSimulator(), shots=50000)
 
 ###############################################################################
-# First, random data is generated centered around two points.
+# First, random data is generated centered around two points. For a first test,
+# the data generated is clearly separated into two clusters.
 
 np.random.seed(1)
 centers = np.array([[0, 0], [0, 1]])
@@ -84,7 +92,7 @@ plt.show()
 #
 # The implementation of the KMeans algorithm is based on an iterative
 # refinement technique. The cluster centers are initially chosen at random
-# between the trainging data. After that, the algorithm assigns each data
+# between the training data. After that, the algorithm assigns each data
 # sample to the closest centroid (cluster center) and recalculates the centroid
 # as the mean of all sample data assigned to it. This process is repeated until
 # there is no change of assignments between two iterations or the iteration
@@ -151,7 +159,8 @@ plot_comparison(x, k_medians_classic, k_medians_quantum,
 
 ###############################################################################
 # It is also interesting to see the decisions made by the algorithms with
-# less straight forward data.
+# less straight forward data. For testing purposes, only one
+# cluster of data is generated in order to show how the algorithms behave.
 
 centers_2 = np.array([[0, 0]])
 x_2, labels_2 = make_blobs(n_samples=20, centers=centers_2, cluster_std=0.05)

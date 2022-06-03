@@ -1,5 +1,5 @@
 from .base_encoding import Encoding
-from typing import Union
+from typing import Union, Tuple
 import numpy as np
 
 
@@ -120,3 +120,35 @@ class BasisEncoding(Encoding):
         state /= np.sqrt(x.shape[0])
 
         return state
+
+    def _kernel_input_prep(
+            self,
+            x: np.ndarray,
+            y: np.ndarray,
+    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+        """Preparation of kernel inputs.
+
+        Args:
+            x (numpy.ndarray of shape (n_samples_1, n_features)): First input.
+            y (numpy.ndarray of shape (n_samples_2, n_features)): Second input.
+
+        Returns:
+            numpy.ndarray of shape (n_samples_1, n_encoded_features):
+                Encoded first input.
+            numpy.ndarray of shape (n_samples_1,):
+                Calculated norms for the first input.
+            numpy.ndarray of shape (n_samples_2, n_encoded_features):
+                Encoded second input.
+            numpy.ndarray of shape (n_samples_2,):
+                Calculated norms for the second input.
+        """
+        x_enc, x_norms, y_enc, y_norms = super()._kernel_input_prep(x, y)
+
+        n_encoded_features = np.max([x_enc.shape[1], y_enc.shape[1]])
+        x_pad = np.zeros((x_enc.shape[0], n_encoded_features))
+        y_pad = np.zeros((y_enc.shape[0], n_encoded_features))
+
+        x_pad[:, :x_enc.shape[1]] = x_enc
+        y_pad[:, :y_enc.shape[1]] = y_enc
+
+        return x_pad, x_norms, y_pad, y_norms
