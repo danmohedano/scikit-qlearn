@@ -3,18 +3,21 @@ Version 1.2
 
 Changes:
 
-* `Encoding` Module:
-    * Addition of parametrized constant to `ExpandedAmplitudeEncoding` instead of always making the expansion with a value of :math:`1.0`.
-    * Remove the requirement of normalized inputs in `AmplitudeEncoding`, as some subroutines can work around that problem. The method will always normalize the input now.
-    * Added check in `AmplitudeEncoding` for empty or null vectors (all components equal to 0).
-    * Fixed dataset encodings for `AmplitudeEncoding` and `ExpandedAmplitudeEncoding`.
+* `encoding` module:
+    * Addition of parametrized constant to :class:`skqlearn.encoding.ExpandedAmplitudeEncoding` instead of always making the expansion with a value of :math:`1.0`.
+    * Remove the requirement of normalized inputs in :class:`skqlearn.encoding.AmplitudeEncoding`, as some subroutines can work around that problem. The method will always normalize the input now.
+    * Added check in :class:`skqlearn.encoding.AmplitudeEncoding` for empty or null vectors (all components equal to 0).
+    * Fixed dataset encodings for :class:`skqlearn.encoding.AmplitudeEncoding` and :class:`skqlearn.encoding.ExpandedAmplitudeEncoding`.
     * Reworked kernel calculations to improve performance.
-    * Included dataset encoding to `AngleEncoding`.
-* `Clustering` Module:
+    * Included dataset encoding to :class:`skqlearn.encoding.AngleEncoding`.
+* Created the `ml` module to contain all submodules related to quantum machine learning (`clustering` and `kernels` for now).
+* `kernels` module:
+    * Implemented the quantum inspired kernel :class:`skqlearn.ml.kernels.SqueezingKernel`.
+* `clustering` module:
     * Reworked clustering algorithms to improve performance.
     * Updated class methods to conform to sklearn's estimator API.
-* `Utils` Module:
-    * Added interactive Bloch Sphere application built with Tkinter.
+* `utils` module:
+    * Added interactive Bloch Sphere application built with Tkinter in :class:`skqlearn.utils.InteractiveBlochSphere`.
 * Tutorials:
-    * Updated :ref:`encodingstutorial` and :ref:`kerneltutorial` tutorials to reflect changes in the module.
+    * Updated :ref:`encodingstutorial` and :ref:`kerneltutorial` tutorials to reflect changes in the modules.
     * Updated :ref:`clusteringtutorial` tutorial to reflect changes in the module.
